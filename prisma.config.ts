@@ -2,13 +2,9 @@ import "dotenv/config";
 import { defineConfig, env } from "prisma/config";
 
 /**
- * Prisma 7부터 CLI(generate/migrate/studio 등)는 package.json#prisma 필드나
- * schema.prisma의 env() 자동 로드에 더 이상 의존하지 않고, 이 파일을 읽습니다.
- * 그래서 dotenv/config를 최상단에서 직접 import해 .env를 명시적으로 불러옵니다.
- *
- * 반면 런타임에 실제로 쿼리를 실행하는 생성된 Prisma Client(src/generated/prisma)는
- * schema.prisma의 datasource.url = env("DATABASE_URL") 설정을 그대로 사용하므로,
- * 두 파일 모두에 DATABASE_URL 설정이 필요합니다 (Prisma 공식 마이그레이션 가이드 기준).
+ * Prisma 7부터 CLI(generate/migrate/studio 등)와 런타임 모두
+ * schema.prisma의 datasource.url 대신 이 파일의 datasource.url을 사용합니다.
+ * dotenv/config를 최상단에서 import해 .env를 명시적으로 불러옵니다.
  */
 export default defineConfig({
   schema: "prisma/schema.prisma",

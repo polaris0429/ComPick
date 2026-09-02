@@ -1,0 +1,26 @@
+/* [project]/src/app/pretendard_fb770056.module.css [app-client] (css) */
+@font-face {
+  font-family: pretendard;
+  src: url("../media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 45 920;
+}
+
+@font-face {
+  font-family: pretendard Fallback;
+  src: local(Arial);
+  ascent-override: 93.76%;
+  descent-override: 23.75%;
+  line-gap-override: 0.0%;
+  size-adjust: 101.55%;
+}
+
+.pretendard_fb770056-module__RJG84a__className {
+  font-family: pretendard, pretendard Fallback;
+}
+
+.pretendard_fb770056-module__RJG84a__variable {
+  --font-pretendard: "pretendard", "pretendard Fallback";
+}
+
+/*# sourceMappingURL=src_app_pretendard_fb770056_module_css_1igg3k2._.single.css.map*/
