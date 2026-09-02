@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+/*
+ * ComPick 디자인 토큰
+ * ────────────────────────────────────────────────────────────────
+ * 조립 PC 부품(기판의 구리 배선, 브러시드 알루미늄 케이스, 스펙 시트의
+ * 정밀함)에서 톤을 가져왔습니다. 흔한 "다크 게이머" 테마 대신, 사양표를
+ * 오래 들여다봐도 눈이 편한 밝고 정밀한 "엔지니어링 도면" 톤을 기본으로
+ * 삼습니다. 실제 3단 패널 UI는 Step 4에서 이 토큰들을 기반으로
+ * 구체화됩니다.
+ *
+ * Tailwind v4는 --color-*, --font-* 등으로 선언한 값을 자동으로
+ * bg-copper / text-circuit 같은 유틸리티 클래스로 만들어 줍니다.
+ */
+@theme {
+  --font-sans:
+    "Pretendard Variable", "Pretendard", -apple-system, BlinkMacSystemFont,
+    system-ui, Roboto, "Malgun Gothic", sans-serif;
+
+  /* 배경 / 텍스트 - 브러시드 메탈 섀시 톤 */
+  --color-paper: #f1f2f0;
+  --color-paper-raised: #ffffff;
+  --color-ink: #171a1e;
+  --color-ink-muted: #5b6470;
+  --color-line: #dcdfdd;
+
+  /* 브랜드 강조색 - 히트싱크/기판 접점의 구리색 */
+  --color-copper: #b5651d;
+  --color-copper-dark: #8f4e16;
+  --color-copper-light: #d98a3d;
+
+  /* 보조 강조색 - 회로/멀티미터의 정밀한 블루 */
+  --color-circuit: #2c4e7c;
+  --color-circuit-light: #4870ac;
+
+  /* 호환성 상태 배지에 쓰이는 의미색 (Step 3에서 실제 사용) */
+  --color-signal: #1e8a5c;
+  --color-signal-soft: #e3f3ec;
+  --color-alert: #c13b33;
+  --color-alert-soft: #fbe9e7;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}

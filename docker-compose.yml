@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres:18-alpine
+    container_name: compick-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-compick}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-compick_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-compick}
+    ports:
+      - "5432:5432"
+    volumes:
+      - compick_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${POSTGRES_USER:-compick} -d ${POSTGRES_DB:-compick}",
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # 애플리케이션 전체를 컨테이너로 띄우고 싶을 때 사용합니다.
+  # (로컬 개발 중에는 db 서비스만 띄우고 `npm run dev`로 핫리로드하는 쪽을 권장합니다 - README 참고)
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_TOSS_CLIENT_KEY: ${NEXT_PUBLIC_TOSS_CLIENT_KEY:-}
+    container_name: compick-app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-compick}:${POSTGRES_PASSWORD:-compick_dev_password}@db:5432/${POSTGRES_DB:-compick}?schema=public
+      FIELD_ENCRYPTION_KEY: ${FIELD_ENCRYPTION_KEY:-}
+      AUTH_SECRET: ${AUTH_SECRET:-}
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
+      NEXT_PUBLIC_TOSS_CLIENT_KEY: ${NEXT_PUBLIC_TOSS_CLIENT_KEY:-}
+      TOSS_SECRET_KEY: ${TOSS_SECRET_KEY:-}
+
+volumes:
+  compick_pgdata:
