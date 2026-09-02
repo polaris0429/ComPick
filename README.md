@@ -72,7 +72,6 @@ npm run docker:down
 
 ```
 compick/
-├── .cursorrules            # AI 코딩 어시스턴트용 컨벤션 (CHANGELOG 자동 갱신 규칙 포함)
 ├── docker-compose.yml       # db(PostgreSQL) + app(Next.js) 서비스 정의
 ├── Dockerfile                # deps / builder / runner 멀티스테이지 빌드
 ├── prisma.config.ts          # Prisma 7 CLI 설정 (schema 위치, 마이그레이션 경로, seed 명령)
@@ -124,7 +123,7 @@ compick/
 
 ## 개발 로드맵
 
-- [x] **Step 1 — 프로젝트 구조**: Next.js 16 스캐폴딩, Tailwind v4, Docker(DB + 앱), README/CHANGELOG/.cursorrules
+- [x] **Step 1 — 프로젝트 구조**: Next.js 16 스캐폴딩, Tailwind v4, Docker(DB + 앱), README/CHANGELOG
 - [x] **Step 2 — 데이터베이스 설계**: Prisma 스키마(User/Product/Order/Category/PrebuiltPC), 필드 레벨 암호화, 더미 시드 데이터
 - [ ] **Step 3 — 상태 관리 & 호환성 로직**: Zustand persist 스토어, 소켓 · 폼팩터 · 와트수 호환성 검증 매트릭스
 - [ ] **Step 4 — 메인 UI**: 좌(카테고리) · 중(상품 리스트, 필터/정렬) · 우(sticky 견적 패널) 3단 레이아웃
