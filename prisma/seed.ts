@@ -1,3 +1,8 @@
+// tsx로 직접 실행되는 순수 Node 스크립트라, Next.js(next dev/build)와 달리
+// .env를 자동으로 읽어주지 않습니다. 다른 import보다 반드시 먼저 실행되어야
+// @/lib/prisma가 모듈 로드 시점에 DATABASE_URL을 정상적으로 찾습니다.
+import "dotenv/config";
+
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma";
 import type {
