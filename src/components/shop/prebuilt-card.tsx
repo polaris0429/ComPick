@@ -18,10 +18,10 @@ export function PrebuiltCard({ prebuilt, onSelect }: PrebuiltCardProps) {
   const src = prebuilt.images[0] ?? "/placeholders/case.svg";
 
   return (
-    <div className="flex items-center gap-4 border-b border-line px-3 py-4 transition-colors hover:bg-paper">
+    <div className="product-row items-center border-b border-line transition-colors hover:bg-paper">
       <div className="h-20 w-20 shrink-0 overflow-hidden rounded-md border border-line">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={prebuilt.name} className={cn("h-full w-full object-cover")} />
+        <img src={src} alt={prebuilt.name} className={cn("h-full w-full object-contain")} />
       </div>
 
       <div className="min-w-0 flex-1">
@@ -40,7 +40,7 @@ export function PrebuiltCard({ prebuilt, onSelect }: PrebuiltCardProps) {
               <span className="text-xs text-ink-muted line-through">{formatKRW(prebuilt.price)}</span>
             </div>
           )}
-          <p className="font-mono text-base font-bold text-ink">{formatKRW(discounted)}</p>
+          <p className="product-price text-ink">{formatKRW(discounted)}</p>
         </div>
 
         <Button type="button" size="sm" onClick={onSelect}>

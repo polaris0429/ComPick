@@ -22,6 +22,6 @@ export function ProductImage({ imageUrl, categoryCode, alt, className }: Product
     // 실사진 도메인이 아직 정해지지 않은 지금 단계에서는 유연한 <img>를 사용합니다.
     // (placeholder는 우리 자체 정적 파일이라 도메인 문제와 무관합니다)
     // eslint-disable-next-line @next/next/no-img-element
-    <img src={src} alt={alt} className={cn("h-full w-full object-cover", className)} />
+    <img src={src} alt={alt} className={cn("h-full w-full object-contain", className)} />
   );
 }

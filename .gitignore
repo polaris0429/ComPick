@@ -1,1 +1,8 @@
 /node_modules
+
+# Credentials and deployment secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem

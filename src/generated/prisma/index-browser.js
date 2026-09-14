@@ -147,8 +147,9 @@ exports.Prisma.ProductScalarFieldEnum = {
   categoryId: 'categoryId',
   price: 'price',
   discountRate: 'discountRate',
-  imageUrl: 'imageUrl',
+  images: 'images',
   description: 'description',
+  marketingContent: 'marketingContent',
   attributes: 'attributes',
   salesCount: 'salesCount',
   stock: 'stock',
@@ -161,7 +162,7 @@ exports.Prisma.PrebuiltPCScalarFieldEnum = {
   id: 'id',
   name: 'name',
   description: 'description',
-  imageUrl: 'imageUrl',
+  images: 'images',
   price: 'price',
   discountRate: 'discountRate',
   salesCount: 'salesCount',
@@ -203,6 +204,11 @@ exports.Prisma.OrderItemScalarFieldEnum = {
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
+};
+
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
 };
 
 exports.Prisma.JsonNullValueInput = {

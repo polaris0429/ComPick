@@ -23,10 +23,10 @@ ENV NEXT_PUBLIC_TOSS_CLIENT_KEY=${NEXT_PUBLIC_TOSS_CLIENT_KEY}
 
 # prisma generate는 DB 접속 없이 schema.prisma만으로 동작하므로
 # DATABASE_URL이 없어도 빌드 단계에서 안전하게 실행됩니다.
-RUN npx prisma generate
+RUN DATABASE_URL=postgresql://build:build@localhost:5432/build npx prisma generate
 
 ENV NEXT_TELEMETRY_DISABLED=1
-RUN npm run build
+RUN DATABASE_URL=postgresql://build:build@localhost:5432/build npm run build -- --webpack
 
 # ─────────────────────────────────────────────────────────────────
 # 3) runner: standalone 산출물만 담은 최소 런타임 이미지

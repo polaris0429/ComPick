@@ -15,6 +15,8 @@ export interface MarketingFeature {
 }
 
 export interface MarketingContent {
+  /** 상품정보 탭에 원본 비율로 이어서 표시하는 상세 이미지. */
+  infoImages?: string[];
   /** 상단 작은 브랜드 태그 (예: "AMD RYZEN™ 7 7800X3D") */
   eyebrow: string;
   /** 히어로 카피 제목 */

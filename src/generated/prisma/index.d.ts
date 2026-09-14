@@ -3942,7 +3942,6 @@ export namespace Prisma {
     categoryId: string | null
     price: number | null
     discountRate: number | null
-    imageUrl: string | null
     description: string | null
     salesCount: number | null
     stock: number | null
@@ -3958,7 +3957,6 @@ export namespace Prisma {
     categoryId: string | null
     price: number | null
     discountRate: number | null
-    imageUrl: string | null
     description: string | null
     salesCount: number | null
     stock: number | null
@@ -3974,8 +3972,9 @@ export namespace Prisma {
     categoryId: number
     price: number
     discountRate: number
-    imageUrl: number
+    images: number
     description: number
+    marketingContent: number
     attributes: number
     salesCount: number
     stock: number
@@ -4007,7 +4006,6 @@ export namespace Prisma {
     categoryId?: true
     price?: true
     discountRate?: true
-    imageUrl?: true
     description?: true
     salesCount?: true
     stock?: true
@@ -4023,7 +4021,6 @@ export namespace Prisma {
     categoryId?: true
     price?: true
     discountRate?: true
-    imageUrl?: true
     description?: true
     salesCount?: true
     stock?: true
@@ -4039,8 +4036,9 @@ export namespace Prisma {
     categoryId?: true
     price?: true
     discountRate?: true
-    imageUrl?: true
+    images?: true
     description?: true
+    marketingContent?: true
     attributes?: true
     salesCount?: true
     stock?: true
@@ -4143,8 +4141,9 @@ export namespace Prisma {
     categoryId: string
     price: number
     discountRate: number
-    imageUrl: string | null
+    images: string[]
     description: string | null
+    marketingContent: JsonValue | null
     attributes: JsonValue
     salesCount: number
     stock: number
@@ -4179,8 +4178,9 @@ export namespace Prisma {
     categoryId?: boolean
     price?: boolean
     discountRate?: boolean
-    imageUrl?: boolean
+    images?: boolean
     description?: boolean
+    marketingContent?: boolean
     attributes?: boolean
     salesCount?: boolean
     stock?: boolean
@@ -4200,8 +4200,9 @@ export namespace Prisma {
     categoryId?: boolean
     price?: boolean
     discountRate?: boolean
-    imageUrl?: boolean
+    images?: boolean
     description?: boolean
+    marketingContent?: boolean
     attributes?: boolean
     salesCount?: boolean
     stock?: boolean
@@ -4218,8 +4219,9 @@ export namespace Prisma {
     categoryId?: boolean
     price?: boolean
     discountRate?: boolean
-    imageUrl?: boolean
+    images?: boolean
     description?: boolean
+    marketingContent?: boolean
     attributes?: boolean
     salesCount?: boolean
     stock?: boolean
@@ -4236,8 +4238,9 @@ export namespace Prisma {
     categoryId?: boolean
     price?: boolean
     discountRate?: boolean
-    imageUrl?: boolean
+    images?: boolean
     description?: boolean
+    marketingContent?: boolean
     attributes?: boolean
     salesCount?: boolean
     stock?: boolean
@@ -4246,7 +4249,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "brand" | "categoryId" | "price" | "discountRate" | "imageUrl" | "description" | "attributes" | "salesCount" | "stock" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
+  export type ProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "brand" | "categoryId" | "price" | "discountRate" | "images" | "description" | "marketingContent" | "attributes" | "salesCount" | "stock" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["product"]>
   export type ProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
     orderItems?: boolean | Product$orderItemsArgs<ExtArgs>
@@ -4280,8 +4283,17 @@ export namespace Prisma {
        * 0~100 사이 할인율(%). 할인 적용가 = price * (100 - discountRate) / 100
        */
       discountRate: number
-      imageUrl: string | null
+      /**
+       * 상품 사진 여러 장 (첫 번째 값이 목록/상세 대표 이미지로 쓰임).
+       */
+      images: string[]
       description: string | null
+      /**
+       * 상세 모달 "상품정보" 탭의 마케팅 카피(eyebrow/제목/본문/특징 3개/프로모).
+       * "상세 스펙" 탭은 attributes를 그대로 표로 보여주므로 별도 필드가 필요
+       * 없습니다. 형태 정의는 src/types/product-detail.ts의 MarketingContent 참고.
+       */
+      marketingContent: Prisma.JsonValue | null
       /**
        * 카테고리별로 형태가 다른 스펙(소켓, 용량, 와트수 등).
        * 형태 정의는 src/types/product-attributes.ts 참고.
@@ -4724,8 +4736,9 @@ export namespace Prisma {
     readonly categoryId: FieldRef<"Product", 'String'>
     readonly price: FieldRef<"Product", 'Int'>
     readonly discountRate: FieldRef<"Product", 'Int'>
-    readonly imageUrl: FieldRef<"Product", 'String'>
+    readonly images: FieldRef<"Product", 'String[]'>
     readonly description: FieldRef<"Product", 'String'>
+    readonly marketingContent: FieldRef<"Product", 'Json'>
     readonly attributes: FieldRef<"Product", 'Json'>
     readonly salesCount: FieldRef<"Product", 'Int'>
     readonly stock: FieldRef<"Product", 'Int'>
@@ -5227,7 +5240,6 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
-    imageUrl: string | null
     price: number | null
     discountRate: number | null
     salesCount: number | null
@@ -5240,7 +5252,6 @@ export namespace Prisma {
     id: string | null
     name: string | null
     description: string | null
-    imageUrl: string | null
     price: number | null
     discountRate: number | null
     salesCount: number | null
@@ -5253,7 +5264,7 @@ export namespace Prisma {
     id: number
     name: number
     description: number
-    imageUrl: number
+    images: number
     price: number
     discountRate: number
     salesCount: number
@@ -5280,7 +5291,6 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
-    imageUrl?: true
     price?: true
     discountRate?: true
     salesCount?: true
@@ -5293,7 +5303,6 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
-    imageUrl?: true
     price?: true
     discountRate?: true
     salesCount?: true
@@ -5306,7 +5315,7 @@ export namespace Prisma {
     id?: true
     name?: true
     description?: true
-    imageUrl?: true
+    images?: true
     price?: true
     discountRate?: true
     salesCount?: true
@@ -5406,7 +5415,7 @@ export namespace Prisma {
     id: string
     name: string
     description: string | null
-    imageUrl: string | null
+    images: string[]
     price: number
     discountRate: number
     salesCount: number
@@ -5438,7 +5447,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    imageUrl?: boolean
+    images?: boolean
     price?: boolean
     discountRate?: boolean
     salesCount?: boolean
@@ -5454,7 +5463,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    imageUrl?: boolean
+    images?: boolean
     price?: boolean
     discountRate?: boolean
     salesCount?: boolean
@@ -5467,7 +5476,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    imageUrl?: boolean
+    images?: boolean
     price?: boolean
     discountRate?: boolean
     salesCount?: boolean
@@ -5480,7 +5489,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    imageUrl?: boolean
+    images?: boolean
     price?: boolean
     discountRate?: boolean
     salesCount?: boolean
@@ -5489,7 +5498,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type PrebuiltPCOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "imageUrl" | "price" | "discountRate" | "salesCount" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["prebuiltPC"]>
+  export type PrebuiltPCOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "images" | "price" | "discountRate" | "salesCount" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["prebuiltPC"]>
   export type PrebuiltPCInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     components?: boolean | PrebuiltPC$componentsArgs<ExtArgs>
     orderItems?: boolean | PrebuiltPC$orderItemsArgs<ExtArgs>
@@ -5508,7 +5517,7 @@ export namespace Prisma {
       id: string
       name: string
       description: string | null
-      imageUrl: string | null
+      images: string[]
       price: number
       discountRate: number
       salesCount: number
@@ -5943,7 +5952,7 @@ export namespace Prisma {
     readonly id: FieldRef<"PrebuiltPC", 'String'>
     readonly name: FieldRef<"PrebuiltPC", 'String'>
     readonly description: FieldRef<"PrebuiltPC", 'String'>
-    readonly imageUrl: FieldRef<"PrebuiltPC", 'String'>
+    readonly images: FieldRef<"PrebuiltPC", 'String[]'>
     readonly price: FieldRef<"PrebuiltPC", 'Int'>
     readonly discountRate: FieldRef<"PrebuiltPC", 'Int'>
     readonly salesCount: FieldRef<"PrebuiltPC", 'Int'>
@@ -9948,8 +9957,9 @@ export namespace Prisma {
     categoryId: 'categoryId',
     price: 'price',
     discountRate: 'discountRate',
-    imageUrl: 'imageUrl',
+    images: 'images',
     description: 'description',
+    marketingContent: 'marketingContent',
     attributes: 'attributes',
     salesCount: 'salesCount',
     stock: 'stock',
@@ -9965,7 +9975,7 @@ export namespace Prisma {
     id: 'id',
     name: 'name',
     description: 'description',
-    imageUrl: 'imageUrl',
+    images: 'images',
     price: 'price',
     discountRate: 'discountRate',
     salesCount: 'salesCount',
@@ -10022,6 +10032,14 @@ export namespace Prisma {
   };
 
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+  export const NullableJsonNullValueInput: {
+    DbNull: typeof DbNull,
+    JsonNull: typeof JsonNull
+  };
+
+  export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
   export const JsonNullValueInput: {
@@ -10325,8 +10343,9 @@ export namespace Prisma {
     categoryId?: StringFilter<"Product"> | string
     price?: IntFilter<"Product"> | number
     discountRate?: IntFilter<"Product"> | number
-    imageUrl?: StringNullableFilter<"Product"> | string | null
+    images?: StringNullableListFilter<"Product">
     description?: StringNullableFilter<"Product"> | string | null
+    marketingContent?: JsonNullableFilter<"Product">
     attributes?: JsonFilter<"Product">
     salesCount?: IntFilter<"Product"> | number
     stock?: IntFilter<"Product"> | number
@@ -10345,8 +10364,9 @@ export namespace Prisma {
     categoryId?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
-    imageUrl?: SortOrderInput | SortOrder
+    images?: SortOrder
     description?: SortOrderInput | SortOrder
+    marketingContent?: SortOrderInput | SortOrder
     attributes?: SortOrder
     salesCount?: SortOrder
     stock?: SortOrder
@@ -10368,8 +10388,9 @@ export namespace Prisma {
     categoryId?: StringFilter<"Product"> | string
     price?: IntFilter<"Product"> | number
     discountRate?: IntFilter<"Product"> | number
-    imageUrl?: StringNullableFilter<"Product"> | string | null
+    images?: StringNullableListFilter<"Product">
     description?: StringNullableFilter<"Product"> | string | null
+    marketingContent?: JsonNullableFilter<"Product">
     attributes?: JsonFilter<"Product">
     salesCount?: IntFilter<"Product"> | number
     stock?: IntFilter<"Product"> | number
@@ -10388,8 +10409,9 @@ export namespace Prisma {
     categoryId?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
-    imageUrl?: SortOrderInput | SortOrder
+    images?: SortOrder
     description?: SortOrderInput | SortOrder
+    marketingContent?: SortOrderInput | SortOrder
     attributes?: SortOrder
     salesCount?: SortOrder
     stock?: SortOrder
@@ -10413,8 +10435,9 @@ export namespace Prisma {
     categoryId?: StringWithAggregatesFilter<"Product"> | string
     price?: IntWithAggregatesFilter<"Product"> | number
     discountRate?: IntWithAggregatesFilter<"Product"> | number
-    imageUrl?: StringNullableWithAggregatesFilter<"Product"> | string | null
+    images?: StringNullableListFilter<"Product">
     description?: StringNullableWithAggregatesFilter<"Product"> | string | null
+    marketingContent?: JsonNullableWithAggregatesFilter<"Product">
     attributes?: JsonWithAggregatesFilter<"Product">
     salesCount?: IntWithAggregatesFilter<"Product"> | number
     stock?: IntWithAggregatesFilter<"Product"> | number
@@ -10430,7 +10453,7 @@ export namespace Prisma {
     id?: StringFilter<"PrebuiltPC"> | string
     name?: StringFilter<"PrebuiltPC"> | string
     description?: StringNullableFilter<"PrebuiltPC"> | string | null
-    imageUrl?: StringNullableFilter<"PrebuiltPC"> | string | null
+    images?: StringNullableListFilter<"PrebuiltPC">
     price?: IntFilter<"PrebuiltPC"> | number
     discountRate?: IntFilter<"PrebuiltPC"> | number
     salesCount?: IntFilter<"PrebuiltPC"> | number
@@ -10445,7 +10468,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
-    imageUrl?: SortOrderInput | SortOrder
+    images?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
     salesCount?: SortOrder
@@ -10463,7 +10486,7 @@ export namespace Prisma {
     NOT?: PrebuiltPCWhereInput | PrebuiltPCWhereInput[]
     name?: StringFilter<"PrebuiltPC"> | string
     description?: StringNullableFilter<"PrebuiltPC"> | string | null
-    imageUrl?: StringNullableFilter<"PrebuiltPC"> | string | null
+    images?: StringNullableListFilter<"PrebuiltPC">
     price?: IntFilter<"PrebuiltPC"> | number
     discountRate?: IntFilter<"PrebuiltPC"> | number
     salesCount?: IntFilter<"PrebuiltPC"> | number
@@ -10478,7 +10501,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
-    imageUrl?: SortOrderInput | SortOrder
+    images?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
     salesCount?: SortOrder
@@ -10499,7 +10522,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"PrebuiltPC"> | string
     name?: StringWithAggregatesFilter<"PrebuiltPC"> | string
     description?: StringNullableWithAggregatesFilter<"PrebuiltPC"> | string | null
-    imageUrl?: StringNullableWithAggregatesFilter<"PrebuiltPC"> | string | null
+    images?: StringNullableListFilter<"PrebuiltPC">
     price?: IntWithAggregatesFilter<"PrebuiltPC"> | number
     discountRate?: IntWithAggregatesFilter<"PrebuiltPC"> | number
     salesCount?: IntWithAggregatesFilter<"PrebuiltPC"> | number
@@ -10876,8 +10899,9 @@ export namespace Prisma {
     brand: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -10896,8 +10920,9 @@ export namespace Prisma {
     categoryId: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -10914,8 +10939,9 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -10934,8 +10960,9 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -10953,8 +10980,9 @@ export namespace Prisma {
     categoryId: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -10969,8 +10997,9 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -10986,8 +11015,9 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -11000,7 +11030,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    imageUrl?: string | null
+    images?: PrebuiltPCCreateimagesInput | string[]
     price: number
     discountRate?: number
     salesCount?: number
@@ -11015,7 +11045,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    imageUrl?: string | null
+    images?: PrebuiltPCCreateimagesInput | string[]
     price: number
     discountRate?: number
     salesCount?: number
@@ -11030,7 +11060,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: PrebuiltPCUpdateimagesInput | string[]
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
     salesCount?: IntFieldUpdateOperationsInput | number
@@ -11045,7 +11075,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: PrebuiltPCUpdateimagesInput | string[]
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
     salesCount?: IntFieldUpdateOperationsInput | number
@@ -11060,7 +11090,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    imageUrl?: string | null
+    images?: PrebuiltPCCreateimagesInput | string[]
     price: number
     discountRate?: number
     salesCount?: number
@@ -11073,7 +11103,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: PrebuiltPCUpdateimagesInput | string[]
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
     salesCount?: IntFieldUpdateOperationsInput | number
@@ -11086,7 +11116,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: PrebuiltPCUpdateimagesInput | string[]
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
     salesCount?: IntFieldUpdateOperationsInput | number
@@ -11510,6 +11540,14 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type StringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -11523,6 +11561,29 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+  export type JsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -11590,8 +11651,9 @@ export namespace Prisma {
     categoryId?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
-    imageUrl?: SortOrder
+    images?: SortOrder
     description?: SortOrder
+    marketingContent?: SortOrder
     attributes?: SortOrder
     salesCount?: SortOrder
     stock?: SortOrder
@@ -11614,7 +11676,6 @@ export namespace Prisma {
     categoryId?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
-    imageUrl?: SortOrder
     description?: SortOrder
     salesCount?: SortOrder
     stock?: SortOrder
@@ -11630,7 +11691,6 @@ export namespace Prisma {
     categoryId?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
-    imageUrl?: SortOrder
     description?: SortOrder
     salesCount?: SortOrder
     stock?: SortOrder
@@ -11662,6 +11722,32 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedStringNullableFilter<$PrismaModel>
     _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+  export type JsonNullableWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedJsonNullableFilter<$PrismaModel>
+    _max?: NestedJsonNullableFilter<$PrismaModel>
   }
   export type JsonWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -11702,7 +11788,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    imageUrl?: SortOrder
+    images?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
     salesCount?: SortOrder
@@ -11721,7 +11807,6 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    imageUrl?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
     salesCount?: SortOrder
@@ -11734,7 +11819,6 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
-    imageUrl?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
     salesCount?: SortOrder
@@ -12054,6 +12138,10 @@ export namespace Prisma {
     deleteMany?: ProductScalarWhereInput | ProductScalarWhereInput[]
   }
 
+  export type ProductCreateimagesInput = {
+    set: string[]
+  }
+
   export type CategoryCreateNestedOneWithoutProductsInput = {
     create?: XOR<CategoryCreateWithoutProductsInput, CategoryUncheckedCreateWithoutProductsInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutProductsInput
@@ -12086,6 +12174,11 @@ export namespace Prisma {
     connectOrCreate?: PrebuiltPCComponentCreateOrConnectWithoutProductInput | PrebuiltPCComponentCreateOrConnectWithoutProductInput[]
     createMany?: PrebuiltPCComponentCreateManyProductInputEnvelope
     connect?: PrebuiltPCComponentWhereUniqueInput | PrebuiltPCComponentWhereUniqueInput[]
+  }
+
+  export type ProductUpdateimagesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -12160,6 +12253,10 @@ export namespace Prisma {
     deleteMany?: PrebuiltPCComponentScalarWhereInput | PrebuiltPCComponentScalarWhereInput[]
   }
 
+  export type PrebuiltPCCreateimagesInput = {
+    set: string[]
+  }
+
   export type PrebuiltPCComponentCreateNestedManyWithoutPrebuiltPCInput = {
     create?: XOR<PrebuiltPCComponentCreateWithoutPrebuiltPCInput, PrebuiltPCComponentUncheckedCreateWithoutPrebuiltPCInput> | PrebuiltPCComponentCreateWithoutPrebuiltPCInput[] | PrebuiltPCComponentUncheckedCreateWithoutPrebuiltPCInput[]
     connectOrCreate?: PrebuiltPCComponentCreateOrConnectWithoutPrebuiltPCInput | PrebuiltPCComponentCreateOrConnectWithoutPrebuiltPCInput[]
@@ -12186,6 +12283,11 @@ export namespace Prisma {
     connectOrCreate?: OrderItemCreateOrConnectWithoutPrebuiltPCInput | OrderItemCreateOrConnectWithoutPrebuiltPCInput[]
     createMany?: OrderItemCreateManyPrebuiltPCInputEnvelope
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
+  }
+
+  export type PrebuiltPCUpdateimagesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type PrebuiltPCComponentUpdateManyWithoutPrebuiltPCNestedInput = {
@@ -12556,6 +12658,29 @@ export namespace Prisma {
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
+  export type NestedJsonNullableFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonNullableFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonNullableFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonNullableFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonNullableFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -12707,8 +12832,9 @@ export namespace Prisma {
     brand: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -12725,8 +12851,9 @@ export namespace Prisma {
     brand: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -12773,8 +12900,9 @@ export namespace Prisma {
     categoryId?: StringFilter<"Product"> | string
     price?: IntFilter<"Product"> | number
     discountRate?: IntFilter<"Product"> | number
-    imageUrl?: StringNullableFilter<"Product"> | string | null
+    images?: StringNullableListFilter<"Product">
     description?: StringNullableFilter<"Product"> | string | null
+    marketingContent?: JsonNullableFilter<"Product">
     attributes?: JsonFilter<"Product">
     salesCount?: IntFilter<"Product"> | number
     stock?: IntFilter<"Product"> | number
@@ -13021,7 +13149,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    imageUrl?: string | null
+    images?: PrebuiltPCCreateimagesInput | string[]
     price: number
     discountRate?: number
     salesCount?: number
@@ -13035,7 +13163,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    imageUrl?: string | null
+    images?: PrebuiltPCCreateimagesInput | string[]
     price: number
     discountRate?: number
     salesCount?: number
@@ -13056,8 +13184,9 @@ export namespace Prisma {
     brand: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -13075,8 +13204,9 @@ export namespace Prisma {
     categoryId: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -13106,7 +13236,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: PrebuiltPCUpdateimagesInput | string[]
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
     salesCount?: IntFieldUpdateOperationsInput | number
@@ -13120,7 +13250,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: PrebuiltPCUpdateimagesInput | string[]
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
     salesCount?: IntFieldUpdateOperationsInput | number
@@ -13147,8 +13277,9 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -13166,8 +13297,9 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -13318,8 +13450,9 @@ export namespace Prisma {
     brand: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -13337,8 +13470,9 @@ export namespace Prisma {
     categoryId: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -13357,7 +13491,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    imageUrl?: string | null
+    images?: PrebuiltPCCreateimagesInput | string[]
     price: number
     discountRate?: number
     salesCount?: number
@@ -13371,7 +13505,7 @@ export namespace Prisma {
     id?: string
     name: string
     description?: string | null
-    imageUrl?: string | null
+    images?: PrebuiltPCCreateimagesInput | string[]
     price: number
     discountRate?: number
     salesCount?: number
@@ -13442,8 +13576,9 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -13461,8 +13596,9 @@ export namespace Prisma {
     categoryId?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -13487,7 +13623,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: PrebuiltPCUpdateimagesInput | string[]
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
     salesCount?: IntFieldUpdateOperationsInput | number
@@ -13501,7 +13637,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: PrebuiltPCUpdateimagesInput | string[]
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
     salesCount?: IntFieldUpdateOperationsInput | number
@@ -13571,8 +13707,9 @@ export namespace Prisma {
     brand: string
     price: number
     discountRate?: number
-    imageUrl?: string | null
+    images?: ProductCreateimagesInput | string[]
     description?: string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes: JsonNullValueInput | InputJsonValue
     salesCount?: number
     stock?: number
@@ -13587,8 +13724,9 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -13605,8 +13743,9 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
@@ -13623,8 +13762,9 @@ export namespace Prisma {
     brand?: StringFieldUpdateOperationsInput | string
     price?: IntFieldUpdateOperationsInput | number
     discountRate?: IntFieldUpdateOperationsInput | number
-    imageUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: ProductUpdateimagesInput | string[]
     description?: NullableStringFieldUpdateOperationsInput | string | null
+    marketingContent?: NullableJsonNullValueInput | InputJsonValue
     attributes?: JsonNullValueInput | InputJsonValue
     salesCount?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number

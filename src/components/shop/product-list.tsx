@@ -3,7 +3,7 @@ import { ProductListItem } from "@/components/shop/product-list-item";
 
 interface ProductListProps {
   products: CatalogProduct[];
-  selectedCategoryPartId?: string;
+  selectedPartIds?: string[];
   onSelect: (product: CatalogProduct) => void;
   onOpenDetail: (product: CatalogProduct) => void;
   onClearFilters: () => void;
@@ -12,7 +12,7 @@ interface ProductListProps {
 
 export function ProductList({
   products,
-  selectedCategoryPartId,
+  selectedPartIds = [],
   onSelect,
   onOpenDetail,
   onClearFilters,
@@ -41,7 +41,7 @@ export function ProductList({
         <ProductListItem
           key={product.id}
           product={product}
-          isSelected={product.id === selectedCategoryPartId}
+          isSelected={selectedPartIds.includes(product.id)}
           onSelect={() => onSelect(product)}
           onOpenDetail={() => onOpenDetail(product)}
         />

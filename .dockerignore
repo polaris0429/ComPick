@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.env
+.env.*
+*.key
+*.pem
+**/*.key
+**/*.pem
+.DS_Store
+tsconfig.tsbuildinfo
+.openai
+.codex
+.agents

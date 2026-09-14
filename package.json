@@ -7,7 +7,8 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --hostname 127.0.0.1",
+    "dev:demo": "NEXT_PUBLIC_COMPICK_DEMO_MODE=1 next dev --hostname 127.0.0.1",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",

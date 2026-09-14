@@ -1,3 +1,0 @@
-module.exports=[27572,a=>{"use strict";var b=a.i(7997),c=a.i(73325);let d={className:c.default.className,style:{fontFamily:"'pretendard', 'pretendard Fallback'"}};null!=c.default.variable&&(d.variable=c.default.variable),a.s(["default",0,function({children:a}){return(0,b.jsx)("html",{lang:"ko",className:d.variable,children:(0,b.jsx)("body",{className:"font-sans antialiased",children:a})})},"metadata",0,{title:"ComPick | 나에게 맞는 조립 PC, 컴픽",description:"소켓, 용량, 와트수까지 — 부품을 고르는 즉시 호환 여부를 확인하는 맞춤형 조립 PC 쇼핑몰, 컴픽(ComPick)."}],27572)},50645,function(a){a.n(a.i(27572))},73325,a=>{a.v({className:"pretendard_fb770056-module__RJG84a__className",variable:"pretendard_fb770056-module__RJG84a__variable"})}];
-
-//# sourceMappingURL=src_app_0tsj3nf._.js.map

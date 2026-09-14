@@ -169,7 +169,9 @@ export const buildStore = createStore<BuildState & BuildActions>()(
         }),
     }),
     {
-      name: "compick-build",
+      name: process.env.NODE_ENV === "development" && process.env.NEXT_PUBLIC_COMPICK_DEMO_MODE === "1"
+        ? "compick-build-demo"
+        : "compick-build",
       storage: createJSONStorage(() => {
         // SSR 환경(서버)에서는 localStorage가 없으므로 빈 구현을 반환
         if (typeof window === "undefined") {

@@ -73,7 +73,7 @@ export function ProductFilters({
                       onClick={() => onToggleFilter(field.key, value)}
                       aria-pressed={isActive}
                       className={cn(
-                        "rounded-full border px-2.5 py-1 text-xs font-medium transition-colors",
+                        "rounded border px-2.5 py-1 text-xs font-medium transition-colors",
                         isActive
                           ? "border-primary bg-primary text-white"
                           : "border-line text-ink-muted hover:border-primary hover:text-primary",
@@ -113,7 +113,7 @@ export function ProductFilters({
         </div>
       )}
 
-      <div className="flex items-center justify-between border-b border-line pb-2">
+      <div className="flex flex-wrap gap-2 items-center justify-between border-b border-line pb-2">
         <p className="text-sm text-ink-muted">
           전체 <span className="font-bold text-ink">{productCount}</span>개
         </p>

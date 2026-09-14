@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check, Plus, ShoppingCart, Truck, X } from "lucide-react";
 import { ATTRIBUTE_LABELS, CATEGORY_ATTRIBUTE_FIELDS } from "@/lib/catalog-config";
 import { applyDiscount, formatKRW, prettifyValue } from "@/lib/format";
@@ -44,12 +44,29 @@ export function ProductDetailModal({
 }: ProductDetailModalProps) {
   const [activeTab, setActiveTab] = useState<TabKey>("info");
 
+  const dialogRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+    const previousFocus = document.activeElement as HTMLElement | null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    dialogRef.current?.focus();
     function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") onClose();
+      if (event.key === "Tab") {
+        const elements = dialogRef.current?.querySelectorAll<HTMLElement>('button:not([disabled]), a[href], input, select, textarea, [tabindex="0"]');
+        const first = elements?.[0];
+        const last = elements?.[elements.length - 1];
+        if (event.shiftKey && (document.activeElement === first || document.activeElement === dialogRef.current)) { event.preventDefault(); last?.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+      }
     }
     document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+      previousFocus?.focus();
+    };
   }, [onClose]);
 
   const attrs = product.attributes as unknown as Record<string, unknown>;
@@ -60,31 +77,34 @@ export function ProductDetailModal({
   return (
     <div onClick={onClose} className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 p-4">
       <div
+        ref={dialogRef}
+        tabIndex={-1}
         role="dialog"
         aria-modal="true"
         aria-label={product.name}
         onClick={(e) => e.stopPropagation()}
-        className="relative flex max-h-[90vh] w-full max-w-3xl flex-col overflow-hidden rounded-xl bg-paper-raised shadow-lg"
+        className="product-detail-dialog relative flex w-full flex-col overflow-hidden rounded-xl bg-paper-raised shadow-lg"
       >
+        <div className="detail-dialog-header"><span>상품 상세정보</span>
         <button
           type="button"
           onClick={onClose}
           aria-label="닫기"
-          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-paper-raised text-ink-muted shadow hover:text-ink"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-paper-raised text-ink-muted shadow hover:text-ink"
         >
           <X className="h-4 w-4" />
-        </button>
+        </button></div>
 
-        <div className="flex flex-col gap-6 overflow-y-auto p-6">
-          <div className="flex flex-col gap-6 sm:flex-row">
-            <div className="aspect-square w-full shrink-0 overflow-hidden rounded-lg border border-line sm:w-72">
+        <div className="detail-dialog-body">
+          <div className="detail-product-overview">
+            <div className="aspect-square w-full overflow-hidden rounded-lg border border-line">
               <ProductImage imageUrl={product.image} categoryCode={product.categoryCode} alt={product.name} />
             </div>
 
             <div className="flex flex-1 flex-col gap-3">
               <div>
                 <Badge tone="primary">{categoryName}</Badge>
-                <h2 className="mt-2 text-lg font-bold text-ink">{product.name}</h2>
+                <h2 className="mt-2 text-3xl font-bold text-ink">{product.name}</h2>
                 <p className="text-sm text-ink-muted">{product.brand}</p>
               </div>
 
@@ -147,11 +167,12 @@ export function ProductDetailModal({
             </div>
           </div>
 
-          <div className="flex gap-1 border-b border-line">
+          <div className="detail-product-tabs">
             {TABS.map((tab) => (
               <button
                 key={tab.key}
                 type="button"
+                aria-pressed={activeTab === tab.key}
                 onClick={() => setActiveTab(tab.key)}
                 className={cn(
                   "border-b-2 px-3 pb-2.5 text-sm font-bold transition-colors",
@@ -166,7 +187,16 @@ export function ProductDetailModal({
           </div>
 
           {activeTab === "info" &&
-            (marketing ? (
+            (marketing?.infoImages?.length ? (
+              <div className="detail-info-images">
+                {marketing.text && <p className="whitespace-pre-wrap py-5 text-sm text-ink-muted">{marketing.text}</p>}
+                {marketing.infoImages.map((src, i) => (
+                  // Preserve long product artwork; do not crop or send it through a thumbnail optimizer.
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img key={`${src}-${i}`} src={src} alt={`${product.name} 상품정보 ${i + 1}`} className="block h-auto w-full" />
+                ))}
+              </div>
+            ) : marketing && (marketing.title || marketing.text || marketing.features?.length) ? (
               <div className="flex flex-col gap-6">
                 <div className="rounded-xl bg-gradient-to-br from-dark to-dark-raised p-6 text-white">
                   <p className="text-xs font-bold text-white/60">{marketing.eyebrow}</p>
@@ -175,7 +205,7 @@ export function ProductDetailModal({
                 </div>
 
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-                  {marketing.features.map((feature) => (
+                  {(marketing.features ?? []).map((feature) => (
                     <div key={feature.title} className="rounded-lg border border-line p-4">
                       <span className="text-xl">{feature.icon}</span>
                       <p className="mt-2 text-sm font-bold text-ink">{feature.title}</p>

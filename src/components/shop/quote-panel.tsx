@@ -98,7 +98,7 @@ export function QuotePanel() {
             <li key={part.id} className="flex items-start justify-between gap-2 text-xs">
               <div className="min-w-0">
                 <p className="truncate text-ink">{part.name}</p>
-                <p className="font-mono text-ink-muted">{formatKRW(part.price)}</p>
+                <p className="tabular-nums text-ink-muted">{formatKRW(part.price)}</p>
               </div>
               <button
                 type="button"
@@ -120,7 +120,7 @@ export function QuotePanel() {
         </div>
         <div className="flex justify-between text-ink-muted">
           <span>할인 금액</span>
-          <span className="font-mono text-danger">-{formatKRW(discountAmount)}</span>
+          <span className="tabular-nums text-danger">-{formatKRW(discountAmount)}</span>
         </div>
         <div className="flex justify-between text-ink-muted">
           <span>배송비</span>
@@ -128,17 +128,17 @@ export function QuotePanel() {
         </div>
         <div className="flex items-baseline justify-between border-t border-line pt-1.5">
           <span className="text-sm font-bold text-ink">총 결제금액</span>
-          <span className="font-mono text-lg font-extrabold text-primary">
+          <span className="tabular-nums text-lg font-extrabold text-primary">
             {formatKRW(totalDiscountedPrice)}
           </span>
         </div>
       </div>
 
       <Button type="button" disabled={!canCheckout} onClick={() => setShowPaymentNotice(true)} className="w-full">
-        Toss Pay로 결제하기
+        주문하기
       </Button>
       {showPaymentNotice && (
-        <p className="text-center text-xs text-ink-muted">결제 연동은 Step 5에서 제공됩니다.</p>
+        <p className="text-center text-xs text-ink-muted">주문·결제 서비스는 준비 중입니다. 담은 견적은 이 브라우저에 자동 저장됩니다.</p>
       )}
     </aside>
   );

@@ -25,7 +25,7 @@ export function ProductListItem({ product, isSelected, onSelect, onOpenDetail }:
   return (
     <div
       className={cn(
-        "flex items-center gap-4 border-b border-line px-3 py-4 transition-colors hover:bg-paper",
+        "product-row items-center border-b border-line transition-colors hover:bg-paper",
         isSelected && "bg-primary-soft/40",
       )}
     >
@@ -51,7 +51,7 @@ export function ProductListItem({ product, isSelected, onSelect, onOpenDetail }:
             const display = typeof raw === "string" ? prettifyValue(raw) : String(raw);
             return (
               <span key={field.key} className="text-xs text-ink-muted">
-                {field.label} <span className="font-mono text-ink">{display}{field.unit ? ` ${field.unit}` : ""}</span>
+                {field.label} <span className="text-ink">{display}{field.unit ? ` ${field.unit}` : ""}</span>
               </span>
             );
           })}
@@ -66,7 +66,7 @@ export function ProductListItem({ product, isSelected, onSelect, onOpenDetail }:
               <span className="text-xs text-ink-muted line-through">{formatKRW(product.price)}</span>
             </div>
           )}
-          <p className="font-mono text-base font-bold text-ink">{formatKRW(discounted)}</p>
+          <p className="product-price text-ink">{formatKRW(discounted)}</p>
         </div>
 
         <Button type="button" size="sm" variant={isSelected ? "outline" : "primary"} onClick={onSelect}>

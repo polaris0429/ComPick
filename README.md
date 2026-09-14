@@ -2,7 +2,7 @@
 
 소켓, 용량, 와트수까지 — 부품을 고르는 즉시 호환 여부를 확인하는 맞춤형 조립 PC 쇼핑몰입니다. "다나와 PC 견적"과 유사한 3단 패널(부품 탐색 · 상품 리스트 · 실시간 견적) 경험을 목표로 합니다.
 
-> 현재 상태: **Step 4 / 6 완료** — 좌/중/우 3단 패널 메인 UI + 상품 필터링/정렬. 진행 상황은 [CHANGELOG.md](./CHANGELOG.md)와 아래 [개발 로드맵](#개발-로드맵)을 참고하세요.
+> 현재 상태: **Step 4 / 6 완료** — 쇼핑몰 디자인 개편, Ai PC 탭, 5초 배너, 3단 견적 UI 및 검색/필터/정렬. 진행 상황은 [CHANGELOG.md](./CHANGELOG.md)와 아래 [개발 로드맵](#개발-로드맵)을 참고하세요.
 
 ## 기술 스택
 
@@ -41,7 +41,7 @@ npm run docker:up         # docker-compose.yml의 db(PostgreSQL) 서비스만 �
 
 npm run prisma:migrate    # 마이그레이션 생성 + 적용 (최초 실행 시 이름을 물어보면 "init" 등 입력)
 npm run prisma:generate   # Prisma Client 생성 → src/generated/prisma
-npm run prisma:seed       # 더미 부품 데이터 24종 + 완제품 PC 2종 채우기
+npm run prisma:seed       # 더미 부품 데이터 27종 + 완제품 PC 2종 채우기
 
 npm run dev                # http://localhost:3000
 ```
@@ -59,6 +59,35 @@ npm run docker:down
 
 > ⚠️ `NEXT_PUBLIC_TOSS_CLIENT_KEY`처럼 `NEXT_PUBLIC_` 접두사가 붙은 값은 `next build` 시점에 클라이언트 번들에 고정되므로, `.env`에만 두지 말고 `docker-compose.yml`의 `app.build.args`로도 전달되도록 이미 구성해 두었습니다.
 
+## 쇼핑몰 디자인 (2026-09-14)
+
+상단 메뉴 → 가로 기획 배너 → 부품 카테고리·상품 목록·견적의 3단 구조입니다. 모바일에서는 카테고리가 가로 스크롤로, 상품과 견적이 세로로 배치됩니다.
+
+- **Ai PC**: 상단과 본문 메뉴에서 진입하며, 이미지 생성/로컬 AI, 데이터 처리, 개발 작업에 따라 GPU·RAM·CPU를 탐색합니다. AI 성능 인증이나 자동 추천 서비스가 아니라 부품 선택 가이드입니다.
+- **배너**: `src/lib/shop-banners.ts`의 `SHOP_BANNERS`에서 이미지 경로, 탭 이름, 대체 텍스트, 이동 대상을 수정합니다. 원본은 `public/banners/`에 있으며 2172×724(3:1) 비율을 유지해 모바일에서도 자르지 않고 표시합니다. 문구는 이미지에 포함되어 있고 조작 버튼은 이미지 아래에 배치됩니다.
+- **자동 전환**: 5초마다 순환합니다. 이전/다음, 배너 직접 선택, 일시정지를 지원하고 호버·키보드 포커스·백그라운드 탭·동작 줄이기 설정에서는 자동 전환을 멈춥니다.
+- **검색**: 상품명 또는 브랜드로 전체 카테고리를 검색합니다. 빈 검색은 전체 부품, 검색 초기화는 기존 카테고리로 돌아갑니다.
+- **미리보기**: DB가 없어도 `npm run dev:demo`로 기존 시드 상품을 확인할 수 있습니다. 화면에 예시 데이터임을 표시하며 개발 모드에서만 작동합니다. 일반 실행은 계속 DB를 사용하며 연결 오류를 데모 데이터로 숨기지 않습니다. 예시 상품의 이미지는 기존 카테고리 일러스트를 사용합니다.
+- **실제 상품 사진**: `Product.images`에 사진 주소를 등록하면 적용됩니다. 상품 이미지는 임시 상품 관리 페이지에서 업로드할 수 있습니다. 배너는 설정 파일에서 수정합니다.
+
+### 이번 변경 검증
+
+`npm run lint`, `npm run typecheck`, `npm run build -- --webpack` 통과. 실제 DB를 사용하는 브라우저 화면에서 Ai PC 전환, GPU VRAM 필터, 메모리 탐색, 검색, 견적 담기, 상세 모달 및 완제품 목록을 확인했습니다. 배너 자동 순환과 일시정지, 390px 모바일 화면의 가로 넘침 없음도 확인했습니다. 데모 견적 저장소는 `compick-build-demo`로 일반 견적과 분리됩니다.
+
+이 검증 환경에서는 기본 `npm run build`의 Turbopack이 내부 포트 생성 권한 오류로 실패했습니다. 같은 코드는 `npm run build -- --webpack`으로 빌드할 수 있습니다. 아래의 과거 단계별 미검증 기록은 당시 상태를 보존한 것입니다.
+
+## 임시 상품 관리 페이지
+
+`npm run dev`로 실행한 뒤 [상품 관리](http://localhost:3000/admin/products)를 열거나 홈페이지 상단의 **상품 관리**를 누르세요. 개발 서버는 `127.0.0.1`에 바인딩됩니다. 인증 연동 전 임시 도구이므로 프로덕션 및 데모 모드에서는 관리 페이지/API를 사용할 수 없습니다.
+
+- 왼쪽에서 상품을 선택해 수정하거나 **새 상품 등록**으로 추가합니다. 새 상품은 기본 **숨김** 상태입니다. 저장하면 실제 DB에 반영되며 홈페이지를 새로고침해 확인할 수 있습니다.
+- 상품명, 브랜드, 카테고리, 판매가, 할인율, 재고, 판매 노출 상태를 편집합니다.
+- **썸네일 파일 선택**으로 대표 이미지를 바꾸고 **상품정보 이미지 추가**로 긴 상세 이미지를 올립니다. JPG/PNG/WEBP, 파일당 최대 20MB를 지원합니다. 업로드 후 **상품 저장**을 눌러 적용합니다.
+- 이미지 주소를 한 줄씩 입력해 추가/순서 변경/제거할 수도 있습니다. 첫 번째 썸네일 주소가 대표 사진입니다. 업로드 파일은 `public/uploads/`에 남으며 상품에서 제거해도 파일은 자동 삭제하지 않습니다.
+- **상세 스펙**은 항목별로 수정합니다. 호환성 검증에 쓰이는 키와 값의 자료형을 유지하며 서버에서 필수 항목을 검증합니다. 카테고리 변경 시 새 분류의 예시 스펙으로 초기화되므로 실제 사양으로 수정하세요.
+- **상품 삭제**는 확인 후 영구 삭제합니다. 주문이나 완제품에서 참조하는 상품은 삭제할 수 없으므로 **숨김**을 사용하세요. 다른 화면에서 먼저 수정된 상품은 덮어쓰기 대신 충돌 안내를 표시합니다.
+- Ryzen 7 9800X3D의 초기 이미지는 `public/products/ryzen-9800x3d/`에 있습니다. `scripts/set-ryzen-images.ts`는 이 상품 한 건의 이미지만 적용하는 초기 설정용 도구이며 전체 DB 시드를 다시 실행할 필요가 없습니다.
+
 ## 데이터 모델 & 필드 레벨 암호화
 
 `prisma/schema.prisma`는 `User` · `Category` · `Product` · `PrebuiltPC`/`PrebuiltPCComponent` · `Order`/`OrderItem` 모델로 구성됩니다.
@@ -66,16 +95,16 @@ npm run docker:down
 - **Product.attributes (JSONB)**: 카테고리(CPU/메인보드/RAM/GPU/저장장치/파워/케이스/쿨러)마다 스펙 형태가 다르므로 JSONB 한 필드에 유연하게 담습니다. 형태 계약은 [`src/types/product-attributes.ts`](./src/types/product-attributes.ts)에 정의되어 있고, Step 3의 호환성 검증 로직과 Step 4의 필터 UI가 이 타입을 그대로 재사용할 예정입니다.
 - **User.email 암호화**: `email` 컬럼에는 평문이 아니라 [`src/lib/encryption.ts`](./src/lib/encryption.ts)의 AES-256-GCM으로 암호화한 값이 저장됩니다. 문제는 "암호화된 값은 매 저장마다 달라져서 `WHERE email = ...` 조회가 안 된다"는 점인데, 그래서 별도의 `emailHash`(HMAC-SHA256, 결정적 해시) 컬럼을 두어 로그인 등 조회는 이 컬럼으로 합니다. 암호화 키와 해시 키는 하나의 `FIELD_ENCRYPTION_KEY`에서 HKDF로 용도별로 분리해 파생시켜, 같은 키를 두 목적에 재사용하지 않습니다.
 - 이 암호화 로직이 실제로 이메일 조회·표시에 자연스럽게 연결되도록 [`src/lib/repositories/user.ts`](./src/lib/repositories/user.ts)에 `createUser` / `findUserByEmail` / `findUserForAuth`(로그인 검증 전용, passwordHash 포함) / `updateUserProfile` 등을 미리 만들어 뒀습니다. Step 6의 Auth.js 연동은 이 리포지토리를 그대로 호출하면 됩니다.
-- `prisma/seed.ts`는 User를 다루지 않습니다(스펙상 시드 대상은 "부품 더미 데이터"). 카테고리 8종, 부품 24종(같은 소켓/폼팩터 계열도 있고 Step 3에서 호환성 검증이 실제로 걸릴 반례 조합도 일부러 섞어 넣었습니다), 완제품 PC 2종을 채웁니다.
+- `prisma/seed.ts`는 User를 다루지 않습니다(스펙상 시드 대상은 "부품 더미 데이터"). 카테고리 8종, 부품 27종(같은 소켓/폼팩터 계열도 있고 Step 3에서 호환성 검증이 실제로 걸릴 반례 조합도 일부러 섞어 넣었습니다), 완제품 PC 2종을 채웁니다.
 
 ## 메인 UI (3단 패널)
 
 `/`(홈)가 곧 조립 PC 빌더입니다. 다나와식으로 좌측에서 카테고리를 고르고, 중앙에서 상품을 담고, 우측에서 실시간 견적을 확인합니다.
 
-- **데이터 흐름**: `src/app/page.tsx`(Server Component)가 `getCategories`/`getActiveProducts`/`getActivePrebuiltPCs`(`src/lib/repositories/catalog.ts`)로 한 번에 가져와 `BuildWorkspace`(Client Component)에 내려줍니다. 상품 수가 적어(24개) 필터·정렬은 서버 재요청 없이 클라이언트에서 처리합니다. 가격/재고가 자주 바뀌는 데이터라 `export const dynamic = "force-dynamic"`으로 빌드 시점 정적 스냅샷을 만들지 않습니다.
+- **데이터 흐름**: `src/app/page.tsx`(Server Component)가 `getCategories`/`getActiveProducts`/`getActivePrebuiltPCs`(`src/lib/repositories/catalog.ts`)로 한 번에 가져와 `BuildWorkspace`(Client Component)에 내려줍니다. 상품 수가 적어(27개) 필터·정렬은 서버 재요청 없이 클라이언트에서 처리합니다. 가격/재고가 자주 바뀌는 데이터라 `export const dynamic = "force-dynamic"`으로 빌드 시점 정적 스냅샷을 만들지 않습니다.
 - **좌측 `CategoryNav`**: 8개 카테고리 + "완제품 PC" 진입점.
-- **중앙**: `ProductFilters`(카테고리별 동적 필터 칩 + 인기순/가격순 정렬) + `ProductGrid`(부품 카드) 또는 `PrebuiltGrid`(완제품 카드), 탭으로 전환. 필터 칩의 "값"은 하드코딩하지 않고 그 카테고리 상품 데이터에서 실제로 등장하는 값만 동적으로 뽑습니다(`src/lib/catalog-config.ts`가 "어떤 필드가 필터 대상인지"만 정의).
-- **우측 `QuotePanel`**: Step 3의 `useBuildStore`를 그대로 구독하는 sticky 패널. 선택 부품 목록, 정가/할인가 합계, 호환성 배지(정상/확인 필요/불가)와 이슈 메시지, 결제 버튼을 보여줍니다. 결제 버튼은 Step 5 전까지는 클릭 시 "Step 5에서 제공됩니다" 안내만 표시합니다.
+- **중앙**: `ProductFilters`(카테고리별 동적 필터 칩 + 인기순/가격순 정렬) + `ProductList`(부품 목록) 또는 `PrebuiltList`(완제품 목록), 탭으로 전환. 필터 칩의 "값"은 하드코딩하지 않고 그 카테고리 상품 데이터에서 실제로 등장하는 값만 동적으로 뽑습니다(`src/lib/catalog-config.ts`가 "어떤 필드가 필터 대상인지"만 정의).
+- **우측 `QuotePanel`**: Step 3의 `useBuildStore`를 그대로 구독하는 sticky 패널. 선택 부품 목록, 정가/할인가 합계, 호환성 배지(정상/확인 필요/불가)와 이슈 메시지, 결제 버튼을 보여줍니다. 결제 버튼은 Step 5 전까지는 클릭 시 "주문·결제 서비스는 준비 중입니다" 안내만 표시합니다.
 - **카탈로그 상품 = 빌드 스토어 부품**: `CatalogProduct`가 Step 3의 `SelectedPart`를 확장하는 형태라, 상품 카드의 "담기" 버튼이 변환 없이 `selectPart(product)`를 그대로 호출합니다. 완제품의 "이 구성으로 시작" 버튼도 마찬가지로 `loadPrebuilt(prebuilt.components)`를 바로 호출합니다.
 
 ## 호환성 검증 엔진 & Zustand 스토어
@@ -98,7 +127,7 @@ compick/
 ├── prisma.config.ts          # Prisma 7 CLI 설정 (schema 위치, 마이그레이션 경로, seed 명령)
 ├── prisma/
 │   ├── schema.prisma         # User/Category/Product/PrebuiltPC/Order 전체 모델
-│   └── seed.ts                # 카테고리 8종 + 부품 24종 + 완제품 2종 더미 데이터
+│   └── seed.ts                # 카테고리 8종 + 부품 27종 + 완제품 2종 더미 데이터
 ├── public/
 ├── src/
 │   ├── app/
@@ -180,8 +209,33 @@ compick/
 - **Docker 이미지 빌드(`prisma generate` 포함)는 실제 인터넷 접속이 되는 환경에서 최종 검증이 필요합니다.** `npm install` / `lint` / `typecheck` / `next build`(standalone 산출물 포함)는 모두 정상 동작을 확인했지만, Prisma 엔진 바이너리 다운로드는 네트워크가 제한된 검증 환경에서는 직접 실행해보지 못했습니다. `docker compose up --build` 로 한 번 확인해 주세요.
 - **(정정) Prisma 7의 schema.prisma는 `datasource.url`을 지원하지 않습니다.** Step 2 문서에서는 `url = env("DATABASE_URL")`이 schema.prisma에 그대로 남는다고 안내했는데, 실제로 `npm run prisma:migrate`를 실행하면 `P1012` 스키마 검증 에러(`The datasource property 'url' is no longer supported in schema files`)로 막힙니다 — 잘못된 안내였습니다. Prisma 7은 연결 정보를 **CLI용**(`prisma.config.ts`의 `datasource.url`)과 **앱 런타임용**(`PrismaClient` 생성자에 넘기는 driver adapter)으로 완전히 분리했습니다. 그래서 `schema.prisma`의 datasource 블록에서는 `url` 줄을 제거했고, `src/lib/prisma.ts`가 `@prisma/adapter-pg`(+`pg`)로 `DATABASE_URL`을 명시적으로 전달하도록 바꿨습니다.
 - **`prisma generate`/`prisma migrate`는 이 환경(제 검증 샌드박스)에서 직접 실행해보지 못했습니다.** Prisma CLI가 스키마 엔진 바이너리를 `binaries.prisma.sh`에서 받아오는데, 검증 환경의 네트워크 허용 목록에 이 도메인이 없어 403으로 막힙니다(driver adapter로 바꾼 뒤에도 동일하게 막히는 것을 재확인했습니다 — adapter 여부와 무관하게 `generate`/`migrate` 자체에 필요). 대신 (1) `schema.prisma`를 동등한 SQL DDL로 변환해 실제 PostgreSQL에 적용해 모델 설계 자체를, (2) `src/generated/prisma`의 실제 타입 형태를 흉내낸 임시 스텁으로 Prisma 호출부 타입을, (3) 이메일 암호화 로직의 실제 PostgreSQL 저장·조회 왕복을, (4) 호환성 검증 엔진과 Zustand 스토어는 실제 seed 데이터 값으로 30개 시나리오를 직접 실행해 각각 검증했습니다(스텁은 검증 후 삭제했으며 이 저장소에는 포함되지 않습니다). 그래도 `prisma generate`/`migrate` 자체는 여러분 환경에서의 첫 실행이 진짜 최종 확인입니다.
-- **Step 4의 실제 데이터 렌더링(브라우저에서 진짜 상품이 보이는지)은 확인하지 못했습니다.** `npm run build`(가짜 `DATABASE_URL`로 모듈 로드만 통과 확인, `force-dynamic`이라 실제 쿼리는 시도하지 않음), `npm run lint`/`typecheck`, 그리고 필터·정렬 로직 자체는 목(mock) 데이터로 7개 시나리오를 실행해 확인했습니다. 하지만 `npm run dev`로 브라우저에 띄워 실제 24개 상품이 카드로 보이고 클릭이 잘 되는지는 여러분 환경에서 처음 확인하시게 됩니다.
+- **Step 4의 실제 데이터 렌더링(브라우저에서 진짜 상품이 보이는지)은 확인하지 못했습니다.** `npm run build`(가짜 `DATABASE_URL`로 모듈 로드만 통과 확인, `force-dynamic`이라 실제 쿼리는 시도하지 않음), `npm run lint`/`typecheck`, 그리고 필터·정렬 로직 자체는 목(mock) 데이터로 7개 시나리오를 실행해 확인했습니다. 하지만 `npm run dev`로 브라우저에 띄워 실제 27개 상품이 카드로 보이고 클릭이 잘 되는지는 여러분 환경에서 처음 확인하시게 됩니다.
 
 ## 라이선스
 
 TBD
+
+## Oracle Cloud 중간발표 배포
+
+- 공개 주소: http://168.110.119.148
+- 서버: `ubuntu@168.110.119.148`, 프로젝트: `~/compick-presentation`
+- 배포 설정: `docker-compose.production.yml`. ARM64 서버에서 Docker 이미지를 빌드하고, 앱만 80번 포트로 공개합니다. PostgreSQL은 내부 Docker 네트워크에서만 접근합니다.
+- 서버의 `.env`는 서버에서 생성한 전용 비밀값을 사용합니다. SSH 키와 로컬 `.env`는 배포 파일/Docker 빌드 컨텍스트에 포함하지 않습니다.
+- 최초 배포 시 현재 로컬 상품·카테고리·완제품 데이터만 복사합니다. 회원/주문 데이터는 복사하지 않습니다. 이후 서버 DB는 독립적으로 유지되며 로컬 상품 변경이 자동 동기화되지는 않습니다.
+- 공개 프로덕션에서는 임시 상품 관리 페이지/API가 비활성화됩니다. 현재 상품 관리는 로컬 개발 환경에서 진행합니다.
+
+서버 프로젝트 폴더에서 운영 명령:
+
+```bash
+# 상태 / 로그
+ docker compose -f docker-compose.production.yml ps
+ docker compose -f docker-compose.production.yml logs --tail=100 app
+# 소스 업데이트 후 빌드, 마이그레이션, 앱 재시작
+ docker compose -f docker-compose.production.yml build app tools
+ docker compose -f docker-compose.production.yml run --rm tools npm run prisma:deploy
+ docker compose -f docker-compose.production.yml up -d app
+# DB 백업 (키와 함께 공개 저장소에 올리지 마세요)
+ docker compose -f docker-compose.production.yml exec -T db pg_dump -U compick -d compick > backup.sql
+```
+
+발표용 주소는 HTTP입니다. 도메인 연결 및 HTTPS, 관리자 인증은 별도 설정 전까지 적용되지 않습니다. DB 볼륨을 삭제하는 `down -v`와 기존 데이터를 초기화하는 seed 명령은 재배포 시 사용하지 않습니다.
