@@ -1,0 +1,21 @@
+<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="400" height="400" fill="#eff6ff"/>
+  <g transform="translate(200,200)">
+    <rect x="-130" y="-140" width="260" height="280" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="4"/>
+    <rect x="-40" y="-110" width="90" height="90" rx="4" fill="#dbeafe" stroke="#1d4ed8" stroke-width="3"/>
+    <rect x="70" y="-115" width="40" height="24" fill="#93c5fd"/>
+    <rect x="70" y="-85" width="40" height="24" fill="#93c5fd"/>
+    <g fill="#93c5fd">
+      <rect x="-110" y="-10" width="10" height="90"/>
+      <rect x="-92" y="-10" width="10" height="90"/>
+      <rect x="-74" y="-10" width="10" height="90"/>
+      <rect x="-56" y="-10" width="10" height="90"/>
+    </g>
+    <rect x="-20" y="100" width="220" height="16" fill="#93c5fd"/>
+    <rect x="-20" y="122" width="140" height="16" fill="#93c5fd"/>
+    <circle cx="-115" cy="-125" r="5" fill="#1d4ed8"/>
+    <circle cx="115" cy="-125" r="5" fill="#1d4ed8"/>
+    <circle cx="-115" cy="125" r="5" fill="#1d4ed8"/>
+    <circle cx="115" cy="125" r="5" fill="#1d4ed8"/>
+  </g>
+</svg>

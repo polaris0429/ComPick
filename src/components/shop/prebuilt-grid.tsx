@@ -1,25 +1,5 @@
-import type { PrebuiltSummary } from "@/lib/repositories/catalog";
-import { PrebuiltCard } from "@/components/shop/prebuilt-card";
-
-interface PrebuiltGridProps {
-  prebuilts: PrebuiltSummary[];
-  onSelect: (prebuilt: PrebuiltSummary) => void;
-}
-
-export function PrebuiltGrid({ prebuilts, onSelect }: PrebuiltGridProps) {
-  if (prebuilts.length === 0) {
-    return (
-      <div className="rounded-md border border-dashed border-line py-16 text-center text-sm text-ink-muted">
-        준비된 완제품 구성이 아직 없습니다.
-      </div>
-    );
-  }
-
-  return (
-    <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
-      {prebuilts.map((prebuilt) => (
-        <PrebuiltCard key={prebuilt.id} prebuilt={prebuilt} onSelect={() => onSelect(prebuilt)} />
-      ))}
-    </div>
-  );
-}
+// 이 파일은 더 이상 사용되지 않습니다.
+// 카드 그리드 대신 리스트 형식(prebuilt-list.tsx)으로 교체되었습니다.
+// 이 파일은 Filesystem 도구에 삭제 기능이 없어 남아있을 뿐이며, 어디서도
+// import되지 않습니다 — 수동으로 삭제하셔도 안전합니다.
+export {};

@@ -31,7 +31,8 @@ export interface SelectedPart {
   price: number;
   /** 0~100 사이 할인율(%) */
   discountRate: number;
-  imageUrl: string | null;
+  /** 대표 이미지 (Product.images[0], 없으면 null) */
+  image: string | null;
   /** 부품이 속한 카테고리 */
   categoryCode: CategoryCode;
   /** 파싱된 JSONB attributes */

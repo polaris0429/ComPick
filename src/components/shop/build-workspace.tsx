@@ -6,10 +6,12 @@ import type { CatalogProduct, CategorySummary, PrebuiltSummary } from "@/lib/rep
 import { applyDiscount } from "@/lib/format";
 import { useBuildStore } from "@/store/build-store";
 import { CategoryNav } from "@/components/shop/category-nav";
+import { HeroBanner } from "@/components/shop/hero-banner";
+import { StatusBar } from "@/components/shop/status-bar";
 import { ProductFilters, type SortOption } from "@/components/shop/product-filters";
-import { ProductGrid } from "@/components/shop/product-grid";
+import { ProductList } from "@/components/shop/product-list";
 import { ProductDetailModal } from "@/components/shop/product-detail-modal";
-import { PrebuiltGrid } from "@/components/shop/prebuilt-grid";
+import { PrebuiltList } from "@/components/shop/prebuilt-list";
 import { QuotePanel } from "@/components/shop/quote-panel";
 
 interface BuildWorkspaceProps {
@@ -43,6 +45,9 @@ function sortProducts(products: CatalogProduct[], sort: SortOption): CatalogProd
         (a, b) => applyDiscount(b.price, b.discountRate) - applyDiscount(a.price, a.discountRate),
       );
       break;
+    case "discount":
+      sorted.sort((a, b) => b.discountRate - a.discountRate);
+      break;
   }
   return sorted;
 }
@@ -70,10 +75,16 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
     [categoryProducts, activeFilters, sortBy],
   );
 
+  const activeCategoryName =
+    categories.find((c) => c.code === activeCategory)?.name ?? activeCategory;
+  const detailCategoryName = detailProduct
+    ? (categories.find((c) => c.code === detailProduct.categoryCode)?.name ?? detailProduct.categoryCode)
+    : "";
+
   function handleSelectCategory(code: CategoryCode) {
     setActiveTab("parts");
     setActiveCategory(code);
-    setActiveFilters({}); // 카테고리가 바뀌면 이전 카테고리의 필터는 의미가 없으므로 초기화
+    setActiveFilters({});
   }
 
   function handleToggleFilter(key: string, value: string) {
@@ -105,42 +116,48 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
       </div>
 
       <main className="flex min-w-0 flex-col gap-4 lg:order-2">
+        <HeroBanner />
+        <StatusBar />
+
         <div className="flex gap-1 border-b border-line">
           <button
             type="button"
             onClick={() => setActiveTab("parts")}
-            className={`border-b-2 px-1 pb-2 text-sm font-medium transition-colors ${
+            className={`border-b-2 px-1 pb-2 text-sm font-bold transition-colors ${
               activeTab === "parts"
-                ? "border-copper text-ink"
+                ? "border-primary text-primary"
                 : "border-transparent text-ink-muted hover:text-ink"
             }`}
           >
-            부품 구성
+            부품으로 견적하기
           </button>
           <button
             type="button"
             onClick={() => setActiveTab("prebuilt")}
-            className={`border-b-2 px-1 pb-2 text-sm font-medium transition-colors ${
+            className={`border-b-2 px-1 pb-2 text-sm font-bold transition-colors ${
               activeTab === "prebuilt"
-                ? "border-copper text-ink"
+                ? "border-primary text-primary"
                 : "border-transparent text-ink-muted hover:text-ink"
             }`}
           >
-            완제품 PC
+            추천 완제품 PC
           </button>
         </div>
 
         {activeTab === "parts" ? (
           <>
+            <h2 className="text-sm font-bold text-ink">{activeCategoryName}</h2>
             <ProductFilters
               category={activeCategory}
+              productCount={visibleProducts.length}
               categoryProducts={categoryProducts}
               activeFilters={activeFilters}
               onToggleFilter={handleToggleFilter}
+              onClearFilters={() => setActiveFilters({})}
               sortBy={sortBy}
               onChangeSortBy={setSortBy}
             />
-            <ProductGrid
+            <ProductList
               products={visibleProducts}
               selectedCategoryPartId={selectedParts[activeCategory]?.id}
               onSelect={(product) => selectPart(product)}
@@ -150,7 +167,7 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
             />
           </>
         ) : (
-          <PrebuiltGrid prebuilts={prebuilts} onSelect={(prebuilt) => loadPrebuilt(prebuilt.components)} />
+          <PrebuiltList prebuilts={prebuilts} onSelect={(prebuilt) => loadPrebuilt(prebuilt.components)} />
         )}
       </main>
 
@@ -161,6 +178,7 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
       {detailProduct && (
         <ProductDetailModal
           product={detailProduct}
+          categoryName={detailCategoryName}
           isSelected={selectedParts[detailProduct.categoryCode]?.id === detailProduct.id}
           onClose={() => setDetailProduct(null)}
           onSelect={() => selectPart(detailProduct)}

@@ -1,4 +1,5 @@
 import { getActivePrebuiltPCs, getActiveProducts, getCategories } from "@/lib/repositories/catalog";
+import { SiteHeader } from "@/components/shop/site-header";
 import { BuildWorkspace } from "@/components/shop/build-workspace";
 
 // 가격/재고/할인율이 자주 바뀌는 카탈로그이므로 빌드 시점에 정적으로 굳히지 않고
@@ -14,10 +15,7 @@ export default async function Home() {
 
   return (
     <div className="min-h-screen">
-      <header className="border-b border-line px-6 py-4">
-        <span className="text-lg font-semibold tracking-tight text-ink">ComPick</span>
-      </header>
-
+      <SiteHeader />
       <BuildWorkspace categories={categories} products={products} prebuilts={prebuilts} />
     </div>
   );

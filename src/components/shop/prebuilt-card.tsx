@@ -1,9 +1,7 @@
 "use client";
 
-import { Package } from "lucide-react";
 import { applyDiscount, formatKRW } from "@/lib/format";
 import type { PrebuiltSummary } from "@/lib/repositories/catalog";
-import { ImagePlaceholder } from "@/components/shop/product-image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -15,54 +13,39 @@ interface PrebuiltCardProps {
 
 export function PrebuiltCard({ prebuilt, onSelect }: PrebuiltCardProps) {
   const discounted = applyDiscount(prebuilt.price, prebuilt.discountRate);
+  // 완제품은 케이스 안에 담긴 완성형 PC이므로, 실사진이 없을 때는 케이스
+  // placeholder 일러스트를 재사용합니다.
+  const src = prebuilt.images[0] ?? "/placeholders/case.svg";
 
   return (
-    <div className="flex flex-col overflow-hidden rounded-md border-l-2 border-y border-r border-line border-l-circuit bg-paper-raised">
-      <div className="aspect-[2/1] border-b border-line">
-        {prebuilt.imageUrl ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={prebuilt.imageUrl}
-            alt={prebuilt.name}
-            className={cn("h-full w-full object-cover")}
-          />
-        ) : (
-          <ImagePlaceholder icon={Package} alt={prebuilt.name} />
-        )}
+    <div className="flex items-center gap-4 border-b border-line px-3 py-4 transition-colors hover:bg-paper">
+      <div className="h-20 w-20 shrink-0 overflow-hidden rounded-md border border-line">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={src} alt={prebuilt.name} className={cn("h-full w-full object-cover")} />
       </div>
 
-      <div className="flex flex-1 flex-col gap-3 p-4">
-        <div>
-          <h3 className="text-sm font-medium text-ink">{prebuilt.name}</h3>
-          {prebuilt.description && (
-            <p className="mt-1 text-xs text-ink-muted">{prebuilt.description}</p>
+      <div className="min-w-0 flex-1">
+        <h3 className="text-sm font-bold text-ink">{prebuilt.name}</h3>
+        {prebuilt.description && <p className="mt-0.5 text-xs text-ink-muted">{prebuilt.description}</p>}
+        <p className="mt-1.5 truncate text-xs text-ink-muted">
+          {prebuilt.components.map((c) => c.name).join(" · ")}
+        </p>
+      </div>
+
+      <div className="flex shrink-0 flex-col items-end gap-2">
+        <div className="text-right">
+          {prebuilt.discountRate > 0 && (
+            <div className="flex items-center justify-end gap-1.5">
+              <Badge tone="danger">{prebuilt.discountRate}%</Badge>
+              <span className="text-xs text-ink-muted line-through">{formatKRW(prebuilt.price)}</span>
+            </div>
           )}
+          <p className="font-mono text-base font-bold text-ink">{formatKRW(discounted)}</p>
         </div>
 
-        <ul className="flex flex-col gap-0.5">
-          {prebuilt.components.map((component) => (
-            <li key={component.id} className="flex justify-between gap-2 text-xs">
-              <span className="text-ink-muted">{component.brand}</span>
-              <span className="truncate text-ink">{component.name}</span>
-            </li>
-          ))}
-        </ul>
-
-        <div className="mt-auto flex items-end justify-between gap-2 pt-1">
-          <div>
-            {prebuilt.discountRate > 0 && (
-              <div className="flex items-center gap-1.5">
-                <Badge tone="alert">{prebuilt.discountRate}%</Badge>
-                <span className="text-xs text-ink-muted line-through">{formatKRW(prebuilt.price)}</span>
-              </div>
-            )}
-            <p className="font-mono text-base font-semibold text-ink">{formatKRW(discounted)}</p>
-          </div>
-
-          <Button type="button" size="sm" variant="secondary" onClick={onSelect}>
-            이 구성으로 시작
-          </Button>
-        </div>
+        <Button type="button" size="sm" onClick={onSelect}>
+          이 구성으로 시작
+        </Button>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@ import { Box, CircuitBoard, Cpu, Fan, Gpu, HardDrive, MemoryStick, Zap } from "l
 import type { LucideIcon } from "lucide-react";
 import type { CategoryCode } from "@/generated/prisma";
 
-/** 카테고리별 아이콘 - 좌측 네비게이션과 상품 이미지 placeholder가 함께 사용 */
+/** 카테고리별 아이콘 - 좌측 네비게이션이 사용 */
 export const CATEGORY_ICONS: Record<CategoryCode, LucideIcon> = {
   CPU: Cpu,
   MOTHERBOARD: CircuitBoard,
@@ -12,6 +12,21 @@ export const CATEGORY_ICONS: Record<CategoryCode, LucideIcon> = {
   PSU: Zap,
   CASE: Box,
   COOLER: Fan,
+};
+
+/**
+ * 실제 상품 사진(Product.images)이 비어 있을 때 쓰는 카테고리별 자체 제작
+ * placeholder 일러스트 경로 (public/placeholders/*.svg, 외부 호스팅 없음).
+ */
+export const CATEGORY_PLACEHOLDER_IMAGES: Record<CategoryCode, string> = {
+  CPU: "/placeholders/cpu.svg",
+  MOTHERBOARD: "/placeholders/motherboard.svg",
+  RAM: "/placeholders/ram.svg",
+  GPU: "/placeholders/gpu.svg",
+  STORAGE: "/placeholders/storage.svg",
+  PSU: "/placeholders/psu.svg",
+  CASE: "/placeholders/case.svg",
+  COOLER: "/placeholders/cooler.svg",
 };
 
 /** 카테고리 하나의 스펙 필드 표시 설정 */

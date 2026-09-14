@@ -96,8 +96,15 @@ model Product {
   /// 0~100 사이 할인율(%). 할인 적용가 = price * (100 - discountRate) / 100
   discountRate Int @default(0)
 
-  imageUrl    String?
+  /// 상품 사진 여러 장 (첫 번째 값이 목록/상세 대표 이미지로 쓰임).
+  images String[] @default([])
+
   description String?
+
+  /// 상세 모달 "상품정보" 탭의 마케팅 카피(eyebrow/제목/본문/특징 3개/프로모).
+  /// "상세 스펙" 탭은 attributes를 그대로 표로 보여주므로 별도 필드가 필요
+  /// 없습니다. 형태 정의는 src/types/product-detail.ts의 MarketingContent 참고.
+  marketingContent Json? @db.JsonB
 
   /// 카테고리별로 형태가 다른 스펙(소켓, 용량, 와트수 등).
   /// 형태 정의는 src/types/product-attributes.ts 참고.
@@ -126,7 +133,7 @@ model PrebuiltPC {
   id          String  @id @default(cuid())
   name        String
   description String?
-  imageUrl    String?
+  images      String[] @default([])
 
   price        Int
   discountRate Int @default(0)
