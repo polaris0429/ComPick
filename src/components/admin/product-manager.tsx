@@ -105,7 +105,7 @@ export function ProductManager() {
   function updateSpec(key:string, value:AdminProductInput["attributes"][string]) {change({attributes:{...draft.attributes,[key]:value}});}
   const visible = products.filter((p)=>(!categoryFilter || p.categoryCode === categoryFilter) && `${p.name} ${p.brand}`.toLowerCase().includes(search.toLowerCase()));
   return <div className="admin-page">
-    <header className="admin-top"><Link href="/" className="brand">Com<span>Pick</span></Link><span>상품 관리 <small>LOCAL</small></span><Link href="/" target="_blank">쇼핑몰 보기 <ExternalLink size={15}/></Link></header>
+    <header className="admin-top"><Link href="/" className="brand">Com<span>Pick</span></Link><span>상품 관리 <small>ADMIN</small></span><Link href="/" target="_blank">쇼핑몰 보기 <ExternalLink size={15}/></Link></header>
     <div className="admin-heading"><div><p>CATALOG MANAGEMENT</p><h1>상품 관리</h1><span>상품과 이미지, 상세 정보를 한곳에서 관리하세요.</span></div><button className="admin-primary" disabled={busy || loading} onClick={()=>selectProduct()}><Plus size={16}/>새 상품 등록</button></div>
     <div className="admin-workspace">
       <aside className="admin-list"><div className="admin-list-head"><strong>등록 상품 <b>{products.length}</b></strong><button aria-label="상품 목록 새로고침" disabled={busy} onClick={refresh}><RefreshCw size={16}/></button></div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { AddToCart } from "@/components/member/add-to-cart";
 import { applyDiscount, formatKRW } from "@/lib/format";
 import type { PrebuiltSummary } from "@/lib/repositories/catalog";
 import { Badge } from "@/components/ui/badge";
@@ -43,6 +44,7 @@ export function PrebuiltCard({ prebuilt, onSelect }: PrebuiltCardProps) {
           <p className="product-price text-ink">{formatKRW(discounted)}</p>
         </div>
 
+        <AddToCart prebuiltPCId={prebuilt.id}/>
         <Button type="button" size="sm" onClick={onSelect}>
           이 구성으로 시작
         </Button>

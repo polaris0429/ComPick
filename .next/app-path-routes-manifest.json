@@ -3,6 +3,12 @@
   "/_global-error/page": "/_global-error",
   "/api/admin/upload/route": "/api/admin/upload",
   "/api/admin/products/route": "/api/admin/products",
+  "/uploads/[filename]/route": "/uploads/[filename]",
+  "/account/page": "/account",
+  "/cart/page": "/cart",
+  "/login/page": "/login",
+  "/register/page": "/register",
+  "/admin/products/page": "/admin/products",
   "/page": "/",
-  "/admin/products/page": "/admin/products"
+  "/api/member/[action]/route": "/api/member/[action]"
 }

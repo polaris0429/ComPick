@@ -5,7 +5,7 @@ import { canMutateLocalAdmin } from "@/lib/admin/access";
 
 export const runtime = "nodejs";
 export async function POST(request: Request) {
-  if (!canMutateLocalAdmin(request)) return Response.json({error:"로컬 개발 서버에서만 업로드할 수 있습니다."},{status:403});
+  if (!canMutateLocalAdmin(request)) return Response.json({error:"관리자 인증이 필요합니다."},{status:403});
   const maxBytes = 20 * 1024 * 1024;
   if (Number(request.headers.get("content-length")) > maxBytes + 65536) return Response.json({error:"이미지는 20MB 이하로 선택하세요."},{status:413});
   try {
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     else if (buffer.toString("ascii",0,4) === "RIFF" && buffer.toString("ascii",8,12) === "WEBP") ext = "webp";
     else return Response.json({error:"JPG, PNG, WEBP 이미지 파일만 지원합니다."},{status:400});
     const name = `${randomUUID()}.${ext}`;
-    const directory = path.join(process.cwd(),"public","uploads");
+    const directory = process.env.UPLOAD_DIRECTORY ?? path.join(process.cwd(),"public","uploads");
     await mkdir(directory,{recursive:true});
     await writeFile(path.join(directory,name),buffer,{flag:"wx"});
     return Response.json({url:`/uploads/${name}`},{status:201});

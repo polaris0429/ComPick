@@ -1,3 +1,4 @@
+import { additionalProducts } from "./additional-products";
 import type { MarketingContent } from "@/types/product-detail";
 import type {
   CaseAttributes,
@@ -27,7 +28,7 @@ export const categorySeeds = [
 
 export type CategoryCodeSeed = (typeof categorySeeds)[number]["code"];
 
-interface ProductSeed<T> {
+export interface ProductSeed<T> {
   name: string;
   brand: string;
   category: CategoryCodeSeed;
@@ -467,6 +468,7 @@ export const allProducts: ProductSeed<
   | CaseAttributes
   | CoolerAttributes
 >[] = [
+  ...additionalProducts,
   ...cpuProducts,
   ...motherboardProducts,
   ...ramProducts,

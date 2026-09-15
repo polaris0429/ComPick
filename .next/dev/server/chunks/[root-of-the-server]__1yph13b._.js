@@ -85,7 +85,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$admin$2f$acces
 const runtime = "nodejs";
 async function POST(request) {
     if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$admin$2f$access$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["canMutateLocalAdmin"])(request)) return Response.json({
-        error: "로컬 개발 서버에서만 업로드할 수 있습니다."
+        error: "관리자 인증이 필요합니다."
     }, {
         status: 403
     });
@@ -127,7 +127,7 @@ async function POST(request) {
             status: 400
         });
         const name = `${(0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["randomUUID"])()}.${ext}`;
-        const directory = __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$path__$5b$external$5d$__$28$node$3a$path$2c$__cjs$29$__["default"].join(process.cwd(), "public", "uploads");
+        const directory = process.env.UPLOAD_DIRECTORY ?? __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$path__$5b$external$5d$__$28$node$3a$path$2c$__cjs$29$__["default"].join(process.cwd(), "public", "uploads");
         await (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$fs$2f$promises__$5b$external$5d$__$28$node$3a$fs$2f$promises$2c$__cjs$29$__["mkdir"])(directory, {
             recursive: true
         });
@@ -151,22 +151,34 @@ async function POST(request) {
 "[project]/src/lib/admin/access.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/** Temporary admin is available only through a loopback host in development. */ __turbopack_context__.s([
+__turbopack_context__.s([
     "canMutateLocalAdmin",
     ()=>canMutateLocalAdmin,
     "canUseLocalAdmin",
     ()=>canUseLocalAdmin
 ]);
+var __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/node:crypto [external] (node:crypto, cjs)");
+;
+function equalSecret(actual, expected) {
+    return (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["timingSafeEqual"])((0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["createHash"])("sha256").update(actual).digest(), (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["createHash"])("sha256").update(expected).digest());
+}
 function canUseLocalAdmin(headers) {
-    if (("TURBOPACK compile-time value", "development") !== "development" || process.env.NEXT_PUBLIC_COMPICK_DEMO_MODE === "1") return false;
+    if (process.env.NEXT_PUBLIC_COMPICK_DEMO_MODE === "1") return false;
     const host = headers.get("host") ?? "";
-    return /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host);
+    if ("TURBOPACK compile-time truthy", 1) return /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host);
+    //TURBOPACK unreachable
+    ;
+    const username = undefined;
+    const password = undefined;
+    const origin = undefined;
 }
 function canMutateLocalAdmin(request) {
     if (!canUseLocalAdmin(request.headers)) return false;
     const origin = request.headers.get("origin");
     if (!origin) return false;
     try {
+        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+        ;
         return new URL(origin).host === request.headers.get("host") && [
             "http:",
             "https:"

@@ -3,7 +3,7 @@ module.exports = [
 
 __turbopack_context__.v((parentImport) => {
     return Promise.all([
-  "server/chunks/ssr/_0nxlvqa._.js"
+  "server/chunks/ssr/_13_j7si._.js"
 ].map((chunk) => __turbopack_context__.l(chunk))).then(() => {
         return parentImport("[project]/src/lib/demo-catalog.ts [app-rsc] (ecmascript)");
     });

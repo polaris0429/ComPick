@@ -40,8 +40,8 @@ export interface SelectedPart {
 }
 
 interface BuildState {
-  /** 카테고리별 선택된 부품 (미선택 카테고리는 키 자체가 없음) */
-  selectedParts: Partial<Record<CategoryCode, SelectedPart>>;
+  /** 상품 ID별 선택된 부품 */
+  selectedParts: Record<string, SelectedPart>;
 
   /** 전체 호환성 검증 결과 */
   compatibility: CompatibilityReport;
@@ -54,11 +54,11 @@ interface BuildState {
 }
 
 interface BuildActions {
-  /** 부품 선택/교체 → 호환성 재검증 + 가격 재계산 */
+  /** 부품 추가 → 호환성 재검증 + 가격 재계산 */
   selectPart: (part: SelectedPart) => void;
 
   /** 부품 제거 → 호환성 재검증 + 가격 재계산 */
-  removePart: (category: CategoryCode) => void;
+  removePart: (productId: string) => void;
 
   /** 전체 견적 초기화 */
   clearAll: () => void;
@@ -80,19 +80,21 @@ function emptyReport(): CompatibilityReport {
 
 /** selectedParts에서 attributes만 추출해 SelectedPartsMap 형태로 변환 */
 function toAttributesMap(
-  parts: Partial<Record<CategoryCode, SelectedPart>>,
+  parts: Record<string, SelectedPart>,
 ): SelectedPartsMap {
   const map: SelectedPartsMap = {};
-  for (const [key, part] of Object.entries(parts)) {
+  for (const part of Object.values(parts)) {
     if (part) {
-      map[key as CategoryCode] = part.attributes;
+      if (Object.values(parts).filter(p => p.categoryCode === part.categoryCode).length === 1) {
+        map[part.categoryCode] = part.attributes;
+      }
     }
   }
   return map;
 }
 
 /** 선택된 부품들의 가격 합계 계산 */
-function calculatePrices(parts: Partial<Record<CategoryCode, SelectedPart>>): {
+function calculatePrices(parts: Record<string, SelectedPart>): {
   totalPrice: number;
   totalDiscountedPrice: number;
 } {
@@ -113,13 +115,22 @@ function calculatePrices(parts: Partial<Record<CategoryCode, SelectedPart>>): {
 
 /** 상태를 재계산합니다 (호환성 + 가격) */
 function recalculate(
-  selectedParts: Partial<Record<CategoryCode, SelectedPart>>,
+  selectedParts: Record<string, SelectedPart>,
 ): Pick<BuildState, "compatibility" | "totalPrice" | "totalDiscountedPrice"> {
   const partCount = Object.keys(selectedParts).length;
   const compatibility =
     partCount === 0
       ? emptyReport()
       : checkAllCompatibility(toAttributesMap(selectedParts));
+  const counts = new Map<CategoryCode, number>();
+  for (const part of Object.values(selectedParts)) counts.set(part.categoryCode, (counts.get(part.categoryCode) ?? 0) + 1);
+  if ([...counts.values()].some(count => count > 1)) {
+    compatibility.issues.push({
+      ruleId: "multiple-parts-review", severity: "warning",
+      message: "같은 종류의 부품이 여러 개 담겨 있습니다. 해당 부품의 동시 장착·슬롯 수·총 전력은 자동 검증하지 않으므로 별도 확인해 주세요.",
+      categories: ["CPU", "GPU"],
+    });
+  }
   const { totalPrice, totalDiscountedPrice } = calculatePrices(selectedParts);
 
   return { compatibility, totalPrice, totalDiscountedPrice };
@@ -145,15 +156,15 @@ export const buildStore = createStore<BuildState & BuildActions>()(
         set((state) => {
           const selectedParts = {
             ...state.selectedParts,
-            [part.categoryCode]: part,
+            [part.id]: part,
           };
           return { selectedParts, ...recalculate(selectedParts) };
         }),
 
-      removePart: (category) =>
+      removePart: (productId) =>
         set((state) => {
           const selectedParts = { ...state.selectedParts };
-          delete selectedParts[category];
+          delete selectedParts[productId];
           return { selectedParts, ...recalculate(selectedParts) };
         }),
 
@@ -161,9 +172,9 @@ export const buildStore = createStore<BuildState & BuildActions>()(
 
       loadPrebuilt: (parts) =>
         set(() => {
-          const selectedParts: Partial<Record<CategoryCode, SelectedPart>> = {};
+          const selectedParts: Record<string, SelectedPart> = {};
           for (const part of parts) {
-            selectedParts[part.categoryCode] = part;
+            selectedParts[part.id] = part;
           }
           return { selectedParts, ...recalculate(selectedParts) };
         }),
@@ -183,6 +194,12 @@ export const buildStore = createStore<BuildState & BuildActions>()(
         }
         return localStorage;
       }),
+      // 이전 카테고리 키 방식의 저장 견적도 상품 ID 기준으로 복원합니다.
+      merge: (persisted, current) => {
+        const saved = persisted as Partial<BuildState> | undefined;
+        const selectedParts = Object.fromEntries(Object.values(saved?.selectedParts ?? {}).filter(Boolean).map(part => [part.id, part]));
+        return { ...current, selectedParts, ...recalculate(selectedParts) };
+      },
       // persist에서 복원할 때 호환성을 재검증
       // (저장된 이후 규칙이 바뀌었을 수 있으므로)
       onRehydrateStorage: () => (state) => {

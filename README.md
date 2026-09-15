@@ -2,7 +2,21 @@
 
 소켓, 용량, 와트수까지 — 부품을 고르는 즉시 호환 여부를 확인하는 맞춤형 조립 PC 쇼핑몰입니다. "다나와 PC 견적"과 유사한 3단 패널(부품 탐색 · 상품 리스트 · 실시간 견적) 경험을 목표로 합니다.
 
-> 현재 상태: **Step 4 / 6 완료** — 쇼핑몰 디자인 개편, Ai PC 탭, 5초 배너, 3단 견적 UI 및 검색/필터/정렬. 진행 상황은 [CHANGELOG.md](./CHANGELOG.md)와 아래 [개발 로드맵](#개발-로드맵)을 참고하세요.
+> 현재 상태: 쇼핑몰·상품 관리·회원 계정·회원별 장바구니 구현. 주문/결제는 준비 중. 진행 상황은 [CHANGELOG.md](./CHANGELOG.md)와 아래 [개발 로드맵](#개발-로드맵)을 참고하세요.
+
+## 회원 계정과 장바구니 (2026-09-15, 로컬)
+
+- `/register`: 아이디·이름·이메일·비밀번호로 가입 후 홈페이지로 이동. `/login`: 아이디 로그인. 상단에서 로그아웃 가능.
+- `/account`: 현재 비밀번호 확인 후 아이디·이름·이메일·비밀번호 수정 또는 탈퇴. 정보 수정 시 다른 로그인 세션을 모두 해제합니다.
+- `/cart`: 로그인한 회원의 부품/완제품 담기, 수량 변경, 삭제, 비우기. 재로그인해도 DB에 저장된 장바구니가 유지됩니다. 상품 상세 및 완제품 카드에 담기 버튼이 있습니다.
+- 아이디·이메일·이름은 AES-256-GCM 필드 암호화, 중복 조회는 별도 HMAC 인덱스를 사용합니다. 비밀번호는 복호화할 수 없는 bcrypt(cost 12) 해시이며 12자 이상/UTF-8 72바이트 이하입니다. DB 전체/디스크 암호화와는 별개입니다.
+- 7일 만료의 무작위 세션 토큰은 HttpOnly/SameSite=Lax 쿠키에, DB에는 SHA-256 해시만 저장됩니다. 프로덕션에서는 Secure 쿠키와 HTTPS `AUTH_URL`이 필수입니다. 변경 요청은 동일 Origin만 허용하며 로그인/민감 작업에는 DB 기반 횟수 제한이 있습니다.
+- 장바구니 소유권·판매 상태·재고를 서버에서 검증하고 가격도 DB 값으로 계산합니다. 탈퇴 시 계정·장바구니·세션은 삭제하고 주문은 회원 연결을 해제하여 남깁니다.
+- 기존 견적 구성은 기기 내 저장 기능으로 유지됩니다. 이메일 인증·비밀번호 찾기 및 주문/결제는 아직 구현하지 않았습니다.
+
+기존 로컬 DB에는 `npm run prisma:deploy` → `npm run prisma:generate`를 실행하고 개발 서버를 재시작하세요. **기존 `FIELD_ENCRYPTION_KEY`를 보존하고 DB 백업과 별도로 안전하게 보관하세요.** 이미 암호화한 데이터가 있으면 키를 새로 생성하거나 교체하면 안 됩니다. 기존 평문 이름은 읽기 호환되며 프로필 저장 시 암호화됩니다. 예전 이메일 전용 회원의 아이디 전환은 별도 마이그레이션이 필요합니다(이번 로컬 DB에는 기존 회원이 없었습니다).
+
+검증: 개발 서버 실행 후 `npx tsx scripts/test-members.ts`. 로컬 DB만 허용하며 임시 회원을 만들고 종료 시 정리합니다. 회원·세션·암호화·CSRF·장바구니 소유권·비밀번호 변경·탈퇴를 확인합니다. 이번 변경은 Oracle 서버에 배포하지 않았습니다.
 
 ## 기술 스택
 
@@ -13,7 +27,7 @@
 | 스타일 | Tailwind CSS v4 (CSS-first `@theme`) |
 | 상태 관리 | Zustand 5 (persist 미들웨어) |
 | DB / ORM | PostgreSQL + Prisma 7 |
-| 인증 | Auth.js (next-auth v5) |
+| 인증 | DB 세션 + HttpOnly 쿠키, bcrypt 비밀번호 해시 |
 | 결제 | 토스페이먼츠 v2 SDK |
 | 차트 | Recharts 3 |
 | 배포 | Docker / Docker Compose |
@@ -78,7 +92,7 @@ npm run docker:down
 
 ## 임시 상품 관리 페이지
 
-`npm run dev`로 실행한 뒤 [상품 관리](http://localhost:3000/admin/products)를 열거나 홈페이지 상단의 **상품 관리**를 누르세요. 개발 서버는 `127.0.0.1`에 바인딩됩니다. 인증 연동 전 임시 도구이므로 프로덕션 및 데모 모드에서는 관리 페이지/API를 사용할 수 없습니다.
+`npm run dev`로 실행한 뒤 [상품 관리](http://localhost:3000/admin/products)를 열거나 홈페이지 상단의 **상품 관리**를 누르세요. 개발 서버는 `127.0.0.1`에 바인딩됩니다. 로컬 개발에서는 바로 사용할 수 있으며, 공개 서버에서는 HTTPS와 별도 관리자 인증이 필요합니다. 데모 모드에서는 사용할 수 없습니다.
 
 - 왼쪽에서 상품을 선택해 수정하거나 **새 상품 등록**으로 추가합니다. 새 상품은 기본 **숨김** 상태입니다. 저장하면 실제 DB에 반영되며 홈페이지를 새로고침해 확인할 수 있습니다.
 - 상품명, 브랜드, 카테고리, 판매가, 할인율, 재고, 판매 노출 상태를 편집합니다.
@@ -217,12 +231,17 @@ TBD
 
 ## Oracle Cloud 중간발표 배포
 
-- 공개 주소: http://168.110.119.148
+현재 상태: 공개 HTTPS 배포 완료. 외부에서 쇼핑몰·상품 이미지 로딩, 관리자 인증 후 페이지/API 접근 및 비인증 접근 차단을 확인했습니다. 서버에서 관리자 CRUD·업로드·재시작 후 이미지 보존도 검증했습니다.
+
+- 공개 주소: https://168.110.119.148
+- 상품 관리: https://168.110.119.148/admin/products (브라우저 인증창에 관리자 계정 입력)
+- 관리자 계정은 서버 `.env`의 `ADMIN_USERNAME`/`ADMIN_PASSWORD`에 보관합니다. 초기 전달본은 로컬 `.env.oracle-admin`이며 Git/Docker에서 제외됩니다.
 - 서버: `ubuntu@168.110.119.148`, 프로젝트: `~/compick-presentation`
-- 배포 설정: `docker-compose.production.yml`. ARM64 서버에서 Docker 이미지를 빌드하고, 앱만 80번 포트로 공개합니다. PostgreSQL은 내부 Docker 네트워크에서만 접근합니다.
+- 배포 설정: `docker-compose.production.yml`. ARM64 서버에서 Docker 이미지를 빌드하고, Caddy가 80/443 포트로 HTTP→HTTPS 리디렉션 및 TLS를 처리하며 앱은 내부 네트워크에만 노출합니다. PostgreSQL은 내부 Docker 네트워크에서만 접근합니다.
 - 서버의 `.env`는 서버에서 생성한 전용 비밀값을 사용합니다. SSH 키와 로컬 `.env`는 배포 파일/Docker 빌드 컨텍스트에 포함하지 않습니다.
 - 최초 배포 시 현재 로컬 상품·카테고리·완제품 데이터만 복사합니다. 회원/주문 데이터는 복사하지 않습니다. 이후 서버 DB는 독립적으로 유지되며 로컬 상품 변경이 자동 동기화되지는 않습니다.
-- 공개 프로덕션에서는 임시 상품 관리 페이지/API가 비활성화됩니다. 현재 상품 관리는 로컬 개발 환경에서 진행합니다.
+- 공개 관리 페이지와 모든 관리 API는 서버 측 Basic 인증을 검증합니다. `ADMIN_ORIGIN`의 HTTPS 주소 및 동일 origin 변경 요청만 허용합니다. 업로드는 `uploads` 볼륨에 저장하며 재배포 후에도 유지됩니다.
+- HTTPS IP 인증서는 Caddy의 Let’s Encrypt shortlived 프로필로 발급/자동 갱신합니다. 80/443 인바운드 연결을 유지해야 합니다.
 
 서버 프로젝트 폴더에서 운영 명령:
 
@@ -233,9 +252,24 @@ TBD
 # 소스 업데이트 후 빌드, 마이그레이션, 앱 재시작
  docker compose -f docker-compose.production.yml build app tools
  docker compose -f docker-compose.production.yml run --rm tools npm run prisma:deploy
- docker compose -f docker-compose.production.yml up -d app
+ docker compose -f docker-compose.production.yml up -d app web
 # DB 백업 (키와 함께 공개 저장소에 올리지 마세요)
  docker compose -f docker-compose.production.yml exec -T db pg_dump -U compick -d compick > backup.sql
 ```
 
-발표용 주소는 HTTP입니다. 도메인 연결 및 HTTPS, 관리자 인증은 별도 설정 전까지 적용되지 않습니다. DB 볼륨을 삭제하는 `down -v`와 기존 데이터를 초기화하는 seed 명령은 재배포 시 사용하지 않습니다.
+발표용 IP 주소는 HTTPS로 제공합니다. 관리자 비밀번호 변경 시 서버 `.env`를 수정하고 앱을 재생성하세요. 업로드 백업은 `uploads` 볼륨도 별도로 보관해야 합니다. DB 볼륨을 삭제하는 `down -v`와 기존 데이터를 초기화하는 seed 명령은 재배포 시 사용하지 않습니다.
+
+## 로컬 실제 부품 추가
+
+`prisma/additional-products.ts`에 제조사 사양을 확인한 16개 제품과 근거 URL을 기록했습니다. 가격·재고는 실시간 판매 정보가 아닌 시연용 값입니다. 제품 상세정보에서 제조사 공식 사양을 열 수 있습니다. 기존 27개 상품은 이 작업의 사양 검증 대상에 포함되지 않습니다.
+
+```bash
+# Docker DB가 실행 중인 로컬 환경에서 새 부품만 추가
+node --import tsx scripts/add-local-products.ts
+```
+
+이 명령은 로컬 DB 주소만 허용하고 기존 상품을 변경하지 않습니다. 동일 상품은 건너뛰므로 다시 실행해도 중복되지 않습니다. 실행 전 기존 상품 JSON 백업을 `/private/tmp/compick-products-before-*.json`에 저장합니다. 전체 seed/데모 카탈로그에도 새 제품이 포함됩니다.
+
+### 견적에 여러 상품 담기
+
+같은 카테고리의 다른 상품을 추가해도 기존 상품을 유지하고 구획 안에 함께 표시합니다. 동일 상품은 중복 등록하지 않습니다. 제거는 상품 단위로 적용하며, 기존 브라우저 저장 견적은 자동 복원합니다. 복수 상품 카테고리는 동시 장착·슬롯·총 전력 자동 검증 대상에서 제외되며 확인 안내가 표시됩니다. 회귀 검사: `node --import tsx scripts/test-build-store.ts`.

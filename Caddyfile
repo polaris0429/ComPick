@@ -1,0 +1,15 @@
+{
+    default_sni 168.110.119.148
+}
+
+https://168.110.119.148 {
+    tls {
+        issuer acme {
+            dir https://acme-v02.api.letsencrypt.org/directory
+            profile shortlived
+        }
+    }
+    encode zstd gzip
+    header X-Content-Type-Options nosniff
+    reverse_proxy app:3000
+}

@@ -126,6 +126,9 @@ exports.Prisma.UserScalarFieldEnum = {
   emailHash: 'emailHash',
   passwordHash: 'passwordHash',
   name: 'name',
+  nameEncrypted: 'nameEncrypted',
+  loginId: 'loginId',
+  loginIdHash: 'loginIdHash',
   role: 'role',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -201,6 +204,29 @@ exports.Prisma.OrderItemScalarFieldEnum = {
   unitPrice: 'unitPrice'
 };
 
+exports.Prisma.MemberSessionScalarFieldEnum = {
+  tokenHash: 'tokenHash',
+  userId: 'userId',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.CartItemScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  productId: 'productId',
+  prebuiltPCId: 'prebuiltPCId',
+  quantity: 'quantity',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MemberRateLimitScalarFieldEnum = {
+  key: 'key',
+  attempts: 'attempts',
+  expiresAt: 'expiresAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -220,15 +246,15 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
-};
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
 };
 exports.UserRole = exports.$Enums.UserRole = {
   USER: 'USER',
@@ -260,7 +286,10 @@ exports.Prisma.ModelName = {
   PrebuiltPC: 'PrebuiltPC',
   PrebuiltPCComponent: 'PrebuiltPCComponent',
   Order: 'Order',
-  OrderItem: 'OrderItem'
+  OrderItem: 'OrderItem',
+  MemberSession: 'MemberSession',
+  CartItem: 'CartItem',
+  MemberRateLimit: 'MemberRateLimit'
 };
 
 /**

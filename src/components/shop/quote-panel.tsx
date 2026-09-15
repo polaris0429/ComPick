@@ -5,6 +5,7 @@ import { AlertTriangle, CheckCircle2, ClipboardList, X } from "lucide-react";
 import type { CategoryCode } from "@/generated/prisma";
 import { formatKRW } from "@/lib/format";
 import { useBuildStore } from "@/store/build-store";
+import { ProductImage } from "@/components/shop/product-image";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -19,6 +20,17 @@ const CATEGORY_ORDER: CategoryCode[] = [
   "COOLER",
 ];
 
+const CATEGORY_LABELS: Record<CategoryCode, string> = {
+  CPU: "CPU · 프로세서",
+  MOTHERBOARD: "메인보드",
+  RAM: "메모리 · RAM",
+  GPU: "그래픽카드 · GPU",
+  STORAGE: "저장장치 · SSD / HDD",
+  PSU: "파워서플라이",
+  CASE: "케이스",
+  COOLER: "CPU 쿨러",
+};
+
 export function QuotePanel() {
   const selectedParts = useBuildStore((s) => s.selectedParts);
   const compatibility = useBuildStore((s) => s.compatibility);
@@ -29,9 +41,10 @@ export function QuotePanel() {
 
   const [showPaymentNotice, setShowPaymentNotice] = useState(false);
 
-  const orderedParts = CATEGORY_ORDER.map((code) => selectedParts[code]).filter(
-    (part): part is NonNullable<typeof part> => Boolean(part),
-  );
+  const groups = CATEGORY_ORDER.map(code => ({
+    code, parts: Object.values(selectedParts).filter(part => part.categoryCode === code),
+  })).filter(group => group.parts.length > 0);
+  const orderedParts = groups.flatMap(group => group.parts);
   const hasErrors = compatibility.issues.some((i) => i.severity === "error");
   const canCheckout = orderedParts.length > 0 && !hasErrors;
   const discountAmount = totalPrice - totalDiscountedPrice;
@@ -93,21 +106,30 @@ export function QuotePanel() {
           왼쪽에서 부품을 선택하면 여기에 담깁니다.
         </p>
       ) : (
-        <ul className="flex flex-col gap-2">
-          {orderedParts.map((part) => (
-            <li key={part.id} className="flex items-start justify-between gap-2 text-xs">
-              <div className="min-w-0">
-                <p className="truncate text-ink">{part.name}</p>
-                <p className="tabular-nums text-ink-muted">{formatKRW(part.price)}</p>
-              </div>
-              <button
-                type="button"
-                onClick={() => removePart(part.categoryCode)}
-                aria-label={`${part.name} 제거`}
-                className="shrink-0 text-ink-muted hover:text-danger"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
+        <ul aria-label="견적에 담은 부품" className="flex flex-col gap-2">
+          {groups.map(({code, parts}) => (
+            <li key={code} className="overflow-hidden rounded-lg border border-line text-xs">
+              <h3 className="flex justify-between border-b border-line bg-paper px-3 py-2 font-bold text-ink">
+                <span>{CATEGORY_LABELS[code]}</span><span className="text-ink-muted">{parts.length}개</span>
+              </h3>
+              <ul className="divide-y divide-line">
+                {parts.map(part => (
+                  <li key={part.id} className="flex items-start gap-2 px-3 py-2.5">
+                    <div className="h-12 w-12 shrink-0 overflow-hidden rounded border border-line bg-white p-1">
+                      <ProductImage imageUrl={part.image} categoryCode={part.categoryCode} alt={part.name} />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="break-words leading-relaxed text-ink">{part.name}</p>
+                      <p className="mt-1.5 text-right font-semibold tabular-nums text-ink">{formatKRW(part.price)}</p>
+                    </div>
+                    <button type="button" onClick={() => removePart(part.id)}
+                      aria-label={`${CATEGORY_LABELS[code]} ${part.name} 제거`}
+                      className="shrink-0 rounded p-1 text-ink-muted hover:bg-danger-soft hover:text-danger">
+                      <X className="h-3.5 w-3.5" />
+                    </button>
+                  </li>
+                ))}
+              </ul>
             </li>
           ))}
         </ul>

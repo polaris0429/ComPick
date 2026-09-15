@@ -187,7 +187,7 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
         <ProductDetailModal
           product={detailProduct}
           categoryName={detailCategoryName}
-          isSelected={selectedParts[detailProduct.categoryCode]?.id === detailProduct.id}
+          isSelected={Boolean(selectedParts[detailProduct.id])}
           onClose={() => setDetailProduct(null)}
           onSelect={() => selectPart(detailProduct)}
         />

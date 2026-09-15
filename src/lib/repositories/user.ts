@@ -19,8 +19,10 @@ function normalizeEmail(email: string): string {
 }
 
 /** 화면 표시/세션에 담아도 안전한 사용자 형태 (passwordHash 제외, email은 복호화됨) */
-export type SafeUser = Omit<User, "passwordHash" | "email"> & {
+export type SafeUser = Pick<User, "id" | "role" | "createdAt" | "updatedAt"> & {
   email: string;
+  name: string;
+  loginId: string | null;
 };
 
 function toSafeUser(user: User): SafeUser {
@@ -28,8 +30,8 @@ function toSafeUser(user: User): SafeUser {
   // 필드가 추가되더라도 여기 직접 추가하기 전까지는 자동으로 노출되지 않습니다.
   return {
     id: user.id,
-    emailHash: user.emailHash,
-    name: user.name,
+    loginId: user.loginId ? decryptField(user.loginId) : null,
+    name: user.nameEncrypted ? decryptField(user.name) : user.name,
     role: user.role,
     createdAt: user.createdAt,
     updatedAt: user.updatedAt,
@@ -52,7 +54,8 @@ export async function createUser(input: CreateUserInput): Promise<SafeUser> {
       email: encryptField(normalized),
       emailHash: hashForLookup(normalized),
       passwordHash: input.passwordHash,
-      name: input.name,
+      name: encryptField(input.name),
+      nameEncrypted: true,
       role: input.role,
     },
   });
@@ -93,7 +96,7 @@ export async function findUserForAuth(email: string): Promise<{
     id: user.id,
     email: decryptField(user.email),
     passwordHash: user.passwordHash,
-    name: user.name,
+    name: user.nameEncrypted ? decryptField(user.name) : user.name,
     role: user.role,
   };
 }
@@ -102,10 +105,11 @@ export async function updateUserProfile(
   id: string,
   data: { name?: string; email?: string },
 ): Promise<SafeUser> {
-  const updateData: { name?: string; email?: string; emailHash?: string } = {};
+  const updateData: { name?: string; nameEncrypted?: boolean; email?: string; emailHash?: string } = {};
 
   if (data.name !== undefined) {
-    updateData.name = data.name;
+    updateData.name = encryptField(data.name);
+    updateData.nameEncrypted = true;
   }
   if (data.email !== undefined) {
     const normalized = normalizeEmail(data.email);
@@ -119,5 +123,8 @@ export async function updateUserProfile(
 
 /** 새 비밀번호는 호출자가 이미 bcrypt로 해시한 값이어야 합니다. */
 export async function updateUserPassword(id: string, newPasswordHash: string): Promise<void> {
-  await prisma.user.update({ where: { id }, data: { passwordHash: newPasswordHash } });
+  await prisma.$transaction(async tx => {
+    await tx.user.update({ where: { id }, data: { passwordHash: newPasswordHash } });
+    await tx.memberSession.deleteMany({ where: { userId: id } });
+  });
 }

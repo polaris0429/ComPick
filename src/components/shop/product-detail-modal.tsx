@@ -1,7 +1,8 @@
 "use client";
 
+import { AddToCart } from "@/components/member/add-to-cart";
 import { useEffect, useRef, useState } from "react";
-import { Check, Plus, ShoppingCart, Truck, X } from "lucide-react";
+import { Check, Plus,  Truck, X } from "lucide-react";
 import { ATTRIBUTE_LABELS, CATEGORY_ATTRIBUTE_FIELDS } from "@/lib/catalog-config";
 import { applyDiscount, formatKRW, prettifyValue } from "@/lib/format";
 import type { CatalogProduct } from "@/lib/repositories/catalog";
@@ -143,15 +144,13 @@ export function ProductDetailModal({
                 <p className="font-mono text-2xl font-extrabold text-ink">{formatKRW(discounted)}</p>
               </div>
 
-              <div className="flex gap-2">
-                <Button type="button" variant="outline" className="flex-1">
-                  <ShoppingCart className="h-4 w-4" /> 장바구니
-                </Button>
+              <div className="flex items-start gap-2">
+                <AddToCart productId={product.id}/>
                 <Button
                   type="button"
                   variant={isSelected ? "outline" : "primary"}
                   onClick={onSelect}
-                  className="flex-1"
+                  className="h-[43px] min-w-0 flex-1"
                 >
                   {isSelected ? (
                     <>
@@ -186,6 +185,7 @@ export function ProductDetailModal({
             ))}
           </div>
 
+          {marketing?.sourceUrl?.startsWith("https://") && <a href={marketing.sourceUrl} target="_blank" rel="noopener noreferrer" className="mb-4 inline-block text-sm text-primary underline">제조사 공식 사양 확인 ↗</a>}
           {activeTab === "info" &&
             (marketing?.infoImages?.length ? (
               <div className="detail-info-images">

@@ -1663,6 +1663,17 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                             lineNumber: 170,
                             columnNumber: 11
                         }, this),
+                        marketing?.sourceUrl?.startsWith("https://") && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                            href: marketing.sourceUrl,
+                            target: "_blank",
+                            rel: "noopener noreferrer",
+                            className: "mb-4 inline-block text-sm text-primary underline",
+                            children: "제조사 공식 사양 확인 ↗"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/shop/product-detail-modal.tsx",
+                            lineNumber: 189,
+                            columnNumber: 60
+                        }, this),
                         activeTab === "info" && (marketing?.infoImages?.length ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "detail-info-images",
                             children: [
@@ -1671,7 +1682,7 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                     children: marketing.text
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                    lineNumber: 192,
+                                    lineNumber: 193,
                                     columnNumber: 36
                                 }, this),
                                 marketing.infoImages.map((src, i)=>// Preserve long product artwork; do not crop or send it through a thumbnail optimizer.
@@ -1682,13 +1693,13 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                         className: "block h-auto w-full"
                                     }, `${src}-${i}`, false, {
                                         fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                        lineNumber: 196,
+                                        lineNumber: 197,
                                         columnNumber: 19
                                     }, this))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                            lineNumber: 191,
+                            lineNumber: 192,
                             columnNumber: 15
                         }, this) : marketing && (marketing.title || marketing.text || marketing.features?.length) ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex flex-col gap-6",
@@ -1701,7 +1712,7 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                             children: marketing.eyebrow
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 202,
+                                            lineNumber: 203,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -1709,7 +1720,7 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                             children: marketing.title
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 203,
+                                            lineNumber: 204,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1717,13 +1728,13 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                             children: marketing.text
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 204,
+                                            lineNumber: 205,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                    lineNumber: 201,
+                                    lineNumber: 202,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1736,7 +1747,7 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                                     children: feature.icon
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                                    lineNumber: 210,
+                                                    lineNumber: 211,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1744,7 +1755,7 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                                     children: feature.title
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                                    lineNumber: 211,
+                                                    lineNumber: 212,
                                                     columnNumber: 23
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1752,18 +1763,18 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                                     children: feature.description
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                                    lineNumber: 212,
+                                                    lineNumber: 213,
                                                     columnNumber: 23
                                                 }, this)
                                             ]
                                         }, feature.title, true, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 209,
+                                            lineNumber: 210,
                                             columnNumber: 21
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                    lineNumber: 207,
+                                    lineNumber: 208,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1774,7 +1785,7 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                             children: marketing.promoTitle
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 218,
+                                            lineNumber: 219,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1782,26 +1793,26 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                             children: marketing.promoText
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 219,
+                                            lineNumber: 220,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                    lineNumber: 217,
+                                    lineNumber: 218,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                            lineNumber: 200,
+                            lineNumber: 201,
                             columnNumber: 15
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                             className: "py-8 text-center text-sm text-ink-muted",
                             children: "등록된 상품 소개가 없습니다."
                         }, void 0, false, {
                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                            lineNumber: 223,
+                            lineNumber: 224,
                             columnNumber: 15
                         }, this)),
                         activeTab === "specs" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("dl", {
@@ -1816,7 +1827,7 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                             children: config?.label ?? key
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 232,
+                                            lineNumber: 233,
                                             columnNumber: 21
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("dd", {
@@ -1827,19 +1838,19 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 233,
+                                            lineNumber: 234,
                                             columnNumber: 21
                                         }, this)
                                     ]
                                 }, key, true, {
                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                    lineNumber: 231,
+                                    lineNumber: 232,
                                     columnNumber: 19
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                            lineNumber: 227,
+                            lineNumber: 228,
                             columnNumber: 13
                         }, this),
                         activeTab === "reviews" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1847,7 +1858,7 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                             children: "아직 등록된 상품평이 없습니다."
                         }, void 0, false, {
                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                            lineNumber: 244,
+                            lineNumber: 245,
                             columnNumber: 13
                         }, this),
                         activeTab === "delivery" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1860,40 +1871,40 @@ function ProductDetailModal({ product, categoryName, isSelected, onClose, onSele
                                             className: "mt-0.5 h-4 w-4 shrink-0 text-primary"
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 250,
+                                            lineNumber: 251,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                             children: "주문 확인 후 1~2일 이내 출고되며, 평균 2~3일 내 수령하실 수 있습니다."
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                            lineNumber: 251,
+                                            lineNumber: 252,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                    lineNumber: 249,
+                                    lineNumber: 250,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     children: "단순 변심에 의한 교환·반품은 상품 수령 후 7일 이내 가능하며, 왕복 배송비는 구매자 부담입니다."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                    lineNumber: 253,
+                                    lineNumber: 254,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                     children: "상품 하자·오배송의 경우 배송비 없이 교환 또는 환불해 드립니다."
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                                    lineNumber: 254,
+                                    lineNumber: 255,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/components/shop/product-detail-modal.tsx",
-                            lineNumber: 248,
+                            lineNumber: 249,
                             columnNumber: 13
                         }, this)
                     ]
@@ -2805,13 +2816,13 @@ function SiteHeader({ activeTab, onNavigate, onSearch, partCount }) {
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex items-center gap-5",
                             children: [
-                                ("TURBOPACK compile-time value", "development") === "development" && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: "/admin/products",
                                     children: "상품 관리"
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/shop/site-header.tsx",
                                     lineNumber: 27,
-                                    columnNumber: 93
+                                    columnNumber: 50
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                     href: "#shopping-guide",
@@ -2822,13 +2833,13 @@ function SiteHeader({ activeTab, onNavigate, onSearch, partCount }) {
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/shop/site-header.tsx",
                                             lineNumber: 27,
-                                            columnNumber: 166
+                                            columnNumber: 122
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/shop/site-header.tsx",
                                     lineNumber: 27,
-                                    columnNumber: 135
+                                    columnNumber: 91
                                 }, this)
                             ]
                         }, void 0, true, {

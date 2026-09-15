@@ -232,22 +232,34 @@ __turbopack_async_result__();
 "[project]/src/lib/admin/access.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
 "use strict";
 
-/** Temporary admin is available only through a loopback host in development. */ __turbopack_context__.s([
+__turbopack_context__.s([
     "canMutateLocalAdmin",
     ()=>canMutateLocalAdmin,
     "canUseLocalAdmin",
     ()=>canUseLocalAdmin
 ]);
+var __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__ = __turbopack_context__.i("[externals]/node:crypto [external] (node:crypto, cjs)");
+;
+function equalSecret(actual, expected) {
+    return (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["timingSafeEqual"])((0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["createHash"])("sha256").update(actual).digest(), (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["createHash"])("sha256").update(expected).digest());
+}
 function canUseLocalAdmin(headers) {
-    if (("TURBOPACK compile-time value", "development") !== "development" || process.env.NEXT_PUBLIC_COMPICK_DEMO_MODE === "1") return false;
+    if (process.env.NEXT_PUBLIC_COMPICK_DEMO_MODE === "1") return false;
     const host = headers.get("host") ?? "";
-    return /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host);
+    if ("TURBOPACK compile-time truthy", 1) return /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host);
+    //TURBOPACK unreachable
+    ;
+    const username = undefined;
+    const password = undefined;
+    const origin = undefined;
 }
 function canMutateLocalAdmin(request) {
     if (!canUseLocalAdmin(request.headers)) return false;
     const origin = request.headers.get("origin");
     if (!origin) return false;
     try {
+        if ("TURBOPACK compile-time falsy", 0) //TURBOPACK unreachable
+        ;
         return new URL(origin).host === request.headers.get("host") && [
             "http:",
             "https:"
