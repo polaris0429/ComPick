@@ -23,6 +23,14 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/api/commerce/[action]",
+      "regex": "^/api/commerce/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPaction": "nxtPaction"
+      },
+      "namedRegex": "^/api/commerce/(?<nxtPaction>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/api/member/[action]",
       "regex": "^/api/member/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -65,10 +73,52 @@
       "namedRegex": "^/account(?:/)?$"
     },
     {
+      "page": "/admin",
+      "regex": "^/admin(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin(?:/)?$"
+    },
+    {
+      "page": "/admin/ai-pcs",
+      "regex": "^/admin/ai\\-pcs(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/ai\\-pcs(?:/)?$"
+    },
+    {
+      "page": "/admin/members",
+      "regex": "^/admin/members(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/members(?:/)?$"
+    },
+    {
+      "page": "/admin/orders",
+      "regex": "^/admin/orders(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/orders(?:/)?$"
+    },
+    {
       "page": "/admin/products",
       "regex": "^/admin/products(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/products(?:/)?$"
+    },
+    {
+      "page": "/admin-login",
+      "regex": "^/admin\\-login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin\\-login(?:/)?$"
+    },
+    {
+      "page": "/api/admin/management",
+      "regex": "^/api/admin/management(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/management(?:/)?$"
+    },
+    {
+      "page": "/api/admin/prebuilts",
+      "regex": "^/api/admin/prebuilts(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin/prebuilts(?:/)?$"
     },
     {
       "page": "/api/admin/products",
@@ -83,16 +133,46 @@
       "namedRegex": "^/api/admin/upload(?:/)?$"
     },
     {
+      "page": "/api/admin-session",
+      "regex": "^/api/admin\\-session(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/admin\\-session(?:/)?$"
+    },
+    {
       "page": "/cart",
       "regex": "^/cart(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/cart(?:/)?$"
     },
     {
+      "page": "/checkout",
+      "regex": "^/checkout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/checkout(?:/)?$"
+    },
+    {
       "page": "/login",
       "regex": "^/login(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/orders",
+      "regex": "^/orders(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/orders(?:/)?$"
+    },
+    {
+      "page": "/payment/fail",
+      "regex": "^/payment/fail(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/payment/fail(?:/)?$"
+    },
+    {
+      "page": "/payment/success",
+      "regex": "^/payment/success(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/payment/success(?:/)?$"
     },
     {
       "page": "/register",

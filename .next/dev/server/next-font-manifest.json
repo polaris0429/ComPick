@@ -1,21 +1,33 @@
 {
   "app": {
-    "[project]/src/app/account/page": [
+    "[project]/src/app/admin-login/page": [
+      "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
+    ],
+    "[project]/src/app/admin/ai-pcs/page": [
+      "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
+    ],
+    "[project]/src/app/admin/members/page": [
+      "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
+    ],
+    "[project]/src/app/admin/orders/page": [
+      "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
+    ],
+    "[project]/src/app/admin/page": [
       "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
     ],
     "[project]/src/app/admin/products/page": [
       "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
     ],
-    "[project]/src/app/cart/page": [
+    "[project]/src/app/checkout/page": [
       "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
     ],
-    "[project]/src/app/login/page": [
+    "[project]/src/app/orders/page": [
       "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
     ],
     "[project]/src/app/page": [
       "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
     ],
-    "[project]/src/app/register/page": [
+    "[project]/src/app/payment/success/page": [
       "static/media/PretendardVariable-s.p.0ztvx5mb7lxp4.woff2"
     ]
   },

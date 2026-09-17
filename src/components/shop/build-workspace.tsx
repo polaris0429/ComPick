@@ -10,7 +10,7 @@ import { useBuildStore } from "@/store/build-store";
 import { CategoryNav } from "@/components/shop/category-nav";
 import { HeroBanner } from "@/components/shop/hero-banner";
 import { SiteHeader, type ShopTab } from "@/components/shop/site-header";
-import { AiPcGuide } from "@/components/shop/ai-pc-guide";
+
 import { StatusBar } from "@/components/shop/status-bar";
 import { ProductFilters, type SortOption } from "@/components/shop/product-filters";
 import { ProductList } from "@/components/shop/product-list";
@@ -99,7 +99,7 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
     setActiveTab(tab);
     setSearchQuery(null);
     setActiveFilters({});
-    if (tab === "ai") setActiveCategory("GPU");
+
   }
 
   function handleSearch(query: string) {
@@ -132,7 +132,7 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
     <div className="shop-container service-strip"><span><b>01</b> 원하는 부품 선택</span><span><b>02</b> 실시간 호환성 확인</span><span><b>03</b> 나만의 PC 견적 완성</span><strong>좋은 PC의 시작, ComPick</strong></div>
     <div className="shop-container breadcrumb">홈 <span>/</span> {activeTab === "ai" ? "Ai PC" : activeTab === "prebuilt" ? "완제품 PC" : "PC 견적"}</div>
     <div id="catalog" className="shop-container workspace-grid">
-      <div className="lg:order-1">
+      <div className="self-start lg:sticky lg:top-6 lg:order-1">
         <CategoryNav
           categories={categories}
           activeTab={activeTab === "ai" ? "parts" : activeTab}
@@ -143,7 +143,7 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
       </div>
 
       <main className="flex min-w-0 flex-col gap-4 lg:order-2">
-        {activeTab === "ai" ? <AiPcGuide activeCategory={activeCategory} onSelectCategory={(code) => { setActiveCategory(code); setActiveFilters({}); }} /> :
+        {activeTab === "ai" ? <div className="section-heading"><div><p className="section-eyebrow">AI COMPUTING</p><h1>Ai PC</h1><p>AI 특화 미니 PC · 완제품 · 추천 조합</p></div></div> :
           <div className="section-heading"><div><p className="section-eyebrow">{activeTab === "parts" ? "CUSTOM PC" : "COMPICK SELECT"}</p><h1>{activeTab === "parts" ? "나만의 PC 견적" : "추천 완제품 PC"}</h1></div><span>용도와 예산에 맞게, 하나씩 골라보세요.</span></div>}
 
 
@@ -151,7 +151,7 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
           {([{ id: "parts", label: "부품으로 견적하기" }, { id: "prebuilt", label: "추천 완제품 PC" }, { id: "ai", label: "Ai PC" }] as const).map((tab) => <button key={tab.id} aria-pressed={activeTab === tab.id} onClick={() => handleNavigate(tab.id)}>{tab.label}</button>)}
         </div>
 
-        {activeTab !== "prebuilt" ? (
+        {activeTab === "parts" ? (
           <>
             <div className="flex items-center justify-between"><h2 className="text-base font-bold text-ink">{searchQuery !== null ? (searchQuery ? `“${searchQuery}” 검색 결과` : "전체 PC 부품") : activeCategoryName}</h2>{searchQuery !== null && <button className="text-xs text-primary" onClick={() => setSearchQuery(null)}>검색 초기화</button>}</div>
             {searchQuery === null ? <ProductFilters
@@ -174,7 +174,7 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
             />
           </>
         ) : (
-          <PrebuiltList prebuilts={prebuilts} onSelect={(prebuilt) => loadPrebuilt(prebuilt.components)} />
+          <PrebuiltList prebuilts={prebuilts.filter(p => activeTab === "ai" ? p.kind?.startsWith("AI_") : !p.kind?.startsWith("AI_"))} onSelect={(prebuilt) => { loadPrebuilt(prebuilt.components); setActiveTab("parts"); }} />
         )}
       </main>
 
@@ -196,7 +196,7 @@ export function BuildWorkspace({ categories, products, prebuilts }: BuildWorkspa
     <footer id="shopping-guide" className="shop-footer"><div className="shop-container footer-content">
       <div><Link href="/" className="brand">Com<span>Pick</span></Link><p>내게 맞는 한 대를 완성하는 곳.</p><small>© ComPick. All rights reserved.</small></div>
       <div><strong>PC 견적 이용안내</strong><p>부품을 담으면 호환성과 합계가 자동으로 계산됩니다.<br />완제품 구성도 불러와 원하는 부품으로 바꿀 수 있습니다.</p></div>
-      <div><strong>구매 전 확인해 주세요</strong><p>현재 주문·결제 서비스는 준비 중입니다.<br />상품별 상세 사양과 호환 여부를 확인해 주세요.</p></div>
+      <div><strong>구매 전 확인해 주세요</strong><p>상품별 상세 사양과 호환 여부를 확인해 주세요.</p></div>
     </div></footer>
     </>
   );

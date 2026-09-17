@@ -165,12 +165,19 @@ function equalSecret(actual, expected) {
 function canUseLocalAdmin(headers) {
     if (process.env.NEXT_PUBLIC_COMPICK_DEMO_MODE === "1") return false;
     const host = headers.get("host") ?? "";
-    if ("TURBOPACK compile-time truthy", 1) return /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host);
-    //TURBOPACK unreachable
-    ;
-    const username = undefined;
-    const password = undefined;
-    const origin = undefined;
+    const local = ("TURBOPACK compile-time value", "development") === "development" && /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host);
+    const username = process.env.ADMIN_USERNAME;
+    const password = process.env.ADMIN_PASSWORD;
+    const origin = process.env.ADMIN_ORIGIN;
+    if (!username || !password || password.length < 12 || !local && !origin) return false;
+    try {
+        if (!local && (new URL(origin).protocol !== "https:" || new URL(origin).host !== host || headers.get("x-forwarded-proto") !== "https")) return false;
+        const authorization = headers.get("authorization") ?? "";
+        if (!authorization.startsWith("Basic ")) return false;
+        return equalSecret(Buffer.from(authorization.slice(6), "base64").toString("utf8"), `${username}:${password}`);
+    } catch  {
+        return false;
+    }
 }
 function canMutateLocalAdmin(request) {
     if (!canUseLocalAdmin(request.headers)) return false;

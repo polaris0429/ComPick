@@ -1,0 +1,5 @@
+import {createHmac,timingSafeEqual,createHash} from 'node:crypto';
+export const adminCookie=process.env.NODE_ENV==='production'?'__Host-compick-admin':'compick-admin';
+const sign=(stamp:string)=>createHmac('sha256',process.env.ADMIN_SESSION_SECRET??'').update(`${stamp}:${createHash('sha256').update(process.env.ADMIN_PASSWORD??'').digest('hex')}`).digest('hex');
+export function issueAdminCookie(){if(!process.env.ADMIN_SESSION_SECRET||process.env.ADMIN_SESSION_SECRET.length<32)throw Error('관리자 세션 키를 설정하세요.');const stamp=String(Date.now());return `${stamp}.${sign(stamp)}`}
+export function validAdminCookie(headers:Headers){if(!process.env.ADMIN_SESSION_SECRET||process.env.ADMIN_SESSION_SECRET.length<32)return false;const value=headers.get('cookie')?.split(';').map(x=>x.trim()).find(x=>x.startsWith(adminCookie+'='))?.slice(adminCookie.length+1);if(!value)return false;const [stamp,signature]=value.split('.');if(!stamp||!signature||!/^[0-9]{13}$/.test(stamp)||!/^[a-f0-9]{64}$/.test(signature)||Date.now()-Number(stamp)>8*3600000||Number(stamp)>Date.now())return false;return timingSafeEqual(Buffer.from(signature,'hex'),Buffer.from(sign(stamp),'hex'))}

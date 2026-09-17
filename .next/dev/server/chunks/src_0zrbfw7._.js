@@ -41,6 +41,11 @@ const fields = {
     email: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().trim().toLowerCase().email().max(254),
     name: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().trim().min(1).max(50)
 };
+const deliveryFields = {
+    phone: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().trim().max(20).refine((v)=>!v || /^[0-9+() -]{7,20}$/.test(v), "전화번호를 확인하세요.").optional(),
+    address: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().trim().max(300).refine((v)=>!v || v.length >= 5, "배송주소는 5자 이상 입력하세요.").optional(),
+    addressDetail: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().trim().max(200).optional()
+};
 const response = (data, status = 200)=>Response.json(data, {
         status,
         headers: {
@@ -85,10 +90,12 @@ async function cart(userId) {
     });
     const items = rows.map((row)=>{
         const p = row.product ?? row.prebuiltPC;
-        const stock = row.product ? row.product.stock : Math.min(99, ...row.prebuiltPC.components.map((c)=>c.product.isActive ? Math.floor(c.product.stock / c.quantity) : 0));
-        const available = p.isActive && stock >= row.quantity && (row.product !== null || row.prebuiltPC.components.length > 0);
+        const stock = row.product ? row.product.stock : row.prebuiltPC.components.length ? Math.min(99, ...row.prebuiltPC.components.map((c)=>c.product.isActive ? Math.floor(c.product.stock / c.quantity) : 0)) : row.prebuiltPC.stock;
+        const available = p.isActive && stock >= row.quantity;
         const unitPrice = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$format$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["applyDiscount"])(p.price, p.discountRate);
         return {
+            productId: row.productId,
+            prebuiltPCId: row.prebuiltPCId,
             id: row.id,
             name: p.name,
             image: p.images[0] ?? "",
@@ -178,7 +185,7 @@ async function POST(request, context) {
                 }
             });
             const valid = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].compare(input.password, user?.passwordHash ?? dummyHash);
-            if (!user || !valid) throw new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["MemberError"]("아이디 또는 비밀번호를 확인하세요.", 401);
+            if (!user || !user.isActive || !valid) throw new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["MemberError"]("아이디 또는 비밀번호를 확인하세요.", 401);
             const oldHash = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["sessionHash"])();
             const token = await __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$prisma$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["prisma"].$transaction(async (tx)=>{
                 await tx.$queryRaw`SELECT id FROM users WHERE id=${user.id} FOR UPDATE`;
@@ -187,7 +194,7 @@ async function POST(request, context) {
                         id: user.id
                     }
                 });
-                if (!fresh || fresh.passwordHash !== user.passwordHash) throw new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["MemberError"]("다시 로그인해 주세요.", 401);
+                if (!fresh || !fresh.isActive || fresh.passwordHash !== user.passwordHash) throw new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["MemberError"]("다시 로그인해 주세요.", 401);
                 if (oldHash) await tx.memberSession.deleteMany({
                     where: {
                         tokenHash: oldHash
@@ -227,6 +234,7 @@ async function POST(request, context) {
                 currentPassword: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string().min(1).max(72).refine((s)=>Buffer.byteLength(s) <= 72),
                 ...action === "profile" ? {
                     ...fields,
+                    ...deliveryFields,
                     newPassword: password.optional()
                 } : {
                     confirmation: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].literal("회원탈퇴")
@@ -235,6 +243,13 @@ async function POST(request, context) {
             const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["memberTransaction"])(async (tx, fresh)=>{
                 if (!await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].compare(input.currentPassword, fresh.passwordHash)) throw new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["MemberError"]("현재 비밀번호를 확인하세요.", 403);
                 if (action === "delete") {
+                    if (await tx.order.count({
+                        where: {
+                            userId: fresh.id,
+                            status: "PENDING",
+                            stockReserved: true
+                        }
+                    })) throw new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["MemberError"]("결제 승인 확인 중인 주문이 있습니다. 결제 상태 확인 후 탈퇴해 주세요.");
                     await tx.user.delete({
                         where: {
                             id: fresh.id
@@ -244,6 +259,7 @@ async function POST(request, context) {
                 }
                 const data = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$v4$2f$classic$2f$external$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
                     ...fields,
+                    ...deliveryFields,
                     newPassword: password.optional()
                 }).parse(body);
                 const updated = await tx.user.update({
@@ -257,6 +273,15 @@ async function POST(request, context) {
                         emailHash: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["hashForLookup"])(data.email),
                         name: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["encryptField"])(data.name),
                         nameEncrypted: true,
+                        ...data.phone !== undefined ? {
+                            phoneEncrypted: data.phone ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["encryptField"])(data.phone) : null
+                        } : {},
+                        ...data.address !== undefined ? {
+                            addressEncrypted: data.address ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["encryptField"])(data.address) : null
+                        } : {},
+                        ...data.addressDetail !== undefined ? {
+                            addressDetailEncrypted: data.addressDetail ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["encryptField"])(data.addressDetail) : null
+                        } : {},
                         ...data.newPassword ? {
                             passwordHash: await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].hash(data.newPassword, 12)
                         } : {}
@@ -363,7 +388,7 @@ async function POST(request, context) {
                             }
                         }
                     });
-                    if (!p?.isActive || !p.components.length || p.components.some((c)=>!c.product.isActive || c.product.stock < quantity * c.quantity)) throw new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["MemberError"]("완제품 구성의 판매 상태 또는 재고가 부족합니다.");
+                    if (!p?.isActive || !p.components.length && p.stock < quantity || p.components.some((c)=>!c.product.isActive || c.product.stock < quantity * c.quantity)) throw new __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$member$2f$server$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["MemberError"]("완제품 구성의 판매 상태 또는 재고가 부족합니다.");
                 }
                 if (existing) await tx.cartItem.update({
                     where: {
@@ -588,13 +613,16 @@ async function currentMember() {
             user: true
         }
     });
-    return session && session.expiresAt > new Date() ? session.user : null;
+    return session && session.user.isActive && session.expiresAt > new Date() ? session.user : null;
 }
 const publicMember = (u)=>({
         id: u.id,
         loginId: u.loginId ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["decryptField"])(u.loginId) : "",
         email: (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["decryptField"])(u.email),
-        name: u.nameEncrypted ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["decryptField"])(u.name) : u.name
+        name: u.nameEncrypted ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["decryptField"])(u.name) : u.name,
+        phone: u.phoneEncrypted ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["decryptField"])(u.phoneEncrypted) : "",
+        address: u.addressEncrypted ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["decryptField"])(u.addressEncrypted) : "",
+        addressDetail: u.addressDetailEncrypted ? (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$encryption$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["decryptField"])(u.addressDetailEncrypted) : ""
     });
 async function issueSession(tx, userId) {
     const token = (0, __TURBOPACK__imported__module__$5b$externals$5d2f$node$3a$crypto__$5b$external$5d$__$28$node$3a$crypto$2c$__cjs$29$__["randomBytes"])(32).toString("hex");
@@ -653,7 +681,7 @@ async function memberTransaction(fn) {
                 user: true
             }
         });
-        if (!fresh || fresh.expiresAt <= new Date()) throw new MemberError("다시 로그인해 주세요.", 401);
+        if (!fresh || !fresh.user.isActive || fresh.expiresAt <= new Date()) throw new MemberError("다시 로그인해 주세요.", 401);
         return fn(tx, fresh.user);
     }, {
         timeout: 15000

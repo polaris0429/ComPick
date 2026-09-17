@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable @next/next/no-img-element -- Catalog images use uploaded URLs. */
 
 import { AddToCart } from "@/components/member/add-to-cart";
 import { applyDiscount, formatKRW } from "@/lib/format";
@@ -21,16 +22,17 @@ export function PrebuiltCard({ prebuilt, onSelect }: PrebuiltCardProps) {
   return (
     <div className="product-row items-center border-b border-line transition-colors hover:bg-paper">
       <div className="h-20 w-20 shrink-0 overflow-hidden rounded-md border border-line">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
+        
         <img src={src} alt={prebuilt.name} className={cn("h-full w-full object-contain")} />
       </div>
 
       <div className="min-w-0 flex-1">
-        <h3 className="text-sm font-bold text-ink">{prebuilt.name}</h3>
+        <p className="text-xs text-primary">{{AI_MINI:"AI 미니 PC",AI_PREBUILT:"AI 완제품",AI_BUILD:"AI 추천 조합"}[prebuilt.kind??""]}</p><h3 className="text-sm font-bold text-ink">{prebuilt.name}</h3>
         {prebuilt.description && <p className="mt-0.5 text-xs text-ink-muted">{prebuilt.description}</p>}
         <p className="mt-1.5 truncate text-xs text-ink-muted">
-          {prebuilt.components.map((c) => c.name).join(" · ")}
+          {prebuilt.components.map((c) => c.name+((c.quantity??1)>1?` × ${c.quantity}`:"")).join(" · ")}
         </p>
+        <details className="mt-3 text-sm"><summary className="cursor-pointer">상품정보 · 상세 스펙</summary><p className="whitespace-pre-wrap py-3">{prebuilt.specText || "상세 스펙을 준비 중입니다."}</p>{prebuilt.infoImages?.map(src=><div key={src}><img src={src} alt={`${prebuilt.name} 상품정보`} className="w-full"/></div>)}</details>
       </div>
 
       <div className="flex shrink-0 flex-col items-end gap-2">
@@ -45,9 +47,9 @@ export function PrebuiltCard({ prebuilt, onSelect }: PrebuiltCardProps) {
         </div>
 
         <AddToCart prebuiltPCId={prebuilt.id}/>
-        <Button type="button" size="sm" onClick={onSelect}>
+        {prebuilt.components.length > 0 && <Button type="button" size="sm" onClick={onSelect}>
           이 구성으로 시작
-        </Button>
+        </Button>}
       </div>
     </div>
   );

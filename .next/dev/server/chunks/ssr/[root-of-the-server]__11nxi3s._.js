@@ -34,7 +34,41 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$admin$2
 const dynamic = "force-dynamic";
 async function AdminProductsPage() {
     if (!(0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$admin$2f$access$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["canUseLocalAdmin"])(await (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$headers$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["headers"])())) (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["notFound"])();
-    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$admin$2f$product$2d$manager$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ProductManager"], {}, void 0, false, {
+    return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Fragment"], {
+        children: [
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
+                className: "p-4",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                        href: "/admin/ai-pcs",
+                        children: "Ai PC · 완제품 관리 →"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/admin/products/page.tsx",
+                        lineNumber: 9,
+                        columnNumber: 33
+                    }, this),
+                    "　",
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
+                        href: "/admin/orders",
+                        children: "주문 관리 →"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/admin/products/page.tsx",
+                        lineNumber: 9,
+                        columnNumber: 78
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/admin/products/page.tsx",
+                lineNumber: 9,
+                columnNumber: 12
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$admin$2f$product$2d$manager$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ProductManager"], {}, void 0, false, {
+                fileName: "[project]/src/app/admin/products/page.tsx",
+                lineNumber: 9,
+                columnNumber: 119
+            }, this)
+        ]
+    }, void 0, true, {
         fileName: "[project]/src/app/admin/products/page.tsx",
         lineNumber: 9,
         columnNumber: 10
@@ -98,12 +132,19 @@ function equalSecret(actual, expected) {
 function canUseLocalAdmin(headers) {
     if (process.env.NEXT_PUBLIC_COMPICK_DEMO_MODE === "1") return false;
     const host = headers.get("host") ?? "";
-    if ("TURBOPACK compile-time truthy", 1) return /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host);
-    //TURBOPACK unreachable
-    ;
-    const username = undefined;
-    const password = undefined;
-    const origin = undefined;
+    const local = ("TURBOPACK compile-time value", "development") === "development" && /^(localhost|127\.0\.0\.1|\[::1\])(:\d+)?$/.test(host);
+    const username = process.env.ADMIN_USERNAME;
+    const password = process.env.ADMIN_PASSWORD;
+    const origin = process.env.ADMIN_ORIGIN;
+    if (!username || !password || password.length < 12 || !local && !origin) return false;
+    try {
+        if (!local && (new URL(origin).protocol !== "https:" || new URL(origin).host !== host || headers.get("x-forwarded-proto") !== "https")) return false;
+        const authorization = headers.get("authorization") ?? "";
+        if (!authorization.startsWith("Basic ")) return false;
+        return equalSecret(Buffer.from(authorization.slice(6), "base64").toString("utf8"), `${username}:${password}`);
+    } catch  {
+        return false;
+    }
 }
 function canMutateLocalAdmin(request) {
     if (!canUseLocalAdmin(request.headers)) return false;

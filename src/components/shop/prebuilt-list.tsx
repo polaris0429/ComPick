@@ -10,7 +10,7 @@ export function PrebuiltList({ prebuilts, onSelect }: PrebuiltListProps) {
   if (prebuilts.length === 0) {
     return (
       <div className="rounded-lg border border-dashed border-line bg-paper-raised py-16 text-center text-sm text-ink-muted">
-        준비된 완제품 구성이 아직 없습니다.
+        등록된 상품이 아직 없습니다.
       </div>
     );
   }

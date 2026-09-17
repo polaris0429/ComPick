@@ -34,7 +34,7 @@ function AuthForm({ register = false }) {
         try {
             const result = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$member$2f$member$2d$provider$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["memberRequest"])(register ? "register" : "login", data);
             setUser(result.user);
-            router.replace(register ? "/" : "/cart");
+            router.replace(register ? "/" : new URLSearchParams(window.location.search).get("next") === "checkout" ? "/checkout" : "/cart");
         } catch (e) {
             setError(e.message);
         } finally{
@@ -376,13 +376,21 @@ function MemberNav() {
                 lineNumber: 5,
                 columnNumber: 461
             }, this),
+            user && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                href: "/orders",
+                children: "주문 내역"
+            }, void 0, false, {
+                fileName: "[project]/src/components/member/member-nav.tsx",
+                lineNumber: 5,
+                columnNumber: 498
+            }, this),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                 role: "alert",
                 children: error
             }, void 0, false, {
                 fileName: "[project]/src/components/member/member-nav.tsx",
                 lineNumber: 5,
-                columnNumber: 499
+                columnNumber: 540
             }, this)
         ]
     }, void 0, true, {

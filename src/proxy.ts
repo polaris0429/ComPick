@@ -8,6 +8,7 @@ export function proxy(request: NextRequest) {
     response.headers.set("X-Robots-Tag", "noindex, nofollow");
     return response;
   }
+  if (request.nextUrl.pathname.startsWith("/admin")) return NextResponse.redirect(new URL("/admin-login",request.url));
   return new NextResponse("관리자 인증이 필요합니다.", {
     status: 401,
     headers: {

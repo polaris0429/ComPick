@@ -1983,12 +1983,16 @@ export namespace Prisma {
   }
 
   export type UserMinAggregateOutputType = {
+    isActive: boolean | null
     id: string | null
     email: string | null
     emailHash: string | null
     passwordHash: string | null
     name: string | null
     nameEncrypted: boolean | null
+    phoneEncrypted: string | null
+    addressEncrypted: string | null
+    addressDetailEncrypted: string | null
     loginId: string | null
     loginIdHash: string | null
     role: $Enums.UserRole | null
@@ -1997,12 +2001,16 @@ export namespace Prisma {
   }
 
   export type UserMaxAggregateOutputType = {
+    isActive: boolean | null
     id: string | null
     email: string | null
     emailHash: string | null
     passwordHash: string | null
     name: string | null
     nameEncrypted: boolean | null
+    phoneEncrypted: string | null
+    addressEncrypted: string | null
+    addressDetailEncrypted: string | null
     loginId: string | null
     loginIdHash: string | null
     role: $Enums.UserRole | null
@@ -2011,12 +2019,16 @@ export namespace Prisma {
   }
 
   export type UserCountAggregateOutputType = {
+    isActive: number
     id: number
     email: number
     emailHash: number
     passwordHash: number
     name: number
     nameEncrypted: number
+    phoneEncrypted: number
+    addressEncrypted: number
+    addressDetailEncrypted: number
     loginId: number
     loginIdHash: number
     role: number
@@ -2027,12 +2039,16 @@ export namespace Prisma {
 
 
   export type UserMinAggregateInputType = {
+    isActive?: true
     id?: true
     email?: true
     emailHash?: true
     passwordHash?: true
     name?: true
     nameEncrypted?: true
+    phoneEncrypted?: true
+    addressEncrypted?: true
+    addressDetailEncrypted?: true
     loginId?: true
     loginIdHash?: true
     role?: true
@@ -2041,12 +2057,16 @@ export namespace Prisma {
   }
 
   export type UserMaxAggregateInputType = {
+    isActive?: true
     id?: true
     email?: true
     emailHash?: true
     passwordHash?: true
     name?: true
     nameEncrypted?: true
+    phoneEncrypted?: true
+    addressEncrypted?: true
+    addressDetailEncrypted?: true
     loginId?: true
     loginIdHash?: true
     role?: true
@@ -2055,12 +2075,16 @@ export namespace Prisma {
   }
 
   export type UserCountAggregateInputType = {
+    isActive?: true
     id?: true
     email?: true
     emailHash?: true
     passwordHash?: true
     name?: true
     nameEncrypted?: true
+    phoneEncrypted?: true
+    addressEncrypted?: true
+    addressDetailEncrypted?: true
     loginId?: true
     loginIdHash?: true
     role?: true
@@ -2142,12 +2166,16 @@ export namespace Prisma {
   }
 
   export type UserGroupByOutputType = {
+    isActive: boolean
     id: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted: boolean
+    phoneEncrypted: string | null
+    addressEncrypted: string | null
+    addressDetailEncrypted: string | null
     loginId: string | null
     loginIdHash: string | null
     role: $Enums.UserRole
@@ -2173,12 +2201,16 @@ export namespace Prisma {
 
 
   export type UserSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    isActive?: boolean
     id?: boolean
     email?: boolean
     emailHash?: boolean
     passwordHash?: boolean
     name?: boolean
     nameEncrypted?: boolean
+    phoneEncrypted?: boolean
+    addressEncrypted?: boolean
+    addressDetailEncrypted?: boolean
     loginId?: boolean
     loginIdHash?: boolean
     role?: boolean
@@ -2191,12 +2223,16 @@ export namespace Prisma {
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    isActive?: boolean
     id?: boolean
     email?: boolean
     emailHash?: boolean
     passwordHash?: boolean
     name?: boolean
     nameEncrypted?: boolean
+    phoneEncrypted?: boolean
+    addressEncrypted?: boolean
+    addressDetailEncrypted?: boolean
     loginId?: boolean
     loginIdHash?: boolean
     role?: boolean
@@ -2205,12 +2241,16 @@ export namespace Prisma {
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    isActive?: boolean
     id?: boolean
     email?: boolean
     emailHash?: boolean
     passwordHash?: boolean
     name?: boolean
     nameEncrypted?: boolean
+    phoneEncrypted?: boolean
+    addressEncrypted?: boolean
+    addressDetailEncrypted?: boolean
     loginId?: boolean
     loginIdHash?: boolean
     role?: boolean
@@ -2219,12 +2259,16 @@ export namespace Prisma {
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
+    isActive?: boolean
     id?: boolean
     email?: boolean
     emailHash?: boolean
     passwordHash?: boolean
     name?: boolean
     nameEncrypted?: boolean
+    phoneEncrypted?: boolean
+    addressEncrypted?: boolean
+    addressDetailEncrypted?: boolean
     loginId?: boolean
     loginIdHash?: boolean
     role?: boolean
@@ -2232,7 +2276,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "emailHash" | "passwordHash" | "name" | "nameEncrypted" | "loginId" | "loginIdHash" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"isActive" | "id" | "email" | "emailHash" | "passwordHash" | "name" | "nameEncrypted" | "phoneEncrypted" | "addressEncrypted" | "addressDetailEncrypted" | "loginId" | "loginIdHash" | "role" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     cartItems?: boolean | User$cartItemsArgs<ExtArgs>
@@ -2250,6 +2294,7 @@ export namespace Prisma {
       orders: Prisma.$OrderPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
+      isActive: boolean
       id: string
       /**
        * AES-256-GCM으로 암호화된 값 (src/lib/encryption.ts, 평문으로 저장하지 않음)
@@ -2269,6 +2314,12 @@ export namespace Prisma {
        */
       name: string
       nameEncrypted: boolean
+      /**
+       * Optional saved delivery details, encrypted with AES-256-GCM.
+       */
+      phoneEncrypted: string | null
+      addressEncrypted: string | null
+      addressDetailEncrypted: string | null
       loginId: string | null
       loginIdHash: string | null
       role: $Enums.UserRole
@@ -2357,8 +2408,8 @@ export namespace Prisma {
      * // Get first 10 Users
      * const users = await prisma.user.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const userWithIdOnly = await prisma.user.findMany({ select: { id: true } })
+     * // Only select the `isActive`
+     * const userWithIsActiveOnly = await prisma.user.findMany({ select: { isActive: true } })
      * 
      */
     findMany<T extends UserFindManyArgs>(args?: SelectSubset<T, UserFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -2402,9 +2453,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Users and only return the `id`
-     * const userWithIdOnly = await prisma.user.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many Users and only return the `isActive`
+     * const userWithIsActiveOnly = await prisma.user.createManyAndReturn({
+     *   select: { isActive: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -2493,9 +2544,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Users and only return the `id`
-     * const userWithIdOnly = await prisma.user.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more Users and only return the `isActive`
+     * const userWithIsActiveOnly = await prisma.user.updateManyAndReturn({
+     *   select: { isActive: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -2700,12 +2751,16 @@ export namespace Prisma {
    * Fields of the User model
    */
   interface UserFieldRefs {
+    readonly isActive: FieldRef<"User", 'Boolean'>
     readonly id: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly emailHash: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
     readonly name: FieldRef<"User", 'String'>
     readonly nameEncrypted: FieldRef<"User", 'Boolean'>
+    readonly phoneEncrypted: FieldRef<"User", 'String'>
+    readonly addressEncrypted: FieldRef<"User", 'String'>
+    readonly addressDetailEncrypted: FieldRef<"User", 'String'>
     readonly loginId: FieldRef<"User", 'String'>
     readonly loginIdHash: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
@@ -5660,18 +5715,23 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCAvgAggregateOutputType = {
+    stock: number | null
     price: number | null
     discountRate: number | null
     salesCount: number | null
   }
 
   export type PrebuiltPCSumAggregateOutputType = {
+    stock: number | null
     price: number | null
     discountRate: number | null
     salesCount: number | null
   }
 
   export type PrebuiltPCMinAggregateOutputType = {
+    kind: string | null
+    stock: number | null
+    specText: string | null
     id: string | null
     name: string | null
     description: string | null
@@ -5684,6 +5744,9 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCMaxAggregateOutputType = {
+    kind: string | null
+    stock: number | null
+    specText: string | null
     id: string | null
     name: string | null
     description: string | null
@@ -5696,6 +5759,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCCountAggregateOutputType = {
+    kind: number
+    stock: number
+    specText: number
+    infoImages: number
     id: number
     name: number
     description: number
@@ -5711,18 +5778,23 @@ export namespace Prisma {
 
 
   export type PrebuiltPCAvgAggregateInputType = {
+    stock?: true
     price?: true
     discountRate?: true
     salesCount?: true
   }
 
   export type PrebuiltPCSumAggregateInputType = {
+    stock?: true
     price?: true
     discountRate?: true
     salesCount?: true
   }
 
   export type PrebuiltPCMinAggregateInputType = {
+    kind?: true
+    stock?: true
+    specText?: true
     id?: true
     name?: true
     description?: true
@@ -5735,6 +5807,9 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCMaxAggregateInputType = {
+    kind?: true
+    stock?: true
+    specText?: true
     id?: true
     name?: true
     description?: true
@@ -5747,6 +5822,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCCountAggregateInputType = {
+    kind?: true
+    stock?: true
+    specText?: true
+    infoImages?: true
     id?: true
     name?: true
     description?: true
@@ -5847,6 +5926,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCGroupByOutputType = {
+    kind: string
+    stock: number
+    specText: string
+    infoImages: string[]
     id: string
     name: string
     description: string | null
@@ -5879,6 +5962,10 @@ export namespace Prisma {
 
 
   export type PrebuiltPCSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    kind?: boolean
+    stock?: boolean
+    specText?: boolean
+    infoImages?: boolean
     id?: boolean
     name?: boolean
     description?: boolean
@@ -5896,6 +5983,10 @@ export namespace Prisma {
   }, ExtArgs["result"]["prebuiltPC"]>
 
   export type PrebuiltPCSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    kind?: boolean
+    stock?: boolean
+    specText?: boolean
+    infoImages?: boolean
     id?: boolean
     name?: boolean
     description?: boolean
@@ -5909,6 +6000,10 @@ export namespace Prisma {
   }, ExtArgs["result"]["prebuiltPC"]>
 
   export type PrebuiltPCSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    kind?: boolean
+    stock?: boolean
+    specText?: boolean
+    infoImages?: boolean
     id?: boolean
     name?: boolean
     description?: boolean
@@ -5922,6 +6017,10 @@ export namespace Prisma {
   }, ExtArgs["result"]["prebuiltPC"]>
 
   export type PrebuiltPCSelectScalar = {
+    kind?: boolean
+    stock?: boolean
+    specText?: boolean
+    infoImages?: boolean
     id?: boolean
     name?: boolean
     description?: boolean
@@ -5934,7 +6033,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type PrebuiltPCOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "images" | "price" | "discountRate" | "salesCount" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["prebuiltPC"]>
+  export type PrebuiltPCOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"kind" | "stock" | "specText" | "infoImages" | "id" | "name" | "description" | "images" | "price" | "discountRate" | "salesCount" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["prebuiltPC"]>
   export type PrebuiltPCInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     components?: boolean | PrebuiltPC$componentsArgs<ExtArgs>
     orderItems?: boolean | PrebuiltPC$orderItemsArgs<ExtArgs>
@@ -5952,6 +6051,10 @@ export namespace Prisma {
       cartItems: Prisma.$CartItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
+      kind: string
+      stock: number
+      specText: string
+      infoImages: string[]
       id: string
       name: string
       description: string | null
@@ -6045,8 +6148,8 @@ export namespace Prisma {
      * // Get first 10 PrebuiltPCS
      * const prebuiltPCS = await prisma.prebuiltPC.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const prebuiltPCWithIdOnly = await prisma.prebuiltPC.findMany({ select: { id: true } })
+     * // Only select the `kind`
+     * const prebuiltPCWithKindOnly = await prisma.prebuiltPC.findMany({ select: { kind: true } })
      * 
      */
     findMany<T extends PrebuiltPCFindManyArgs>(args?: SelectSubset<T, PrebuiltPCFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PrebuiltPCPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -6090,9 +6193,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many PrebuiltPCS and only return the `id`
-     * const prebuiltPCWithIdOnly = await prisma.prebuiltPC.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many PrebuiltPCS and only return the `kind`
+     * const prebuiltPCWithKindOnly = await prisma.prebuiltPC.createManyAndReturn({
+     *   select: { kind: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -6181,9 +6284,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more PrebuiltPCS and only return the `id`
-     * const prebuiltPCWithIdOnly = await prisma.prebuiltPC.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more PrebuiltPCS and only return the `kind`
+     * const prebuiltPCWithKindOnly = await prisma.prebuiltPC.updateManyAndReturn({
+     *   select: { kind: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -6388,6 +6491,10 @@ export namespace Prisma {
    * Fields of the PrebuiltPC model
    */
   interface PrebuiltPCFieldRefs {
+    readonly kind: FieldRef<"PrebuiltPC", 'String'>
+    readonly stock: FieldRef<"PrebuiltPC", 'Int'>
+    readonly specText: FieldRef<"PrebuiltPC", 'String'>
+    readonly infoImages: FieldRef<"PrebuiltPC", 'String[]'>
     readonly id: FieldRef<"PrebuiltPC", 'String'>
     readonly name: FieldRef<"PrebuiltPC", 'String'>
     readonly description: FieldRef<"PrebuiltPC", 'String'>
@@ -7998,6 +8105,14 @@ export namespace Prisma {
   }
 
   export type OrderMinAggregateOutputType = {
+    shippingStatus: string | null
+    courier: string | null
+    trackingNumber: string | null
+    shippedAt: Date | null
+    deliveredAt: Date | null
+    requestKey: string | null
+    shippingEncrypted: string | null
+    stockReserved: boolean | null
     id: string | null
     userId: string | null
     status: $Enums.OrderStatus | null
@@ -8012,6 +8127,14 @@ export namespace Prisma {
   }
 
   export type OrderMaxAggregateOutputType = {
+    shippingStatus: string | null
+    courier: string | null
+    trackingNumber: string | null
+    shippedAt: Date | null
+    deliveredAt: Date | null
+    requestKey: string | null
+    shippingEncrypted: string | null
+    stockReserved: boolean | null
     id: string | null
     userId: string | null
     status: $Enums.OrderStatus | null
@@ -8026,6 +8149,15 @@ export namespace Prisma {
   }
 
   export type OrderCountAggregateOutputType = {
+    shippingStatus: number
+    courier: number
+    trackingNumber: number
+    shippedAt: number
+    deliveredAt: number
+    requestKey: number
+    shippingEncrypted: number
+    inventory: number
+    stockReserved: number
     id: number
     userId: number
     status: number
@@ -8054,6 +8186,14 @@ export namespace Prisma {
   }
 
   export type OrderMinAggregateInputType = {
+    shippingStatus?: true
+    courier?: true
+    trackingNumber?: true
+    shippedAt?: true
+    deliveredAt?: true
+    requestKey?: true
+    shippingEncrypted?: true
+    stockReserved?: true
     id?: true
     userId?: true
     status?: true
@@ -8068,6 +8208,14 @@ export namespace Prisma {
   }
 
   export type OrderMaxAggregateInputType = {
+    shippingStatus?: true
+    courier?: true
+    trackingNumber?: true
+    shippedAt?: true
+    deliveredAt?: true
+    requestKey?: true
+    shippingEncrypted?: true
+    stockReserved?: true
     id?: true
     userId?: true
     status?: true
@@ -8082,6 +8230,15 @@ export namespace Prisma {
   }
 
   export type OrderCountAggregateInputType = {
+    shippingStatus?: true
+    courier?: true
+    trackingNumber?: true
+    shippedAt?: true
+    deliveredAt?: true
+    requestKey?: true
+    shippingEncrypted?: true
+    inventory?: true
+    stockReserved?: true
     id?: true
     userId?: true
     status?: true
@@ -8183,6 +8340,15 @@ export namespace Prisma {
   }
 
   export type OrderGroupByOutputType = {
+    shippingStatus: string
+    courier: string
+    trackingNumber: string
+    shippedAt: Date | null
+    deliveredAt: Date | null
+    requestKey: string | null
+    shippingEncrypted: string | null
+    inventory: JsonValue | null
+    stockReserved: boolean
     id: string
     userId: string | null
     status: $Enums.OrderStatus
@@ -8216,6 +8382,15 @@ export namespace Prisma {
 
 
   export type OrderSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    shippingStatus?: boolean
+    courier?: boolean
+    trackingNumber?: boolean
+    shippedAt?: boolean
+    deliveredAt?: boolean
+    requestKey?: boolean
+    shippingEncrypted?: boolean
+    inventory?: boolean
+    stockReserved?: boolean
     id?: boolean
     userId?: boolean
     status?: boolean
@@ -8233,6 +8408,15 @@ export namespace Prisma {
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    shippingStatus?: boolean
+    courier?: boolean
+    trackingNumber?: boolean
+    shippedAt?: boolean
+    deliveredAt?: boolean
+    requestKey?: boolean
+    shippingEncrypted?: boolean
+    inventory?: boolean
+    stockReserved?: boolean
     id?: boolean
     userId?: boolean
     status?: boolean
@@ -8248,6 +8432,15 @@ export namespace Prisma {
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    shippingStatus?: boolean
+    courier?: boolean
+    trackingNumber?: boolean
+    shippedAt?: boolean
+    deliveredAt?: boolean
+    requestKey?: boolean
+    shippingEncrypted?: boolean
+    inventory?: boolean
+    stockReserved?: boolean
     id?: boolean
     userId?: boolean
     status?: boolean
@@ -8263,6 +8456,15 @@ export namespace Prisma {
   }, ExtArgs["result"]["order"]>
 
   export type OrderSelectScalar = {
+    shippingStatus?: boolean
+    courier?: boolean
+    trackingNumber?: boolean
+    shippedAt?: boolean
+    deliveredAt?: boolean
+    requestKey?: boolean
+    shippingEncrypted?: boolean
+    inventory?: boolean
+    stockReserved?: boolean
     id?: boolean
     userId?: boolean
     status?: boolean
@@ -8276,7 +8478,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "status" | "totalAmount" | "discountAmount" | "finalAmount" | "tossOrderId" | "tossPaymentKey" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
+  export type OrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"shippingStatus" | "courier" | "trackingNumber" | "shippedAt" | "deliveredAt" | "requestKey" | "shippingEncrypted" | "inventory" | "stockReserved" | "id" | "userId" | "status" | "totalAmount" | "discountAmount" | "finalAmount" | "tossOrderId" | "tossPaymentKey" | "paidAt" | "createdAt" | "updatedAt", ExtArgs["result"]["order"]>
   export type OrderInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | Order$userArgs<ExtArgs>
     items?: boolean | Order$itemsArgs<ExtArgs>
@@ -8296,6 +8498,15 @@ export namespace Prisma {
       items: Prisma.$OrderItemPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
+      shippingStatus: string
+      courier: string
+      trackingNumber: string
+      shippedAt: Date | null
+      deliveredAt: Date | null
+      requestKey: string | null
+      shippingEncrypted: string | null
+      inventory: Prisma.JsonValue | null
+      stockReserved: boolean
       id: string
       userId: string | null
       status: $Enums.OrderStatus
@@ -8406,8 +8617,8 @@ export namespace Prisma {
      * // Get first 10 Orders
      * const orders = await prisma.order.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const orderWithIdOnly = await prisma.order.findMany({ select: { id: true } })
+     * // Only select the `shippingStatus`
+     * const orderWithShippingStatusOnly = await prisma.order.findMany({ select: { shippingStatus: true } })
      * 
      */
     findMany<T extends OrderFindManyArgs>(args?: SelectSubset<T, OrderFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -8451,9 +8662,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many Orders and only return the `id`
-     * const orderWithIdOnly = await prisma.order.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many Orders and only return the `shippingStatus`
+     * const orderWithShippingStatusOnly = await prisma.order.createManyAndReturn({
+     *   select: { shippingStatus: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -8542,9 +8753,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more Orders and only return the `id`
-     * const orderWithIdOnly = await prisma.order.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more Orders and only return the `shippingStatus`
+     * const orderWithShippingStatusOnly = await prisma.order.updateManyAndReturn({
+     *   select: { shippingStatus: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -8748,6 +8959,15 @@ export namespace Prisma {
    * Fields of the Order model
    */
   interface OrderFieldRefs {
+    readonly shippingStatus: FieldRef<"Order", 'String'>
+    readonly courier: FieldRef<"Order", 'String'>
+    readonly trackingNumber: FieldRef<"Order", 'String'>
+    readonly shippedAt: FieldRef<"Order", 'DateTime'>
+    readonly deliveredAt: FieldRef<"Order", 'DateTime'>
+    readonly requestKey: FieldRef<"Order", 'String'>
+    readonly shippingEncrypted: FieldRef<"Order", 'String'>
+    readonly inventory: FieldRef<"Order", 'Json'>
+    readonly stockReserved: FieldRef<"Order", 'Boolean'>
     readonly id: FieldRef<"Order", 'String'>
     readonly userId: FieldRef<"Order", 'String'>
     readonly status: FieldRef<"Order", 'OrderStatus'>
@@ -9244,6 +9464,8 @@ export namespace Prisma {
   }
 
   export type OrderItemMinAggregateOutputType = {
+    image: string | null
+    name: string | null
     id: string | null
     orderId: string | null
     productId: string | null
@@ -9253,6 +9475,8 @@ export namespace Prisma {
   }
 
   export type OrderItemMaxAggregateOutputType = {
+    image: string | null
+    name: string | null
     id: string | null
     orderId: string | null
     productId: string | null
@@ -9262,6 +9486,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCountAggregateOutputType = {
+    image: number
+    name: number
     id: number
     orderId: number
     productId: number
@@ -9283,6 +9509,8 @@ export namespace Prisma {
   }
 
   export type OrderItemMinAggregateInputType = {
+    image?: true
+    name?: true
     id?: true
     orderId?: true
     productId?: true
@@ -9292,6 +9520,8 @@ export namespace Prisma {
   }
 
   export type OrderItemMaxAggregateInputType = {
+    image?: true
+    name?: true
     id?: true
     orderId?: true
     productId?: true
@@ -9301,6 +9531,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCountAggregateInputType = {
+    image?: true
+    name?: true
     id?: true
     orderId?: true
     productId?: true
@@ -9397,6 +9629,8 @@ export namespace Prisma {
   }
 
   export type OrderItemGroupByOutputType = {
+    image: string
+    name: string
     id: string
     orderId: string
     productId: string | null
@@ -9425,6 +9659,8 @@ export namespace Prisma {
 
 
   export type OrderItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    image?: boolean
+    name?: boolean
     id?: boolean
     orderId?: boolean
     productId?: boolean
@@ -9437,6 +9673,8 @@ export namespace Prisma {
   }, ExtArgs["result"]["orderItem"]>
 
   export type OrderItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    image?: boolean
+    name?: boolean
     id?: boolean
     orderId?: boolean
     productId?: boolean
@@ -9449,6 +9687,8 @@ export namespace Prisma {
   }, ExtArgs["result"]["orderItem"]>
 
   export type OrderItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    image?: boolean
+    name?: boolean
     id?: boolean
     orderId?: boolean
     productId?: boolean
@@ -9461,6 +9701,8 @@ export namespace Prisma {
   }, ExtArgs["result"]["orderItem"]>
 
   export type OrderItemSelectScalar = {
+    image?: boolean
+    name?: boolean
     id?: boolean
     orderId?: boolean
     productId?: boolean
@@ -9469,7 +9711,7 @@ export namespace Prisma {
     unitPrice?: boolean
   }
 
-  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "orderId" | "productId" | "prebuiltPCId" | "quantity" | "unitPrice", ExtArgs["result"]["orderItem"]>
+  export type OrderItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"image" | "name" | "id" | "orderId" | "productId" | "prebuiltPCId" | "quantity" | "unitPrice", ExtArgs["result"]["orderItem"]>
   export type OrderItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     order?: boolean | OrderDefaultArgs<ExtArgs>
     product?: boolean | OrderItem$productArgs<ExtArgs>
@@ -9494,6 +9736,8 @@ export namespace Prisma {
       prebuiltPC: Prisma.$PrebuiltPCPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
+      image: string
+      name: string
       id: string
       orderId: string
       productId: string | null
@@ -9586,8 +9830,8 @@ export namespace Prisma {
      * // Get first 10 OrderItems
      * const orderItems = await prisma.orderItem.findMany({ take: 10 })
      * 
-     * // Only select the `id`
-     * const orderItemWithIdOnly = await prisma.orderItem.findMany({ select: { id: true } })
+     * // Only select the `image`
+     * const orderItemWithImageOnly = await prisma.orderItem.findMany({ select: { image: true } })
      * 
      */
     findMany<T extends OrderItemFindManyArgs>(args?: SelectSubset<T, OrderItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OrderItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
@@ -9631,9 +9875,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Create many OrderItems and only return the `id`
-     * const orderItemWithIdOnly = await prisma.orderItem.createManyAndReturn({
-     *   select: { id: true },
+     * // Create many OrderItems and only return the `image`
+     * const orderItemWithImageOnly = await prisma.orderItem.createManyAndReturn({
+     *   select: { image: true },
      *   data: [
      *     // ... provide data here
      *   ]
@@ -9722,9 +9966,9 @@ export namespace Prisma {
      *   ]
      * })
      * 
-     * // Update zero or more OrderItems and only return the `id`
-     * const orderItemWithIdOnly = await prisma.orderItem.updateManyAndReturn({
-     *   select: { id: true },
+     * // Update zero or more OrderItems and only return the `image`
+     * const orderItemWithImageOnly = await prisma.orderItem.updateManyAndReturn({
+     *   select: { image: true },
      *   where: {
      *     // ... provide filter here
      *   },
@@ -9929,6 +10173,8 @@ export namespace Prisma {
    * Fields of the OrderItem model
    */
   interface OrderItemFieldRefs {
+    readonly image: FieldRef<"OrderItem", 'String'>
+    readonly name: FieldRef<"OrderItem", 'String'>
     readonly id: FieldRef<"OrderItem", 'String'>
     readonly orderId: FieldRef<"OrderItem", 'String'>
     readonly productId: FieldRef<"OrderItem", 'String'>
@@ -13642,12 +13888,16 @@ export namespace Prisma {
 
 
   export const UserScalarFieldEnum: {
+    isActive: 'isActive',
     id: 'id',
     email: 'email',
     emailHash: 'emailHash',
     passwordHash: 'passwordHash',
     name: 'name',
     nameEncrypted: 'nameEncrypted',
+    phoneEncrypted: 'phoneEncrypted',
+    addressEncrypted: 'addressEncrypted',
+    addressDetailEncrypted: 'addressDetailEncrypted',
     loginId: 'loginId',
     loginIdHash: 'loginIdHash',
     role: 'role',
@@ -13692,6 +13942,10 @@ export namespace Prisma {
 
 
   export const PrebuiltPCScalarFieldEnum: {
+    kind: 'kind',
+    stock: 'stock',
+    specText: 'specText',
+    infoImages: 'infoImages',
     id: 'id',
     name: 'name',
     description: 'description',
@@ -13718,6 +13972,15 @@ export namespace Prisma {
 
 
   export const OrderScalarFieldEnum: {
+    shippingStatus: 'shippingStatus',
+    courier: 'courier',
+    trackingNumber: 'trackingNumber',
+    shippedAt: 'shippedAt',
+    deliveredAt: 'deliveredAt',
+    requestKey: 'requestKey',
+    shippingEncrypted: 'shippingEncrypted',
+    inventory: 'inventory',
+    stockReserved: 'stockReserved',
     id: 'id',
     userId: 'userId',
     status: 'status',
@@ -13735,6 +13998,8 @@ export namespace Prisma {
 
 
   export const OrderItemScalarFieldEnum: {
+    image: 'image',
+    name: 'name',
     id: 'id',
     orderId: 'orderId',
     productId: 'productId',
@@ -13832,6 +14097,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+  /**
    * Reference to a field of type 'String'
    */
   export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String'>
@@ -13842,13 +14114,6 @@ export namespace Prisma {
    * Reference to a field of type 'String[]'
    */
   export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -13957,12 +14222,16 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
+    isActive?: BoolFilter<"User"> | boolean
     id?: StringFilter<"User"> | string
     email?: StringFilter<"User"> | string
     emailHash?: StringFilter<"User"> | string
     passwordHash?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     nameEncrypted?: BoolFilter<"User"> | boolean
+    phoneEncrypted?: StringNullableFilter<"User"> | string | null
+    addressEncrypted?: StringNullableFilter<"User"> | string | null
+    addressDetailEncrypted?: StringNullableFilter<"User"> | string | null
     loginId?: StringNullableFilter<"User"> | string | null
     loginIdHash?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
@@ -13974,12 +14243,16 @@ export namespace Prisma {
   }
 
   export type UserOrderByWithRelationInput = {
+    isActive?: SortOrder
     id?: SortOrder
     email?: SortOrder
     emailHash?: SortOrder
     passwordHash?: SortOrder
     name?: SortOrder
     nameEncrypted?: SortOrder
+    phoneEncrypted?: SortOrderInput | SortOrder
+    addressEncrypted?: SortOrderInput | SortOrder
+    addressDetailEncrypted?: SortOrderInput | SortOrder
     loginId?: SortOrderInput | SortOrder
     loginIdHash?: SortOrderInput | SortOrder
     role?: SortOrder
@@ -13997,10 +14270,14 @@ export namespace Prisma {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
+    isActive?: BoolFilter<"User"> | boolean
     email?: StringFilter<"User"> | string
     passwordHash?: StringFilter<"User"> | string
     name?: StringFilter<"User"> | string
     nameEncrypted?: BoolFilter<"User"> | boolean
+    phoneEncrypted?: StringNullableFilter<"User"> | string | null
+    addressEncrypted?: StringNullableFilter<"User"> | string | null
+    addressDetailEncrypted?: StringNullableFilter<"User"> | string | null
     loginId?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -14011,12 +14288,16 @@ export namespace Prisma {
   }, "id" | "emailHash" | "loginIdHash">
 
   export type UserOrderByWithAggregationInput = {
+    isActive?: SortOrder
     id?: SortOrder
     email?: SortOrder
     emailHash?: SortOrder
     passwordHash?: SortOrder
     name?: SortOrder
     nameEncrypted?: SortOrder
+    phoneEncrypted?: SortOrderInput | SortOrder
+    addressEncrypted?: SortOrderInput | SortOrder
+    addressDetailEncrypted?: SortOrderInput | SortOrder
     loginId?: SortOrderInput | SortOrder
     loginIdHash?: SortOrderInput | SortOrder
     role?: SortOrder
@@ -14031,12 +14312,16 @@ export namespace Prisma {
     AND?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
     OR?: UserScalarWhereWithAggregatesInput[]
     NOT?: UserScalarWhereWithAggregatesInput | UserScalarWhereWithAggregatesInput[]
+    isActive?: BoolWithAggregatesFilter<"User"> | boolean
     id?: StringWithAggregatesFilter<"User"> | string
     email?: StringWithAggregatesFilter<"User"> | string
     emailHash?: StringWithAggregatesFilter<"User"> | string
     passwordHash?: StringWithAggregatesFilter<"User"> | string
     name?: StringWithAggregatesFilter<"User"> | string
     nameEncrypted?: BoolWithAggregatesFilter<"User"> | boolean
+    phoneEncrypted?: StringNullableWithAggregatesFilter<"User"> | string | null
+    addressEncrypted?: StringNullableWithAggregatesFilter<"User"> | string | null
+    addressDetailEncrypted?: StringNullableWithAggregatesFilter<"User"> | string | null
     loginId?: StringNullableWithAggregatesFilter<"User"> | string | null
     loginIdHash?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
@@ -14226,6 +14511,10 @@ export namespace Prisma {
     AND?: PrebuiltPCWhereInput | PrebuiltPCWhereInput[]
     OR?: PrebuiltPCWhereInput[]
     NOT?: PrebuiltPCWhereInput | PrebuiltPCWhereInput[]
+    kind?: StringFilter<"PrebuiltPC"> | string
+    stock?: IntFilter<"PrebuiltPC"> | number
+    specText?: StringFilter<"PrebuiltPC"> | string
+    infoImages?: StringNullableListFilter<"PrebuiltPC">
     id?: StringFilter<"PrebuiltPC"> | string
     name?: StringFilter<"PrebuiltPC"> | string
     description?: StringNullableFilter<"PrebuiltPC"> | string | null
@@ -14242,6 +14531,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCOrderByWithRelationInput = {
+    kind?: SortOrder
+    stock?: SortOrder
+    specText?: SortOrder
+    infoImages?: SortOrder
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -14262,6 +14555,10 @@ export namespace Prisma {
     AND?: PrebuiltPCWhereInput | PrebuiltPCWhereInput[]
     OR?: PrebuiltPCWhereInput[]
     NOT?: PrebuiltPCWhereInput | PrebuiltPCWhereInput[]
+    kind?: StringFilter<"PrebuiltPC"> | string
+    stock?: IntFilter<"PrebuiltPC"> | number
+    specText?: StringFilter<"PrebuiltPC"> | string
+    infoImages?: StringNullableListFilter<"PrebuiltPC">
     name?: StringFilter<"PrebuiltPC"> | string
     description?: StringNullableFilter<"PrebuiltPC"> | string | null
     images?: StringNullableListFilter<"PrebuiltPC">
@@ -14277,6 +14574,10 @@ export namespace Prisma {
   }, "id">
 
   export type PrebuiltPCOrderByWithAggregationInput = {
+    kind?: SortOrder
+    stock?: SortOrder
+    specText?: SortOrder
+    infoImages?: SortOrder
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
@@ -14298,6 +14599,10 @@ export namespace Prisma {
     AND?: PrebuiltPCScalarWhereWithAggregatesInput | PrebuiltPCScalarWhereWithAggregatesInput[]
     OR?: PrebuiltPCScalarWhereWithAggregatesInput[]
     NOT?: PrebuiltPCScalarWhereWithAggregatesInput | PrebuiltPCScalarWhereWithAggregatesInput[]
+    kind?: StringWithAggregatesFilter<"PrebuiltPC"> | string
+    stock?: IntWithAggregatesFilter<"PrebuiltPC"> | number
+    specText?: StringWithAggregatesFilter<"PrebuiltPC"> | string
+    infoImages?: StringNullableListFilter<"PrebuiltPC">
     id?: StringWithAggregatesFilter<"PrebuiltPC"> | string
     name?: StringWithAggregatesFilter<"PrebuiltPC"> | string
     description?: StringNullableWithAggregatesFilter<"PrebuiltPC"> | string | null
@@ -14370,6 +14675,15 @@ export namespace Prisma {
     AND?: OrderWhereInput | OrderWhereInput[]
     OR?: OrderWhereInput[]
     NOT?: OrderWhereInput | OrderWhereInput[]
+    shippingStatus?: StringFilter<"Order"> | string
+    courier?: StringFilter<"Order"> | string
+    trackingNumber?: StringFilter<"Order"> | string
+    shippedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+    deliveredAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+    requestKey?: StringNullableFilter<"Order"> | string | null
+    shippingEncrypted?: StringNullableFilter<"Order"> | string | null
+    inventory?: JsonNullableFilter<"Order">
+    stockReserved?: BoolFilter<"Order"> | boolean
     id?: StringFilter<"Order"> | string
     userId?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
@@ -14386,6 +14700,15 @@ export namespace Prisma {
   }
 
   export type OrderOrderByWithRelationInput = {
+    shippingStatus?: SortOrder
+    courier?: SortOrder
+    trackingNumber?: SortOrder
+    shippedAt?: SortOrderInput | SortOrder
+    deliveredAt?: SortOrderInput | SortOrder
+    requestKey?: SortOrderInput | SortOrder
+    shippingEncrypted?: SortOrderInput | SortOrder
+    inventory?: SortOrderInput | SortOrder
+    stockReserved?: SortOrder
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
     status?: SortOrder
@@ -14402,12 +14725,21 @@ export namespace Prisma {
   }
 
   export type OrderWhereUniqueInput = Prisma.AtLeast<{
+    requestKey?: string
     id?: string
     tossOrderId?: string
     tossPaymentKey?: string
     AND?: OrderWhereInput | OrderWhereInput[]
     OR?: OrderWhereInput[]
     NOT?: OrderWhereInput | OrderWhereInput[]
+    shippingStatus?: StringFilter<"Order"> | string
+    courier?: StringFilter<"Order"> | string
+    trackingNumber?: StringFilter<"Order"> | string
+    shippedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+    deliveredAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+    shippingEncrypted?: StringNullableFilter<"Order"> | string | null
+    inventory?: JsonNullableFilter<"Order">
+    stockReserved?: BoolFilter<"Order"> | boolean
     userId?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
     totalAmount?: IntFilter<"Order"> | number
@@ -14418,9 +14750,18 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Order"> | Date | string
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     items?: OrderItemListRelationFilter
-  }, "id" | "tossOrderId" | "tossPaymentKey">
+  }, "id" | "requestKey" | "tossOrderId" | "tossPaymentKey">
 
   export type OrderOrderByWithAggregationInput = {
+    shippingStatus?: SortOrder
+    courier?: SortOrder
+    trackingNumber?: SortOrder
+    shippedAt?: SortOrderInput | SortOrder
+    deliveredAt?: SortOrderInput | SortOrder
+    requestKey?: SortOrderInput | SortOrder
+    shippingEncrypted?: SortOrderInput | SortOrder
+    inventory?: SortOrderInput | SortOrder
+    stockReserved?: SortOrder
     id?: SortOrder
     userId?: SortOrderInput | SortOrder
     status?: SortOrder
@@ -14443,6 +14784,15 @@ export namespace Prisma {
     AND?: OrderScalarWhereWithAggregatesInput | OrderScalarWhereWithAggregatesInput[]
     OR?: OrderScalarWhereWithAggregatesInput[]
     NOT?: OrderScalarWhereWithAggregatesInput | OrderScalarWhereWithAggregatesInput[]
+    shippingStatus?: StringWithAggregatesFilter<"Order"> | string
+    courier?: StringWithAggregatesFilter<"Order"> | string
+    trackingNumber?: StringWithAggregatesFilter<"Order"> | string
+    shippedAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+    deliveredAt?: DateTimeNullableWithAggregatesFilter<"Order"> | Date | string | null
+    requestKey?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    shippingEncrypted?: StringNullableWithAggregatesFilter<"Order"> | string | null
+    inventory?: JsonNullableWithAggregatesFilter<"Order">
+    stockReserved?: BoolWithAggregatesFilter<"Order"> | boolean
     id?: StringWithAggregatesFilter<"Order"> | string
     userId?: StringNullableWithAggregatesFilter<"Order"> | string | null
     status?: EnumOrderStatusWithAggregatesFilter<"Order"> | $Enums.OrderStatus
@@ -14460,6 +14810,8 @@ export namespace Prisma {
     AND?: OrderItemWhereInput | OrderItemWhereInput[]
     OR?: OrderItemWhereInput[]
     NOT?: OrderItemWhereInput | OrderItemWhereInput[]
+    image?: StringFilter<"OrderItem"> | string
+    name?: StringFilter<"OrderItem"> | string
     id?: StringFilter<"OrderItem"> | string
     orderId?: StringFilter<"OrderItem"> | string
     productId?: StringNullableFilter<"OrderItem"> | string | null
@@ -14472,6 +14824,8 @@ export namespace Prisma {
   }
 
   export type OrderItemOrderByWithRelationInput = {
+    image?: SortOrder
+    name?: SortOrder
     id?: SortOrder
     orderId?: SortOrder
     productId?: SortOrderInput | SortOrder
@@ -14488,6 +14842,8 @@ export namespace Prisma {
     AND?: OrderItemWhereInput | OrderItemWhereInput[]
     OR?: OrderItemWhereInput[]
     NOT?: OrderItemWhereInput | OrderItemWhereInput[]
+    image?: StringFilter<"OrderItem"> | string
+    name?: StringFilter<"OrderItem"> | string
     orderId?: StringFilter<"OrderItem"> | string
     productId?: StringNullableFilter<"OrderItem"> | string | null
     prebuiltPCId?: StringNullableFilter<"OrderItem"> | string | null
@@ -14499,6 +14855,8 @@ export namespace Prisma {
   }, "id">
 
   export type OrderItemOrderByWithAggregationInput = {
+    image?: SortOrder
+    name?: SortOrder
     id?: SortOrder
     orderId?: SortOrder
     productId?: SortOrderInput | SortOrder
@@ -14516,6 +14874,8 @@ export namespace Prisma {
     AND?: OrderItemScalarWhereWithAggregatesInput | OrderItemScalarWhereWithAggregatesInput[]
     OR?: OrderItemScalarWhereWithAggregatesInput[]
     NOT?: OrderItemScalarWhereWithAggregatesInput | OrderItemScalarWhereWithAggregatesInput[]
+    image?: StringWithAggregatesFilter<"OrderItem"> | string
+    name?: StringWithAggregatesFilter<"OrderItem"> | string
     id?: StringWithAggregatesFilter<"OrderItem"> | string
     orderId?: StringWithAggregatesFilter<"OrderItem"> | string
     productId?: StringNullableWithAggregatesFilter<"OrderItem"> | string | null
@@ -14694,12 +15054,16 @@ export namespace Prisma {
   }
 
   export type UserCreateInput = {
+    isActive?: boolean
     id?: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted?: boolean
+    phoneEncrypted?: string | null
+    addressEncrypted?: string | null
+    addressDetailEncrypted?: string | null
     loginId?: string | null
     loginIdHash?: string | null
     role?: $Enums.UserRole
@@ -14711,12 +15075,16 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateInput = {
+    isActive?: boolean
     id?: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted?: boolean
+    phoneEncrypted?: string | null
+    addressEncrypted?: string | null
+    addressDetailEncrypted?: string | null
     loginId?: string | null
     loginIdHash?: string | null
     role?: $Enums.UserRole
@@ -14728,12 +15096,16 @@ export namespace Prisma {
   }
 
   export type UserUpdateInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -14745,12 +15117,16 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -14762,12 +15138,16 @@ export namespace Prisma {
   }
 
   export type UserCreateManyInput = {
+    isActive?: boolean
     id?: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted?: boolean
+    phoneEncrypted?: string | null
+    addressEncrypted?: string | null
+    addressDetailEncrypted?: string | null
     loginId?: string | null
     loginIdHash?: string | null
     role?: $Enums.UserRole
@@ -14776,12 +15156,16 @@ export namespace Prisma {
   }
 
   export type UserUpdateManyMutationInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -14790,12 +15174,16 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateManyInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -15008,6 +15396,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCCreateInput = {
+    kind?: string
+    stock?: number
+    specText?: string
+    infoImages?: PrebuiltPCCreateinfoImagesInput | string[]
     id?: string
     name: string
     description?: string | null
@@ -15024,6 +15416,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUncheckedCreateInput = {
+    kind?: string
+    stock?: number
+    specText?: string
+    infoImages?: PrebuiltPCCreateinfoImagesInput | string[]
     id?: string
     name: string
     description?: string | null
@@ -15040,6 +15436,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUpdateInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15056,6 +15456,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUncheckedUpdateInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15072,6 +15476,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCCreateManyInput = {
+    kind?: string
+    stock?: number
+    specText?: string
+    infoImages?: PrebuiltPCCreateinfoImagesInput | string[]
     id?: string
     name: string
     description?: string | null
@@ -15085,6 +15493,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUpdateManyMutationInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15098,6 +15510,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUncheckedUpdateManyInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15158,6 +15574,15 @@ export namespace Prisma {
   }
 
   export type OrderCreateInput = {
+    shippingStatus?: string
+    courier?: string
+    trackingNumber?: string
+    shippedAt?: Date | string | null
+    deliveredAt?: Date | string | null
+    requestKey?: string | null
+    shippingEncrypted?: string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: boolean
     id?: string
     status?: $Enums.OrderStatus
     totalAmount: number
@@ -15173,6 +15598,15 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedCreateInput = {
+    shippingStatus?: string
+    courier?: string
+    trackingNumber?: string
+    shippedAt?: Date | string | null
+    deliveredAt?: Date | string | null
+    requestKey?: string | null
+    shippingEncrypted?: string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: boolean
     id?: string
     userId?: string | null
     status?: $Enums.OrderStatus
@@ -15188,6 +15622,15 @@ export namespace Prisma {
   }
 
   export type OrderUpdateInput = {
+    shippingStatus?: StringFieldUpdateOperationsInput | string
+    courier?: StringFieldUpdateOperationsInput | string
+    trackingNumber?: StringFieldUpdateOperationsInput | string
+    shippedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestKey?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     totalAmount?: IntFieldUpdateOperationsInput | number
@@ -15203,6 +15646,15 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedUpdateInput = {
+    shippingStatus?: StringFieldUpdateOperationsInput | string
+    courier?: StringFieldUpdateOperationsInput | string
+    trackingNumber?: StringFieldUpdateOperationsInput | string
+    shippedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestKey?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -15218,6 +15670,15 @@ export namespace Prisma {
   }
 
   export type OrderCreateManyInput = {
+    shippingStatus?: string
+    courier?: string
+    trackingNumber?: string
+    shippedAt?: Date | string | null
+    deliveredAt?: Date | string | null
+    requestKey?: string | null
+    shippingEncrypted?: string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: boolean
     id?: string
     userId?: string | null
     status?: $Enums.OrderStatus
@@ -15232,6 +15693,15 @@ export namespace Prisma {
   }
 
   export type OrderUpdateManyMutationInput = {
+    shippingStatus?: StringFieldUpdateOperationsInput | string
+    courier?: StringFieldUpdateOperationsInput | string
+    trackingNumber?: StringFieldUpdateOperationsInput | string
+    shippedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestKey?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     totalAmount?: IntFieldUpdateOperationsInput | number
@@ -15245,6 +15715,15 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedUpdateManyInput = {
+    shippingStatus?: StringFieldUpdateOperationsInput | string
+    courier?: StringFieldUpdateOperationsInput | string
+    trackingNumber?: StringFieldUpdateOperationsInput | string
+    shippedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestKey?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -15259,6 +15738,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCreateInput = {
+    image?: string
+    name?: string
     id?: string
     quantity?: number
     unitPrice: number
@@ -15268,6 +15749,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedCreateInput = {
+    image?: string
+    name?: string
     id?: string
     orderId: string
     productId?: string | null
@@ -15277,6 +15760,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUpdateInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -15286,6 +15771,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedUpdateInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15295,6 +15782,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCreateManyInput = {
+    image?: string
+    name?: string
     id?: string
     orderId: string
     productId?: string | null
@@ -15304,12 +15793,16 @@ export namespace Prisma {
   }
 
   export type OrderItemUpdateManyMutationInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
   }
 
   export type OrderItemUncheckedUpdateManyInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -15475,6 +15968,11 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -15488,11 +15986,6 @@ export namespace Prisma {
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type BoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type StringNullableFilter<$PrismaModel = never> = {
@@ -15564,12 +16057,16 @@ export namespace Prisma {
   }
 
   export type UserCountOrderByAggregateInput = {
+    isActive?: SortOrder
     id?: SortOrder
     email?: SortOrder
     emailHash?: SortOrder
     passwordHash?: SortOrder
     name?: SortOrder
     nameEncrypted?: SortOrder
+    phoneEncrypted?: SortOrder
+    addressEncrypted?: SortOrder
+    addressDetailEncrypted?: SortOrder
     loginId?: SortOrder
     loginIdHash?: SortOrder
     role?: SortOrder
@@ -15578,12 +16075,16 @@ export namespace Prisma {
   }
 
   export type UserMaxOrderByAggregateInput = {
+    isActive?: SortOrder
     id?: SortOrder
     email?: SortOrder
     emailHash?: SortOrder
     passwordHash?: SortOrder
     name?: SortOrder
     nameEncrypted?: SortOrder
+    phoneEncrypted?: SortOrder
+    addressEncrypted?: SortOrder
+    addressDetailEncrypted?: SortOrder
     loginId?: SortOrder
     loginIdHash?: SortOrder
     role?: SortOrder
@@ -15592,17 +16093,29 @@ export namespace Prisma {
   }
 
   export type UserMinOrderByAggregateInput = {
+    isActive?: SortOrder
     id?: SortOrder
     email?: SortOrder
     emailHash?: SortOrder
     passwordHash?: SortOrder
     name?: SortOrder
     nameEncrypted?: SortOrder
+    phoneEncrypted?: SortOrder
+    addressEncrypted?: SortOrder
+    addressDetailEncrypted?: SortOrder
     loginId?: SortOrder
     loginIdHash?: SortOrder
     role?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -15621,14 +16134,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -15956,6 +16461,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCCountOrderByAggregateInput = {
+    kind?: SortOrder
+    stock?: SortOrder
+    specText?: SortOrder
+    infoImages?: SortOrder
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
@@ -15969,12 +16478,16 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCAvgOrderByAggregateInput = {
+    stock?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
     salesCount?: SortOrder
   }
 
   export type PrebuiltPCMaxOrderByAggregateInput = {
+    kind?: SortOrder
+    stock?: SortOrder
+    specText?: SortOrder
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
@@ -15987,6 +16500,9 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCMinOrderByAggregateInput = {
+    kind?: SortOrder
+    stock?: SortOrder
+    specText?: SortOrder
     id?: SortOrder
     name?: SortOrder
     description?: SortOrder
@@ -15999,6 +16515,7 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCSumOrderByAggregateInput = {
+    stock?: SortOrder
     price?: SortOrder
     discountRate?: SortOrder
     salesCount?: SortOrder
@@ -16048,13 +16565,6 @@ export namespace Prisma {
     quantity?: SortOrder
   }
 
-  export type EnumOrderStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
-  }
-
   export type DateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -16066,12 +16576,28 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type EnumOrderStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
+  }
+
   export type UserNullableScalarRelationFilter = {
     is?: UserWhereInput | null
     isNot?: UserWhereInput | null
   }
 
   export type OrderCountOrderByAggregateInput = {
+    shippingStatus?: SortOrder
+    courier?: SortOrder
+    trackingNumber?: SortOrder
+    shippedAt?: SortOrder
+    deliveredAt?: SortOrder
+    requestKey?: SortOrder
+    shippingEncrypted?: SortOrder
+    inventory?: SortOrder
+    stockReserved?: SortOrder
     id?: SortOrder
     userId?: SortOrder
     status?: SortOrder
@@ -16092,6 +16618,14 @@ export namespace Prisma {
   }
 
   export type OrderMaxOrderByAggregateInput = {
+    shippingStatus?: SortOrder
+    courier?: SortOrder
+    trackingNumber?: SortOrder
+    shippedAt?: SortOrder
+    deliveredAt?: SortOrder
+    requestKey?: SortOrder
+    shippingEncrypted?: SortOrder
+    stockReserved?: SortOrder
     id?: SortOrder
     userId?: SortOrder
     status?: SortOrder
@@ -16106,6 +16640,14 @@ export namespace Prisma {
   }
 
   export type OrderMinOrderByAggregateInput = {
+    shippingStatus?: SortOrder
+    courier?: SortOrder
+    trackingNumber?: SortOrder
+    shippedAt?: SortOrder
+    deliveredAt?: SortOrder
+    requestKey?: SortOrder
+    shippingEncrypted?: SortOrder
+    stockReserved?: SortOrder
     id?: SortOrder
     userId?: SortOrder
     status?: SortOrder
@@ -16125,16 +16667,6 @@ export namespace Prisma {
     finalAmount?: SortOrder
   }
 
-  export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
-    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
-  }
-
   export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -16147,6 +16679,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type EnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
+    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
   export type OrderScalarRelationFilter = {
@@ -16165,6 +16707,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCountOrderByAggregateInput = {
+    image?: SortOrder
+    name?: SortOrder
     id?: SortOrder
     orderId?: SortOrder
     productId?: SortOrder
@@ -16179,6 +16723,8 @@ export namespace Prisma {
   }
 
   export type OrderItemMaxOrderByAggregateInput = {
+    image?: SortOrder
+    name?: SortOrder
     id?: SortOrder
     orderId?: SortOrder
     productId?: SortOrder
@@ -16188,6 +16734,8 @@ export namespace Prisma {
   }
 
   export type OrderItemMinOrderByAggregateInput = {
+    image?: SortOrder
+    name?: SortOrder
     id?: SortOrder
     orderId?: SortOrder
     productId?: SortOrder
@@ -16343,12 +16891,12 @@ export namespace Prisma {
     connect?: OrderWhereUniqueInput | OrderWhereUniqueInput[]
   }
 
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
+  }
+
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -16650,6 +17198,10 @@ export namespace Prisma {
     deleteMany?: PrebuiltPCComponentScalarWhereInput | PrebuiltPCComponentScalarWhereInput[]
   }
 
+  export type PrebuiltPCCreateinfoImagesInput = {
+    set: string[]
+  }
+
   export type PrebuiltPCCreateimagesInput = {
     set: string[]
   }
@@ -16694,6 +17246,11 @@ export namespace Prisma {
     connectOrCreate?: CartItemCreateOrConnectWithoutPrebuiltPCInput | CartItemCreateOrConnectWithoutPrebuiltPCInput[]
     createMany?: CartItemCreateManyPrebuiltPCInputEnvelope
     connect?: CartItemWhereUniqueInput | CartItemWhereUniqueInput[]
+  }
+
+  export type PrebuiltPCUpdateinfoImagesInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type PrebuiltPCUpdateimagesInput = {
@@ -16833,12 +17390,12 @@ export namespace Prisma {
     connect?: OrderItemWhereUniqueInput | OrderItemWhereUniqueInput[]
   }
 
-  export type EnumOrderStatusFieldUpdateOperationsInput = {
-    set?: $Enums.OrderStatus
-  }
-
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type EnumOrderStatusFieldUpdateOperationsInput = {
+    set?: $Enums.OrderStatus
   }
 
   export type UserUpdateOneWithoutOrdersNestedInput = {
@@ -16985,6 +17542,11 @@ export namespace Prisma {
     update?: XOR<XOR<PrebuiltPCUpdateToOneWithWhereWithoutCartItemsInput, PrebuiltPCUpdateWithoutCartItemsInput>, PrebuiltPCUncheckedUpdateWithoutCartItemsInput>
   }
 
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -16997,11 +17559,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringFilter<$PrismaModel> | string
-  }
-
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedStringNullableFilter<$PrismaModel = never> = {
@@ -17036,6 +17593,25 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -17051,25 +17627,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17214,13 +17771,6 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
-  }
-
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
@@ -17232,14 +17782,11 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
-  export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
+  export type NestedEnumOrderStatusFilter<$PrismaModel = never> = {
     equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
     in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
-    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
+    not?: NestedEnumOrderStatusFilter<$PrismaModel> | $Enums.OrderStatus
   }
 
   export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17254,6 +17801,16 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.OrderStatus | EnumOrderStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.OrderStatus[] | ListEnumOrderStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumOrderStatusWithAggregatesFilter<$PrismaModel> | $Enums.OrderStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumOrderStatusFilter<$PrismaModel>
+    _max?: NestedEnumOrderStatusFilter<$PrismaModel>
   }
 
   export type MemberSessionCreateWithoutUserInput = {
@@ -17307,6 +17864,15 @@ export namespace Prisma {
   }
 
   export type OrderCreateWithoutUserInput = {
+    shippingStatus?: string
+    courier?: string
+    trackingNumber?: string
+    shippedAt?: Date | string | null
+    deliveredAt?: Date | string | null
+    requestKey?: string | null
+    shippingEncrypted?: string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: boolean
     id?: string
     status?: $Enums.OrderStatus
     totalAmount: number
@@ -17321,6 +17887,15 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedCreateWithoutUserInput = {
+    shippingStatus?: string
+    courier?: string
+    trackingNumber?: string
+    shippedAt?: Date | string | null
+    deliveredAt?: Date | string | null
+    requestKey?: string | null
+    shippingEncrypted?: string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: boolean
     id?: string
     status?: $Enums.OrderStatus
     totalAmount: number
@@ -17419,6 +17994,15 @@ export namespace Prisma {
     AND?: OrderScalarWhereInput | OrderScalarWhereInput[]
     OR?: OrderScalarWhereInput[]
     NOT?: OrderScalarWhereInput | OrderScalarWhereInput[]
+    shippingStatus?: StringFilter<"Order"> | string
+    courier?: StringFilter<"Order"> | string
+    trackingNumber?: StringFilter<"Order"> | string
+    shippedAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+    deliveredAt?: DateTimeNullableFilter<"Order"> | Date | string | null
+    requestKey?: StringNullableFilter<"Order"> | string | null
+    shippingEncrypted?: StringNullableFilter<"Order"> | string | null
+    inventory?: JsonNullableFilter<"Order">
+    stockReserved?: BoolFilter<"Order"> | boolean
     id?: StringFilter<"Order"> | string
     userId?: StringNullableFilter<"Order"> | string | null
     status?: EnumOrderStatusFilter<"Order"> | $Enums.OrderStatus
@@ -17571,6 +18155,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCreateWithoutProductInput = {
+    image?: string
+    name?: string
     id?: string
     quantity?: number
     unitPrice: number
@@ -17579,6 +18165,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedCreateWithoutProductInput = {
+    image?: string
+    name?: string
     id?: string
     orderId: string
     prebuiltPCId?: string | null
@@ -17683,6 +18271,8 @@ export namespace Prisma {
     AND?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
     OR?: OrderItemScalarWhereInput[]
     NOT?: OrderItemScalarWhereInput | OrderItemScalarWhereInput[]
+    image?: StringFilter<"OrderItem"> | string
+    name?: StringFilter<"OrderItem"> | string
     id?: StringFilter<"OrderItem"> | string
     orderId?: StringFilter<"OrderItem"> | string
     productId?: StringNullableFilter<"OrderItem"> | string | null
@@ -17740,6 +18330,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCreateWithoutPrebuiltPCInput = {
+    image?: string
+    name?: string
     id?: string
     quantity?: number
     unitPrice: number
@@ -17748,6 +18340,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedCreateWithoutPrebuiltPCInput = {
+    image?: string
+    name?: string
     id?: string
     orderId: string
     productId?: string | null
@@ -17842,6 +18436,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCCreateWithoutComponentsInput = {
+    kind?: string
+    stock?: number
+    specText?: string
+    infoImages?: PrebuiltPCCreateinfoImagesInput | string[]
     id?: string
     name: string
     description?: string | null
@@ -17857,6 +18455,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUncheckedCreateWithoutComponentsInput = {
+    kind?: string
+    stock?: number
+    specText?: string
+    infoImages?: PrebuiltPCCreateinfoImagesInput | string[]
     id?: string
     name: string
     description?: string | null
@@ -17933,6 +18535,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUpdateWithoutComponentsInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17948,6 +18554,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUncheckedUpdateWithoutComponentsInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18014,12 +18624,16 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutOrdersInput = {
+    isActive?: boolean
     id?: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted?: boolean
+    phoneEncrypted?: string | null
+    addressEncrypted?: string | null
+    addressDetailEncrypted?: string | null
     loginId?: string | null
     loginIdHash?: string | null
     role?: $Enums.UserRole
@@ -18030,12 +18644,16 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutOrdersInput = {
+    isActive?: boolean
     id?: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted?: boolean
+    phoneEncrypted?: string | null
+    addressEncrypted?: string | null
+    addressDetailEncrypted?: string | null
     loginId?: string | null
     loginIdHash?: string | null
     role?: $Enums.UserRole
@@ -18051,6 +18669,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCreateWithoutOrderInput = {
+    image?: string
+    name?: string
     id?: string
     quantity?: number
     unitPrice: number
@@ -18059,6 +18679,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedCreateWithoutOrderInput = {
+    image?: string
+    name?: string
     id?: string
     productId?: string | null
     prebuiltPCId?: string | null
@@ -18088,12 +18710,16 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutOrdersInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -18104,12 +18730,16 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutOrdersInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -18136,6 +18766,15 @@ export namespace Prisma {
   }
 
   export type OrderCreateWithoutItemsInput = {
+    shippingStatus?: string
+    courier?: string
+    trackingNumber?: string
+    shippedAt?: Date | string | null
+    deliveredAt?: Date | string | null
+    requestKey?: string | null
+    shippingEncrypted?: string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: boolean
     id?: string
     status?: $Enums.OrderStatus
     totalAmount: number
@@ -18150,6 +18789,15 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedCreateWithoutItemsInput = {
+    shippingStatus?: string
+    courier?: string
+    trackingNumber?: string
+    shippedAt?: Date | string | null
+    deliveredAt?: Date | string | null
+    requestKey?: string | null
+    shippingEncrypted?: string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: boolean
     id?: string
     userId?: string | null
     status?: $Enums.OrderStatus
@@ -18214,6 +18862,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCCreateWithoutOrderItemsInput = {
+    kind?: string
+    stock?: number
+    specText?: string
+    infoImages?: PrebuiltPCCreateinfoImagesInput | string[]
     id?: string
     name: string
     description?: string | null
@@ -18229,6 +18881,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUncheckedCreateWithoutOrderItemsInput = {
+    kind?: string
+    stock?: number
+    specText?: string
+    infoImages?: PrebuiltPCCreateinfoImagesInput | string[]
     id?: string
     name: string
     description?: string | null
@@ -18260,6 +18916,15 @@ export namespace Prisma {
   }
 
   export type OrderUpdateWithoutItemsInput = {
+    shippingStatus?: StringFieldUpdateOperationsInput | string
+    courier?: StringFieldUpdateOperationsInput | string
+    trackingNumber?: StringFieldUpdateOperationsInput | string
+    shippedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestKey?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     totalAmount?: IntFieldUpdateOperationsInput | number
@@ -18274,6 +18939,15 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedUpdateWithoutItemsInput = {
+    shippingStatus?: StringFieldUpdateOperationsInput | string
+    courier?: StringFieldUpdateOperationsInput | string
+    trackingNumber?: StringFieldUpdateOperationsInput | string
+    shippedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestKey?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
@@ -18350,6 +19024,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUpdateWithoutOrderItemsInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18365,6 +19043,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUncheckedUpdateWithoutOrderItemsInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18380,12 +19062,16 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutSessionsInput = {
+    isActive?: boolean
     id?: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted?: boolean
+    phoneEncrypted?: string | null
+    addressEncrypted?: string | null
+    addressDetailEncrypted?: string | null
     loginId?: string | null
     loginIdHash?: string | null
     role?: $Enums.UserRole
@@ -18396,12 +19082,16 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
+    isActive?: boolean
     id?: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted?: boolean
+    phoneEncrypted?: string | null
+    addressEncrypted?: string | null
+    addressDetailEncrypted?: string | null
     loginId?: string | null
     loginIdHash?: string | null
     role?: $Enums.UserRole
@@ -18428,12 +19118,16 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutSessionsInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -18444,12 +19138,16 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -18460,12 +19158,16 @@ export namespace Prisma {
   }
 
   export type UserCreateWithoutCartItemsInput = {
+    isActive?: boolean
     id?: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted?: boolean
+    phoneEncrypted?: string | null
+    addressEncrypted?: string | null
+    addressDetailEncrypted?: string | null
     loginId?: string | null
     loginIdHash?: string | null
     role?: $Enums.UserRole
@@ -18476,12 +19178,16 @@ export namespace Prisma {
   }
 
   export type UserUncheckedCreateWithoutCartItemsInput = {
+    isActive?: boolean
     id?: string
     email: string
     emailHash: string
     passwordHash: string
     name: string
     nameEncrypted?: boolean
+    phoneEncrypted?: string | null
+    addressEncrypted?: string | null
+    addressDetailEncrypted?: string | null
     loginId?: string | null
     loginIdHash?: string | null
     role?: $Enums.UserRole
@@ -18542,6 +19248,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCCreateWithoutCartItemsInput = {
+    kind?: string
+    stock?: number
+    specText?: string
+    infoImages?: PrebuiltPCCreateinfoImagesInput | string[]
     id?: string
     name: string
     description?: string | null
@@ -18557,6 +19267,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUncheckedCreateWithoutCartItemsInput = {
+    kind?: string
+    stock?: number
+    specText?: string
+    infoImages?: PrebuiltPCCreateinfoImagesInput | string[]
     id?: string
     name: string
     description?: string | null
@@ -18588,12 +19302,16 @@ export namespace Prisma {
   }
 
   export type UserUpdateWithoutCartItemsInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -18604,12 +19322,16 @@ export namespace Prisma {
   }
 
   export type UserUncheckedUpdateWithoutCartItemsInput = {
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
     emailHash?: StringFieldUpdateOperationsInput | string
     passwordHash?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     nameEncrypted?: BoolFieldUpdateOperationsInput | boolean
+    phoneEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    addressDetailEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
     loginId?: NullableStringFieldUpdateOperationsInput | string | null
     loginIdHash?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
@@ -18682,6 +19404,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUpdateWithoutCartItemsInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18697,6 +19423,10 @@ export namespace Prisma {
   }
 
   export type PrebuiltPCUncheckedUpdateWithoutCartItemsInput = {
+    kind?: StringFieldUpdateOperationsInput | string
+    stock?: IntFieldUpdateOperationsInput | number
+    specText?: StringFieldUpdateOperationsInput | string
+    infoImages?: PrebuiltPCUpdateinfoImagesInput | string[]
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18727,6 +19457,15 @@ export namespace Prisma {
   }
 
   export type OrderCreateManyUserInput = {
+    shippingStatus?: string
+    courier?: string
+    trackingNumber?: string
+    shippedAt?: Date | string | null
+    deliveredAt?: Date | string | null
+    requestKey?: string | null
+    shippingEncrypted?: string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: boolean
     id?: string
     status?: $Enums.OrderStatus
     totalAmount: number
@@ -18785,6 +19524,15 @@ export namespace Prisma {
   }
 
   export type OrderUpdateWithoutUserInput = {
+    shippingStatus?: StringFieldUpdateOperationsInput | string
+    courier?: StringFieldUpdateOperationsInput | string
+    trackingNumber?: StringFieldUpdateOperationsInput | string
+    shippedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestKey?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     totalAmount?: IntFieldUpdateOperationsInput | number
@@ -18799,6 +19547,15 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedUpdateWithoutUserInput = {
+    shippingStatus?: StringFieldUpdateOperationsInput | string
+    courier?: StringFieldUpdateOperationsInput | string
+    trackingNumber?: StringFieldUpdateOperationsInput | string
+    shippedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestKey?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     totalAmount?: IntFieldUpdateOperationsInput | number
@@ -18813,6 +19570,15 @@ export namespace Prisma {
   }
 
   export type OrderUncheckedUpdateManyWithoutUserInput = {
+    shippingStatus?: StringFieldUpdateOperationsInput | string
+    courier?: StringFieldUpdateOperationsInput | string
+    trackingNumber?: StringFieldUpdateOperationsInput | string
+    shippedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    requestKey?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingEncrypted?: NullableStringFieldUpdateOperationsInput | string | null
+    inventory?: NullableJsonNullValueInput | InputJsonValue
+    stockReserved?: BoolFieldUpdateOperationsInput | boolean
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumOrderStatusFieldUpdateOperationsInput | $Enums.OrderStatus
     totalAmount?: IntFieldUpdateOperationsInput | number
@@ -18909,6 +19675,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCreateManyProductInput = {
+    image?: string
+    name?: string
     id?: string
     orderId: string
     prebuiltPCId?: string | null
@@ -18950,6 +19718,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUpdateWithoutProductInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -18958,6 +19728,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedUpdateWithoutProductInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     prebuiltPCId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18966,6 +19738,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedUpdateManyWithoutProductInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     prebuiltPCId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -18998,6 +19772,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCreateManyPrebuiltPCInput = {
+    image?: string
+    name?: string
     id?: string
     orderId: string
     productId?: string | null
@@ -19033,6 +19809,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUpdateWithoutPrebuiltPCInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -19041,6 +19819,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedUpdateWithoutPrebuiltPCInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19049,6 +19829,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedUpdateManyWithoutPrebuiltPCInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     orderId?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19084,6 +19866,8 @@ export namespace Prisma {
   }
 
   export type OrderItemCreateManyOrderInput = {
+    image?: string
+    name?: string
     id?: string
     productId?: string | null
     prebuiltPCId?: string | null
@@ -19092,6 +19876,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUpdateWithoutOrderInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     quantity?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -19100,6 +19886,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedUpdateWithoutOrderInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     prebuiltPCId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -19108,6 +19896,8 @@ export namespace Prisma {
   }
 
   export type OrderItemUncheckedUpdateManyWithoutOrderInput = {
+    image?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
     id?: StringFieldUpdateOperationsInput | string
     productId?: NullableStringFieldUpdateOperationsInput | string | null
     prebuiltPCId?: NullableStringFieldUpdateOperationsInput | string | null

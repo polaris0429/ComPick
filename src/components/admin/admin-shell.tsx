@@ -1,0 +1,6 @@
+'use client';
+import Link from 'next/link';
+import {useRouter,usePathname} from 'next/navigation';
+import {LayoutDashboard,Package,Truck,Users,Monitor,ArrowUpRight} from 'lucide-react';
+const links=[['/admin','매출 대시보드',LayoutDashboard],['/admin/orders','주문 · 배송 관리',Truck],['/admin/members','회원 관리',Users],['/admin/products','부품 상품 관리',Package],['/admin/ai-pcs','Ai PC · 완제품 관리',Monitor]] as const;
+export function AdminShell({children}:{children:React.ReactNode}){const path=usePathname();const router=useRouter();return <div className="admin-layout"><aside className="admin-sidebar"><Link href="/admin" className="admin-brand">Com<span>Pick</span><small>ADMIN CENTER</small></Link><nav>{links.map(([href,title,Icon])=><Link key={href} href={href} className={path===href?'active':''}><Icon size={18}/>{title}</Link>)}</nav><div className="admin-sidebar-footer"><span>스토어 운영</span><Link href="/">쇼핑몰 보기 <ArrowUpRight size={15}/></Link></div></aside><div className="admin-main-area"><header className="admin-topbar"><span>컴픽 관리자 센터</span><div className="flex gap-5"><strong>관리자 · admin</strong><button onClick={async()=>{const r=await fetch("/api/admin-session",{method:"DELETE"});if(r.ok){router.replace("/admin-login");router.refresh()}}}>로그아웃</button></div></header>{children}</div></div>}

@@ -16,6 +16,7 @@
     },
     "/api/admin/products": {},
     "/api/admin/upload": {},
+    "/api/commerce/[action]": {},
     "/api/member/[action]": {},
     "/uploads/[filename]": {}
   }

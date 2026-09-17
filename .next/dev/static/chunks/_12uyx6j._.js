@@ -1084,13 +1084,13 @@ function AccountForm() {
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/member/account-form.tsx",
                                                     lineNumber: 10,
-                                                    columnNumber: 299
+                                                    columnNumber: 351
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 289
+                                            columnNumber: 341
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             children: [
@@ -1104,13 +1104,13 @@ function AccountForm() {
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/member/account-form.tsx",
                                                     lineNumber: 10,
-                                                    columnNumber: 429
+                                                    columnNumber: 481
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 420
+                                            columnNumber: 472
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             children: [
@@ -1124,13 +1124,89 @@ function AccountForm() {
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/member/account-form.tsx",
                                                     lineNumber: 10,
-                                                    columnNumber: 536
+                                                    columnNumber: 588
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 526
+                                            columnNumber: 578
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                            className: "mt-6",
+                                            children: "기본 배송정보"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/member/account-form.tsx",
+                                            lineNumber: 10,
+                                            columnNumber: 686
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                                            children: "저장한 전화번호와 주소가 주문서에 자동 입력됩니다. 주문할 때 다른 주소로 변경할 수 있습니다."
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/member/account-form.tsx",
+                                            lineNumber: 10,
+                                            columnNumber: 719
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                            children: [
+                                                "전화번호",
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                    name: "phone",
+                                                    type: "tel",
+                                                    defaultValue: user.phone,
+                                                    maxLength: 20,
+                                                    autoComplete: "tel",
+                                                    placeholder: "010-0000-0000"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/member/account-form.tsx",
+                                                    lineNumber: 10,
+                                                    columnNumber: 790
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/member/account-form.tsx",
+                                            lineNumber: 10,
+                                            columnNumber: 779
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                            children: [
+                                                "배송주소",
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                    name: "address",
+                                                    defaultValue: user.address,
+                                                    maxLength: 300,
+                                                    autoComplete: "address-line1",
+                                                    placeholder: "도로명 주소"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/member/account-form.tsx",
+                                                    lineNumber: 10,
+                                                    columnNumber: 929
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/member/account-form.tsx",
+                                            lineNumber: 10,
+                                            columnNumber: 918
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                                            children: [
+                                                "상세 주소",
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                                    name: "addressDetail",
+                                                    defaultValue: user.addressDetail,
+                                                    maxLength: 200,
+                                                    autoComplete: "address-line2",
+                                                    placeholder: "동·호수 등"
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/member/account-form.tsx",
+                                                    lineNumber: 10,
+                                                    columnNumber: 1066
+                                                }, this)
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/member/account-form.tsx",
+                                            lineNumber: 10,
+                                            columnNumber: 1054
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             children: [
@@ -1143,13 +1219,13 @@ function AccountForm() {
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/member/account-form.tsx",
                                                     lineNumber: 10,
-                                                    columnNumber: 648
+                                                    columnNumber: 1217
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 634
+                                            columnNumber: 1203
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             children: [
@@ -1163,13 +1239,13 @@ function AccountForm() {
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/member/account-form.tsx",
                                                     lineNumber: 10,
-                                                    columnNumber: 766
+                                                    columnNumber: 1335
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 744
+                                            columnNumber: 1313
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             children: [
@@ -1181,13 +1257,13 @@ function AccountForm() {
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/member/account-form.tsx",
                                                     lineNumber: 10,
-                                                    columnNumber: 891
+                                                    columnNumber: 1460
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 875
+                                            columnNumber: 1444
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             className: "member-primary",
@@ -1195,15 +1271,15 @@ function AccountForm() {
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 974
+                                            columnNumber: 1543
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/member/account-form.tsx",
                                     lineNumber: 10,
-                                    columnNumber: 263
+                                    columnNumber: 315
                                 }, this)
-                            }, `${user.id}-${user.loginId}-${user.email}-${user.name}`, false, {
+                            }, `${user.id}-${user.loginId}-${user.email}-${user.name}-${user.phone}-${user.address}-${user.addressDetail}`, false, {
                                 fileName: "[project]/src/components/member/account-form.tsx",
                                 lineNumber: 10,
                                 columnNumber: 161
@@ -1222,14 +1298,14 @@ function AccountForm() {
                             }, void 0, false, {
                                 fileName: "[project]/src/components/member/account-form.tsx",
                                 lineNumber: 10,
-                                columnNumber: 1100
+                                columnNumber: 1669
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                                 children: "계정과 개인정보, 저장한 장바구니가 삭제되며 모든 기기에서 로그아웃됩니다. 되돌릴 수 없습니다. 기존 주문 내역은 계정 연결을 해제한 상태로 남습니다."
                             }, void 0, false, {
                                 fileName: "[project]/src/components/member/account-form.tsx",
                                 lineNumber: 10,
-                                columnNumber: 1113
+                                columnNumber: 1682
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                                 onSubmit: (e)=>submit(e, "delete"),
@@ -1247,13 +1323,13 @@ function AccountForm() {
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/member/account-form.tsx",
                                                     lineNumber: 10,
-                                                    columnNumber: 1283
+                                                    columnNumber: 1852
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 1269
+                                            columnNumber: 1838
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                             children: [
@@ -1266,13 +1342,13 @@ function AccountForm() {
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/components/member/account-form.tsx",
                                                     lineNumber: 10,
-                                                    columnNumber: 1406
+                                                    columnNumber: 1975
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 1379
+                                            columnNumber: 1948
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                             className: "member-danger",
@@ -1280,24 +1356,24 @@ function AccountForm() {
                                         }, void 0, false, {
                                             fileName: "[project]/src/components/member/account-form.tsx",
                                             lineNumber: 10,
-                                            columnNumber: 1485
+                                            columnNumber: 2054
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/components/member/account-form.tsx",
                                     lineNumber: 10,
-                                    columnNumber: 1243
+                                    columnNumber: 1812
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/components/member/account-form.tsx",
                                 lineNumber: 10,
-                                columnNumber: 1204
+                                columnNumber: 1773
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/member/account-form.tsx",
                         lineNumber: 10,
-                        columnNumber: 1051
+                        columnNumber: 1620
                     }, this)
                 ]
             }, void 0, true, {
@@ -1312,7 +1388,7 @@ function AccountForm() {
             }, void 0, false, {
                 fileName: "[project]/src/components/member/account-form.tsx",
                 lineNumber: 10,
-                columnNumber: 1574
+                columnNumber: 2143
             }, this),
             message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                 role: "status",
@@ -1321,7 +1397,7 @@ function AccountForm() {
             }, void 0, false, {
                 fileName: "[project]/src/components/member/account-form.tsx",
                 lineNumber: 10,
-                columnNumber: 1637
+                columnNumber: 2206
             }, this)
         ]
     }, void 0, true, {
@@ -1439,13 +1515,21 @@ function MemberNav() {
                 lineNumber: 5,
                 columnNumber: 461
             }, this),
+            user && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                href: "/orders",
+                children: "주문 내역"
+            }, void 0, false, {
+                fileName: "[project]/src/components/member/member-nav.tsx",
+                lineNumber: 5,
+                columnNumber: 498
+            }, this),
             error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                 role: "alert",
                 children: error
             }, void 0, false, {
                 fileName: "[project]/src/components/member/member-nav.tsx",
                 lineNumber: 5,
-                columnNumber: 499
+                columnNumber: 540
             }, this)
         ]
     }, void 0, true, {

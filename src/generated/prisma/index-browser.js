@@ -121,12 +121,16 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 });
 
 exports.Prisma.UserScalarFieldEnum = {
+  isActive: 'isActive',
   id: 'id',
   email: 'email',
   emailHash: 'emailHash',
   passwordHash: 'passwordHash',
   name: 'name',
   nameEncrypted: 'nameEncrypted',
+  phoneEncrypted: 'phoneEncrypted',
+  addressEncrypted: 'addressEncrypted',
+  addressDetailEncrypted: 'addressDetailEncrypted',
   loginId: 'loginId',
   loginIdHash: 'loginIdHash',
   role: 'role',
@@ -162,6 +166,10 @@ exports.Prisma.ProductScalarFieldEnum = {
 };
 
 exports.Prisma.PrebuiltPCScalarFieldEnum = {
+  kind: 'kind',
+  stock: 'stock',
+  specText: 'specText',
+  infoImages: 'infoImages',
   id: 'id',
   name: 'name',
   description: 'description',
@@ -182,6 +190,15 @@ exports.Prisma.PrebuiltPCComponentScalarFieldEnum = {
 };
 
 exports.Prisma.OrderScalarFieldEnum = {
+  shippingStatus: 'shippingStatus',
+  courier: 'courier',
+  trackingNumber: 'trackingNumber',
+  shippedAt: 'shippedAt',
+  deliveredAt: 'deliveredAt',
+  requestKey: 'requestKey',
+  shippingEncrypted: 'shippingEncrypted',
+  inventory: 'inventory',
+  stockReserved: 'stockReserved',
   id: 'id',
   userId: 'userId',
   status: 'status',
@@ -196,6 +213,8 @@ exports.Prisma.OrderScalarFieldEnum = {
 };
 
 exports.Prisma.OrderItemScalarFieldEnum = {
+  image: 'image',
+  name: 'name',
   id: 'id',
   orderId: 'orderId',
   productId: 'productId',

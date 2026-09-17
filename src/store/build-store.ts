@@ -23,6 +23,7 @@ import {
 
 /** 스토어에 저장되는 선택된 부품 정보 */
 export interface SelectedPart {
+  quantity?: number;
   /** Product.id (DB PK) */
   id: string;
   name: string;
@@ -85,7 +86,7 @@ function toAttributesMap(
   const map: SelectedPartsMap = {};
   for (const part of Object.values(parts)) {
     if (part) {
-      if (Object.values(parts).filter(p => p.categoryCode === part.categoryCode).length === 1) {
+      if (Object.values(parts).filter(p => p.categoryCode === part.categoryCode).length === 1 && (part.quantity ?? 1) === 1) {
         map[part.categoryCode] = part.attributes;
       }
     }
@@ -103,10 +104,10 @@ function calculatePrices(parts: Record<string, SelectedPart>): {
 
   for (const part of Object.values(parts)) {
     if (part) {
-      totalPrice += part.price;
+      totalPrice += part.price * (part.quantity ?? 1);
       totalDiscountedPrice += Math.round(
         part.price * (100 - part.discountRate) / 100,
-      );
+      ) * (part.quantity ?? 1);
     }
   }
 
@@ -123,7 +124,7 @@ function recalculate(
       ? emptyReport()
       : checkAllCompatibility(toAttributesMap(selectedParts));
   const counts = new Map<CategoryCode, number>();
-  for (const part of Object.values(selectedParts)) counts.set(part.categoryCode, (counts.get(part.categoryCode) ?? 0) + 1);
+  for (const part of Object.values(selectedParts)) counts.set(part.categoryCode, (counts.get(part.categoryCode) ?? 0) + (part.quantity ?? 1));
   if ([...counts.values()].some(count => count > 1)) {
     compatibility.issues.push({
       ruleId: "multiple-parts-review", severity: "warning",

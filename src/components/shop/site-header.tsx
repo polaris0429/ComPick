@@ -25,7 +25,7 @@ export function SiteHeader({ activeTab, onNavigate, onSearch, partCount }: SiteH
     <header className="site-header">
       <div className="utility-bar"><div className="shop-container flex items-center justify-between">
         <span>내게 맞는 PC를 고르는 기준, 컴픽</span>
-        <div className="flex items-center gap-5"><MemberNav/><Link href="/admin/products">상품 관리</Link><a href="#shopping-guide">이용안내 <ArrowUpRight size={12} /></a></div>
+        <div className="flex items-center gap-5"><MemberNav/><Link href="/admin">관리자</Link><a href="#shopping-guide">이용안내 <ArrowUpRight size={12} /></a></div>
       </div></div>
       <div className="shop-container header-main">
         <Link href="/" className="brand" aria-label="ComPick 홈">Com<span>Pick</span><small>컴픽</small></Link>

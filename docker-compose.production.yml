@@ -19,6 +19,8 @@ services:
     build:
       context: .
       target: runner
+      args:
+        NEXT_PUBLIC_TOSS_CLIENT_KEY: ${NEXT_PUBLIC_TOSS_CLIENT_KEY:-}
     restart: unless-stopped
     depends_on:
       db:
@@ -27,11 +29,14 @@ services:
       - uploads:/app/storage/uploads
     environment:
       DATABASE_URL: postgresql://compick:${POSTGRES_PASSWORD}@db:5432/compick?schema=public
+      TOSS_CLIENT_KEY: ${NEXT_PUBLIC_TOSS_CLIENT_KEY:-}
+      TOSS_SECRET_KEY: ${TOSS_SECRET_KEY:-}
       AUTH_SECRET: ${AUTH_SECRET}
       FIELD_ENCRYPTION_KEY: ${FIELD_ENCRYPTION_KEY}
       AUTH_URL: https://168.110.119.148
       UPLOAD_DIRECTORY: /app/storage/uploads
       ADMIN_ORIGIN: https://168.110.119.148
+      ADMIN_SESSION_SECRET: ${ADMIN_SESSION_SECRET}
       ADMIN_USERNAME: ${ADMIN_USERNAME}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     healthcheck:

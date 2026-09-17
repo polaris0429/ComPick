@@ -11,6 +11,7 @@ export const dynamic="force-dynamic";
 const loginId=z.string().trim().toLowerCase().regex(/^[a-z0-9_]{4,30}$/, "아이디는 영문·숫자·밑줄 4~30자로 입력하세요.");
 const password=z.string().min(12,"비밀번호는 12자 이상 입력하세요.").max(72).refine(s=>Buffer.byteLength(s,"utf8")<=72,"비밀번호는 UTF-8 기준 72바이트 이하여야 합니다.");
 const fields={loginId,email:z.string().trim().toLowerCase().email().max(254),name:z.string().trim().min(1).max(50)};
+const deliveryFields={phone:z.string().trim().max(20).refine(v=>!v||/^[0-9+() -]{7,20}$/.test(v),"전화번호를 확인하세요.").optional(),address:z.string().trim().max(300).refine(v=>!v||v.length>=5,"배송주소는 5자 이상 입력하세요.").optional(),addressDetail:z.string().trim().max(200).optional()};
 const response=(data:unknown,status=200)=>Response.json(data,{status,headers:{"Cache-Control":"private, no-store"}});
 const dummyHash=bcrypt.hashSync("dummy-password-for-timing-only",12);
 type Context={params:Promise<{action:string}>};
@@ -24,10 +25,10 @@ async function cart(userId:string){
  const rows=await prisma.cartItem.findMany({where:{userId},orderBy:{createdAt:"asc"},include:{product:true,prebuiltPC:{include:{components:{include:{product:true}}}}}});
  const items=rows.map(row=>{
  const p=row.product??row.prebuiltPC!;
- const stock=row.product?row.product.stock:Math.min(99,...row.prebuiltPC!.components.map(c=>c.product.isActive?Math.floor(c.product.stock/c.quantity):0));
- const available=p.isActive && stock>=row.quantity && (row.product!==null || row.prebuiltPC!.components.length>0);
+ const stock=row.product?row.product.stock:(row.prebuiltPC!.components.length ? Math.min(99,...row.prebuiltPC!.components.map(c=>c.product.isActive?Math.floor(c.product.stock/c.quantity):0)) : row.prebuiltPC!.stock);
+ const available=p.isActive && stock>=row.quantity;
  const unitPrice=applyDiscount(p.price,p.discountRate);
- return {id:row.id,name:p.name,image:p.images[0]??"",quantity:row.quantity,unitPrice,total:unitPrice*row.quantity,stock,available,kind:row.product?"부품":"완제품"};
+ return {productId:row.productId,prebuiltPCId:row.prebuiltPCId,id:row.id,name:p.name,image:p.images[0]??"",quantity:row.quantity,unitPrice,total:unitPrice*row.quantity,stock,available,kind:row.product?"부품":"완제품"};
  });
  return {items,total:items.filter(i=>i.available).reduce((s,i)=>s+i.total,0)};
 }
@@ -56,11 +57,11 @@ export async function POST(request:Request,context:Context){try{
  await rateLimit("login",input.loginId,8);
  const user=await prisma.user.findUnique({where:{loginIdHash:hashForLookup(`login:${input.loginId}`)}});
  const valid=await bcrypt.compare(input.password,user?.passwordHash??dummyHash);
- if(!user || !valid)throw new MemberError("아이디 또는 비밀번호를 확인하세요.",401);
+ if(!user || !user.isActive || !valid)throw new MemberError("아이디 또는 비밀번호를 확인하세요.",401);
  const oldHash=await sessionHash();
  const token=await prisma.$transaction(async tx=>{
  await tx.$queryRaw`SELECT id FROM users WHERE id=${user.id} FOR UPDATE`;
- const fresh=await tx.user.findUnique({where:{id:user.id}});if(!fresh || fresh.passwordHash!==user.passwordHash)throw new MemberError("다시 로그인해 주세요.",401);
+ const fresh=await tx.user.findUnique({where:{id:user.id}});if(!fresh || !fresh.isActive || fresh.passwordHash!==user.passwordHash)throw new MemberError("다시 로그인해 주세요.",401);
  if(oldHash)await tx.memberSession.deleteMany({where:{tokenHash:oldHash}});
  await tx.memberSession.deleteMany({where:{expiresAt:{lt:new Date()}}});
  return issueSession(tx,user.id)});
@@ -70,12 +71,12 @@ export async function POST(request:Request,context:Context){try{
  if(action==="profile" || action==="delete"){
  const user=await currentMember();if(!user)throw new MemberError("로그인이 필요합니다.",401);
  await rateLimit("sensitive",user.id,8);
- const input=z.object({currentPassword:z.string().min(1).max(72).refine(s=>Buffer.byteLength(s)<=72),...(action==="profile"?{...fields,newPassword:password.optional()}:{confirmation:z.literal("회원탈퇴")})}).parse(body);
+ const input=z.object({currentPassword:z.string().min(1).max(72).refine(s=>Buffer.byteLength(s)<=72),...(action==="profile"?{...fields,...deliveryFields,newPassword:password.optional()}:{confirmation:z.literal("회원탈퇴")})}).parse(body);
  const result=await memberTransaction(async(tx,fresh)=>{
  if(!await bcrypt.compare(input.currentPassword,fresh.passwordHash))throw new MemberError("현재 비밀번호를 확인하세요.",403);
- if(action==="delete"){await tx.user.delete({where:{id:fresh.id}});return null}
- const data=z.object({...fields,newPassword:password.optional()}).parse(body);
- const updated=await tx.user.update({where:{id:fresh.id},data:{loginId:encryptField(data.loginId),loginIdHash:hashForLookup(`login:${data.loginId}`),email:encryptField(data.email),emailHash:hashForLookup(data.email),name:encryptField(data.name),nameEncrypted:true,...(data.newPassword?{passwordHash:await bcrypt.hash(data.newPassword,12)}:{})}});
+ if(action==="delete"){if(await tx.order.count({where:{userId:fresh.id,status:"PENDING",stockReserved:true}}))throw new MemberError("결제 승인 확인 중인 주문이 있습니다. 결제 상태 확인 후 탈퇴해 주세요.");await tx.user.delete({where:{id:fresh.id}});return null}
+ const data=z.object({...fields,...deliveryFields,newPassword:password.optional()}).parse(body);
+ const updated=await tx.user.update({where:{id:fresh.id},data:{loginId:encryptField(data.loginId),loginIdHash:hashForLookup(`login:${data.loginId}`),email:encryptField(data.email),emailHash:hashForLookup(data.email),name:encryptField(data.name),nameEncrypted:true,...(data.phone!==undefined?{phoneEncrypted:data.phone?encryptField(data.phone):null}:{}),...(data.address!==undefined?{addressEncrypted:data.address?encryptField(data.address):null}:{}),...(data.addressDetail!==undefined?{addressDetailEncrypted:data.addressDetail?encryptField(data.addressDetail):null}:{}),...(data.newPassword?{passwordHash:await bcrypt.hash(data.newPassword,12)}:{})}});
  await tx.memberSession.deleteMany({where:{userId:fresh.id}});
  return {user:updated,token:await issueSession(tx,fresh.id)};
  });
@@ -97,7 +98,7 @@ export async function POST(request:Request,context:Context){try{
  const quantity=input.operation==="set"?input.quantity:(existing?.quantity??0)+input.quantity;
  if(quantity>99)throw new MemberError("상품당 최대 99개까지 담을 수 있습니다.");
  if(productId){const p=await tx.product.findUnique({where:{id:productId}});if(!p?.isActive||p.stock<quantity)throw new MemberError("판매 상태 또는 재고 수량을 확인하세요.")}
- else{const p=await tx.prebuiltPC.findUnique({where:{id:prebuiltPCId!},include:{components:{include:{product:true}}}});if(!p?.isActive||!p.components.length||p.components.some(c=>!c.product.isActive||c.product.stock<quantity*c.quantity))throw new MemberError("완제품 구성의 판매 상태 또는 재고가 부족합니다.")}
+ else{const p=await tx.prebuiltPC.findUnique({where:{id:prebuiltPCId!},include:{components:{include:{product:true}}}});if(!p?.isActive||(!p.components.length&&p.stock<quantity)||p.components.some(c=>!c.product.isActive||c.product.stock<quantity*c.quantity))throw new MemberError("완제품 구성의 판매 상태 또는 재고가 부족합니다.")}
  if(existing)await tx.cartItem.update({where:{id:existing.id},data:{quantity}});
  else{if(await tx.cartItem.count({where:{userId:user.id}})>=100)throw new MemberError("장바구니는 최대 100종까지 담을 수 있습니다.");await tx.cartItem.create({data:{userId:user.id,productId,prebuiltPCId,quantity}})}
  });

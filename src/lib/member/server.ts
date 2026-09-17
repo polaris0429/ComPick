@@ -9,8 +9,8 @@ export const cookieName=process.env.NODE_ENV==="production"?"__Host-compick-sess
 const cookieOptions={httpOnly:true,secure:process.env.NODE_ENV==="production",sameSite:"lax" as const,path:"/"};
 export const tokenHash=(token:string)=>createHash("sha256").update(token).digest("hex");
 export async function sessionHash(){const token=(await cookies()).get(cookieName)?.value;return token && /^[a-f0-9]{64}$/.test(token)?tokenHash(token):null}
-export async function currentMember(){const hash=await sessionHash();if(!hash)return null;const session=await prisma.memberSession.findUnique({where:{tokenHash:hash},include:{user:true}});return session && session.expiresAt>new Date()?session.user:null}
-export const publicMember=(u:User)=>({id:u.id,loginId:u.loginId?decryptField(u.loginId):"",email:decryptField(u.email),name:u.nameEncrypted?decryptField(u.name):u.name});
+export async function currentMember(){const hash=await sessionHash();if(!hash)return null;const session=await prisma.memberSession.findUnique({where:{tokenHash:hash},include:{user:true}});return session && session.user.isActive && session.expiresAt>new Date()?session.user:null}
+export const publicMember=(u:User)=>({id:u.id,loginId:u.loginId?decryptField(u.loginId):"",email:decryptField(u.email),name:u.nameEncrypted?decryptField(u.name):u.name,phone:u.phoneEncrypted?decryptField(u.phoneEncrypted):"",address:u.addressEncrypted?decryptField(u.addressEncrypted):"",addressDetail:u.addressDetailEncrypted?decryptField(u.addressDetailEncrypted):""});
 export async function issueSession(tx:Prisma.TransactionClient,userId:string){const token=randomBytes(32).toString("hex");await tx.memberSession.create({data:{tokenHash:tokenHash(token),userId,expiresAt:new Date(Date.now()+7*86400000)}});return token}
 export async function setSession(token:string){(await cookies()).set(cookieName,token,{...cookieOptions,maxAge:7*86400})}
 export async function clearSession(){(await cookies()).set(cookieName,"",{...cookieOptions,maxAge:0})}
@@ -33,7 +33,7 @@ export async function memberTransaction<T>(fn:(tx:Prisma.TransactionClient,user:
  return prisma.$transaction(async(tx)=>{
  const s=await tx.memberSession.findUnique({where:{tokenHash:hash}});if(!s || s.expiresAt<=new Date())throw new MemberError("다시 로그인해 주세요.",401);
  await tx.$queryRaw`SELECT id FROM users WHERE id=${s.userId} FOR UPDATE`;
- const fresh=await tx.memberSession.findUnique({where:{tokenHash:hash},include:{user:true}});if(!fresh || fresh.expiresAt<=new Date())throw new MemberError("다시 로그인해 주세요.",401);
+ const fresh=await tx.memberSession.findUnique({where:{tokenHash:hash},include:{user:true}});if(!fresh || !fresh.user.isActive || fresh.expiresAt<=new Date())throw new MemberError("다시 로그인해 주세요.",401);
  return fn(tx,fresh.user);
  },{timeout:15000});
 }

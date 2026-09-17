@@ -139,13 +139,19 @@ async function getActivePrebuiltPCs() {
     });
     return prebuilts.map((pb)=>({
             id: pb.id,
+            kind: pb.kind,
+            specText: pb.specText,
+            infoImages: pb.infoImages,
             name: pb.name,
             description: pb.description,
             images: pb.images,
             price: pb.price,
             discountRate: pb.discountRate,
             salesCount: pb.salesCount,
-            components: pb.components.map((c)=>toCatalogProduct(c.product))
+            components: pb.components.map((c)=>({
+                    ...toCatalogProduct(c.product),
+                    quantity: c.quantity
+                }))
         }));
 }
 __turbopack_async_result__();

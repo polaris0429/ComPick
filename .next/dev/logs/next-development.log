@@ -1,19 +1,7 @@
-{"timestamp":"00:00:00.437","source":"Server","level":"LOG","message":""}
-{"timestamp":"00:01:02.889","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:02:11.813","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:07:18.675","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:11:33.305","source":"Server","level":"LOG","message":"✓ Compiled in 26ms"}
-{"timestamp":"00:12:32.214","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:16:53.136","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:19:42.517","source":"Server","level":"LOG","message":"✓ Compiled in 31ms"}
-{"timestamp":"00:20:32.500","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:21:27.644","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:23:42.506","source":"Server","level":"LOG","message":"✓ Compiled in 26ms"}
-{"timestamp":"00:52:21.537","source":"Server","level":"WARN","message":"Request body exceeded 10MB for /api/admin/upload. Only the first 10MB will be available unless configured. See https://nextjs.org/docs/app/api-reference/config/next-config-js/middlewareClientMaxBodySize for more details."}
-{"timestamp":"00:52:32.930","source":"Server","level":"WARN","message":"Request body exceeded 10MB for /api/admin/upload. Only the first 10MB will be available unless configured. See https://nextjs.org/docs/app/api-reference/config/next-config-js/middlewareClientMaxBodySize for more details."}
-{"timestamp":"00:52:44.623","source":"Server","level":"WARN","message":"Request body exceeded 10MB for /api/admin/upload. Only the first 10MB will be available unless configured. See https://nextjs.org/docs/app/api-reference/config/next-config-js/middlewareClientMaxBodySize for more details."}
-{"timestamp":"00:52:47.684","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
-{"timestamp":"00:53:05.894","source":"Server","level":"WARN","message":"Request body exceeded 10MB for /api/admin/upload. Only the first 10MB will be available unless configured. See https://nextjs.org/docs/app/api-reference/config/next-config-js/middlewareClientMaxBodySize for more details."}
-{"timestamp":"00:53:23.047","source":"Server","level":"WARN","message":"Request body exceeded 10MB for /api/admin/upload. Only the first 10MB will be available unless configured. See https://nextjs.org/docs/app/api-reference/config/next-config-js/middlewareClientMaxBodySize for more details."}
-{"timestamp":"00:55:36.476","source":"Server","level":"WARN","message":"Request body exceeded 10MB for /api/admin/upload. Only the first 10MB will be available unless configured. See https://nextjs.org/docs/app/api-reference/config/next-config-js/middlewareClientMaxBodySize for more details."}
-{"timestamp":"01:02:31.669","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:00.634","source":"Server","level":"LOG","message":""}
+{"timestamp":"00:00:11.685","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:00:23.581","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:11:53.597","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:13:58.040","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:20:41.050","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}
+{"timestamp":"00:22:08.393","source":"Browser","level":"INFO","message":"Download the React DevTools for a better development experience: https://react.dev/link/react-devtools"}

@@ -1,0 +1,7 @@
+import {cookies} from 'next/headers';
+import {z} from 'zod';
+import {canUseLocalAdmin} from '@/lib/admin/access';
+import {adminCookie,issueAdminCookie} from '@/lib/admin/session';
+import {checkOrigin,rateLimit,MemberError} from '@/lib/member/server';
+export async function POST(r:Request){try{checkOrigin(r);const raw=await r.text();if(raw.length>1000)return Response.json({error:'잘못된 요청입니다.'},{status:400});const input=z.object({username:z.string().min(1).max(100),password:z.string().min(1).max(200)}).parse(JSON.parse(raw));await rateLimit('admin-login','global',20);const h=new Headers(r.headers);h.delete('cookie');h.set('authorization','Basic '+Buffer.from(input.username+':'+input.password).toString('base64'));if(!canUseLocalAdmin(h))return Response.json({error:'관리자 계정을 확인하세요.'},{status:401});(await cookies()).set(adminCookie,issueAdminCookie(),{httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:'strict',path:'/',maxAge:8*3600});return Response.json({ok:true},{headers:{'Cache-Control':'no-store'}})}catch(e){return Response.json({error:e instanceof MemberError?e.message:'로그인 설정 또는 입력 내용을 확인하세요.'},{status:e instanceof MemberError?e.status:400})}}
+export async function DELETE(r:Request){try{checkOrigin(r);(await cookies()).set(adminCookie,'',{path:'/',httpOnly:true,secure:process.env.NODE_ENV==='production',sameSite:'strict',maxAge:0});return Response.json({ok:true})}catch{return Response.json({error:'허용되지 않은 요청'},{status:403})}}

@@ -1,5 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import {useMember} from "@/components/member/member-provider";
+import {commerce,saveCheckout} from "@/components/member/checkout";
 import { useState } from "react";
 import { AlertTriangle, CheckCircle2, ClipboardList, X } from "lucide-react";
 import type { CategoryCode } from "@/generated/prisma";
@@ -39,7 +42,12 @@ export function QuotePanel() {
   const removePart = useBuildStore((s) => s.removePart);
   const clearAll = useBuildStore((s) => s.clearAll);
 
-  const [showPaymentNotice, setShowPaymentNotice] = useState(false);
+  const router=useRouter();
+  const {user}=useMember();
+  const [message,setMessage]=useState("");
+  const [busy,setBusy]=useState(false);
+  const checkoutItems=()=>Object.values(selectedParts).map(p=>({productId:p.id,quantity:p.quantity??1}));
+  async function addQuote(){if(!user){setMessage("로그인 후 견적을 장바구니에 담을 수 있습니다.");return}setBusy(true);try{await commerce("cart",{items:checkoutItems()});setMessage("견적의 모든 부품을 장바구니에 담았습니다.")}catch(e){setMessage((e as Error).message)}finally{setBusy(false)}}
 
   const groups = CATEGORY_ORDER.map(code => ({
     code, parts: Object.values(selectedParts).filter(part => part.categoryCode === code),
@@ -110,7 +118,7 @@ export function QuotePanel() {
           {groups.map(({code, parts}) => (
             <li key={code} className="overflow-hidden rounded-lg border border-line text-xs">
               <h3 className="flex justify-between border-b border-line bg-paper px-3 py-2 font-bold text-ink">
-                <span>{CATEGORY_LABELS[code]}</span><span className="text-ink-muted">{parts.length}개</span>
+                <span>{CATEGORY_LABELS[code]}</span><span className="text-ink-muted">{parts.reduce((n,p)=>n+(p.quantity??1),0)}개</span>
               </h3>
               <ul className="divide-y divide-line">
                 {parts.map(part => (
@@ -119,8 +127,8 @@ export function QuotePanel() {
                       <ProductImage imageUrl={part.image} categoryCode={part.categoryCode} alt={part.name} />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="break-words leading-relaxed text-ink">{part.name}</p>
-                      <p className="mt-1.5 text-right font-semibold tabular-nums text-ink">{formatKRW(part.price)}</p>
+                      <p className="break-words leading-relaxed text-ink">{part.name}{(part.quantity??1)>1&&` × ${part.quantity}`}</p>
+                      <p className="mt-1.5 text-right font-semibold tabular-nums text-ink">{formatKRW(part.price*(part.quantity??1))}</p>
                     </div>
                     <button type="button" onClick={() => removePart(part.id)}
                       aria-label={`${CATEGORY_LABELS[code]} ${part.name} 제거`}
@@ -156,12 +164,9 @@ export function QuotePanel() {
         </div>
       </div>
 
-      <Button type="button" disabled={!canCheckout} onClick={() => setShowPaymentNotice(true)} className="w-full">
-        주문하기
-      </Button>
-      {showPaymentNotice && (
-        <p className="text-center text-xs text-ink-muted">주문·결제 서비스는 준비 중입니다. 담은 견적은 이 브라우저에 자동 저장됩니다.</p>
-      )}
+      <Button type="button" variant="outline" disabled={!orderedParts.length||busy} onClick={()=>void addQuote()} className="w-full">견적 장바구니 담기</Button>
+      <Button type="button" disabled={!canCheckout||busy} onClick={()=>{saveCheckout(checkoutItems());router.push(user?"/checkout":"/login?next=checkout")}} className="w-full">바로 주문</Button>
+      {message&&<p role="status" className="text-xs">{message}</p>}
     </aside>
   );
 }

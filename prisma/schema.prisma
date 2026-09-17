@@ -25,6 +25,7 @@ enum UserRole {
 }
 
 model User {
+  isActive Boolean @default(true)
   id String @id @default(cuid())
 
   /// AES-256-GCM으로 암호화된 값 (src/lib/encryption.ts, 평문으로 저장하지 않음)
@@ -40,6 +41,10 @@ model User {
   /// AES-256-GCM; legacy rows marked with nameEncrypted=false until migrated.
   name String
   nameEncrypted Boolean @default(false)
+  /// Optional saved delivery details, encrypted with AES-256-GCM.
+  phoneEncrypted String?
+  addressEncrypted String?
+  addressDetailEncrypted String?
   loginId String?
   loginIdHash String? @unique
   sessions MemberSession[]
@@ -137,6 +142,10 @@ model Product {
 // ════════════════════════════════════════════════════════════════
 
 model PrebuiltPC {
+  kind String @default("STANDARD")
+  stock Int @default(0)
+  specText String @default("")
+  infoImages String[] @default([])
   id          String  @id @default(cuid())
   name        String
   description String?
@@ -186,6 +195,15 @@ enum OrderStatus {
 }
 
 model Order {
+  shippingStatus String @default("PREPARING")
+  courier String @default("")
+  trackingNumber String @default("")
+  shippedAt DateTime?
+  deliveredAt DateTime?
+  requestKey String? @unique
+  shippingEncrypted String?
+  inventory Json?
+  stockReserved Boolean @default(false)
   id String @id @default(cuid())
 
   userId String?
@@ -221,6 +239,8 @@ model Order {
 /// 채워집니다 — Prisma 스키마 레벨에서는 이 상호배타 제약을 표현할 수 없으므로
 /// Step 5의 주문 생성 로직에서 애플리케이션 레벨로 검증합니다.
 model OrderItem {
+  image String @default("")
+  name String @default("")
   id String @id @default(cuid())
 
   orderId String
